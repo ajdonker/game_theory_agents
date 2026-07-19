@@ -1,0 +1,9 @@
+MAS prisoners_dilemma {
+    
+    agents: 
+    player1;
+    player2;
+
+    aslSourcePath:
+    "src/main/asl";
+}
