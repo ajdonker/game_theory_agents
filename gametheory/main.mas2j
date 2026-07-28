@@ -1,0 +1,11 @@
+MAS main {
+
+    agents:
+    agent;
+    planner;
+
+    aslSourcePath:
+    "src/main/asl";
+
+
+}

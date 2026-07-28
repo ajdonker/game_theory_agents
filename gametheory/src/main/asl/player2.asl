@@ -6,8 +6,8 @@ available(defect).
  * payoff(MyAction, OpponentAction, MyPayoff)
  */
 payoff(cooperate, cooperate, -1).
-payoff(cooperate, defect,    -0).
-payoff(defect,    cooperate, -12).
+payoff(cooperate, defect,    -12).
+payoff(defect,    cooperate, 0).
 payoff(defect,    defect,    -8).
 
 
