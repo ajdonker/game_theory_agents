@@ -37,3 +37,18 @@ application {
 tasks.test {
     useJUnit()
 }
+
+tasks.register<JavaExec>("runResourceManagement") {
+    group = "application"
+    description = "Runs the resource-management Jason scenario"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+    args(file("resourceManagement.mas2j").absolutePath)
+
+    standardInput = System.`in`
+}

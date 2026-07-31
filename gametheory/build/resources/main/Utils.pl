@@ -93,7 +93,6 @@ subtract(S1, S2, S3) :-
      difference(S1, S2, S3).
 
 difference(S, [], S) :- !.
-difference(S, [], S) :- !.
 difference([], _, []) :- !.
 difference(S1, S2, S3) :-
     member(X, S2, S2_2),

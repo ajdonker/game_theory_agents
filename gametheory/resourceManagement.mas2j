@@ -1,0 +1,13 @@
+MAS resource_management {
+    
+    agents: 
+    agent;
+    agent;
+    agent;
+    agent;
+    agent;
+    planner;
+
+    aslSourcePath:
+    "src/main/asl";
+}
