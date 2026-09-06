@@ -2,15 +2,42 @@
 // initial beliefs
 
 round(1).
+max_rounds(5).
+active_agent(agent).
+
 stock(resource, 3).
 min_stock(resource, 1).
 
+acted(agent, 0).
 allocated(agent, resource, 0).
 contribution_quota(agent, 1).
 contribution(agent, 0).
 //starting goals
-
+!start.
 // plans
++!start <- 
+    .println("STARTING SIM");
+    !start_round.
+
+
++!start_round
+    : round(Round)
+    & contribution(agent, PrevContrib)
+    & acted(agent, PrevAction)
+<-
+    -contribution(agent, PrevContrib);
+    +contribution(agent, 0);
+
+    -acted(agent, PrevAction);
+    +acted(agent, 0);
+
+    .println("");
+    .println("======================");
+    .println("STARTING ROUND: ", Round);
+    .println("======================");
+
+    .broadcast(tell, start_round(Round)).
+
 @obtain[atomic]
 +! obtain(Resource)[source(Requester)]
     :stock(Resource, _)
@@ -26,7 +53,7 @@ contribution(agent, 0).
 <-
     .println("UNKNOWN RESOURCE REQUESTED: ", Resource);
 
-    .send(Requester, tell, unknown_resource(Resource)).  
+    .send(Requester, achieve, unknown_resource(Resource)).  
 
 +!check_contribution(Requester, Resource)
     : contribution(Requester, Amount)
@@ -35,7 +62,7 @@ contribution(agent, 0).
 <-
     .println("REQUEST DENIED TO ", Requester, ",CONTRIBUTION: ", Amount, ",QUOTA: ", Required);
 
-    .send(Requester, tell, denied_quota(Resource, Amount, Required)).
+    .send(Requester, achieve, denied_quota(Resource, Amount, Required)).
 
 
 +!check_contribution(Requester, Resource)
@@ -54,7 +81,7 @@ contribution(agent, 0).
 <- 
     .println("REQUEST DENIED TO: ", Requester, "RESOURCE: ", Resource);
 
-    .send(Requester, tell, denied(Resource, Quantity)).
+    .send(Requester, achieve, denied(Resource, Quantity)).
 
 
 
@@ -81,7 +108,7 @@ contribution(agent, 0).
         " REMAINING STOCK: ", Remaining
     );
 
-    .send(Requester,tell,granted(Resource, Remaining, NewOwned)).
+    .send(Requester,achieve,granted(Resource, Remaining, NewOwned)).
 
 @record_contribution[atomic]
 +!contribute(Resource, Added)[source(Requester)]
@@ -95,7 +122,7 @@ contribution(agent, 0).
 
     .println("CONTRIBUTION RECORDED FROM: ", Requester, "RESOURCE: ", Resource, "ADDED: ", Added, "TOTAL: ", Updated);
 
-    .send(Requester, tell, contribution_recorded(Resource, Added, Updated)).
+    .send(Requester, achieve, contribution_recorded(Resource, Added, Updated)).
 
 +!contribute(Resource, Added)[source(Requester)]
     : not stock(Resource, _)
@@ -105,7 +132,7 @@ contribution(agent, 0).
         " UNKNOWN RESOURCE: ", Resource
     );
 
-    .send(Requester, tell, unknown_resource(Resource)).    
+    .send(Requester, achieve, unknown_resource(Resource)).    
 
 @release_resource[atomic]
 +!release(Resource)[source(Requester)]
@@ -119,6 +146,9 @@ contribution(agent, 0).
     -stock(Resource, Quantity);
     +stock(Resource, NewStock);
 
+    -allocated(Requester, Resource, Owned);
+    +allocated(Requester, Resource, NewOwned);
+
     .println(
         "RESOURCE RELEASED BY: ", Requester,
         " RESOURCE: ", Resource, 
@@ -126,7 +156,7 @@ contribution(agent, 0).
         " AVAILABLE STOCK: ", NewStock 
     );
 
-    .send(Requester, tell, released(Resource, NewStock, NewOwned)).
+    .send(Requester, achieve, released(Resource, NewStock, NewOwned)).
 
 +!release(Resource)[source(Requester)]
     : allocated(Requester, Resource, 0)
@@ -136,6 +166,49 @@ contribution(agent, 0).
         ". NO ALLOCATED RESOURCE: ", Resource
     );
 
-    .send(Requester, tell, release_denied(Resource)).    
+    .send(Requester, achieve, release_denied(Resource)).    
 
-  
+
++round_finished(Round)[source(Requester)]
+    : round(Round)
+    & active_agent(Requester)
+    & acted(Requester, 0)
+<-
+    -acted(Requester, 0);
+    +acted(Requester, 1);
+
+    .println(
+        "AGENT ", Requester,
+        " FINISHED ROUND ", Round
+    );
+
+    !check_round_complete.
+
+
++!check_round_complete
+: acted(agent, 1)
+<-
+    !advance_round.
+
++!advance_round
+    : round(Round)
+    & max_rounds(Max)
+    & Round < Max 
+<- 
+    NextRound = Round + 1;
+
+    -round(Round);
+    +round(NextRound);
+
+    !start_round.
+
++!advance_round
+    : round(Round)
+    & max_rounds(Max)
+    & Round >= Max
+<-
+    .println("");
+    .println("========================");
+    .println("SIMULATION FINISHED");
+    .println("ROUNDS COMPLETED: ", Round);
+    .println("========================").         
