@@ -11,6 +11,7 @@ active_agent(agent5).
 
 stock(resource, 15).
 min_stock(resource, 1).
+natural_regeneration(resource, 1).
 
 acted(agent1, 0).
 acted(agent2, 0).
@@ -23,11 +24,11 @@ allocated(agent3, resource, 0).
 allocated(agent4, resource, 0).
 allocated(agent5, resource, 0).
 
-contribution_quota(agent1, 1).
-contribution_quota(agent2, 1).
-contribution_quota(agent3, 1).
-contribution_quota(agent4, 1).
-contribution_quota(agent5, 1).
+contribution_quota(agent1, 0).
+contribution_quota(agent2, 0).
+contribution_quota(agent3, 0).
+contribution_quota(agent4, 0).
+contribution_quota(agent5, 0).
 
 
 contribution(agent1, 0).
@@ -52,14 +53,20 @@ contribution(agent5, 0).
         +contribution(A, 0);
 
         -acted(A, _);
-        +acted(A, _);
+        +acted(A, 0);
     }
     .println("");
     .println("===============");
     .println("STARTING ROUND: ", Round);
     .println("===============");
 
-    .broadcast(tell, start_round(Round)).
+    //.broadcast(tell, start_round(Round)).
+
+    for(active_agent(A)
+    & contribution_quota(A, Required)) {
+        .send(A, tell, start_round(Round, Required));
+    }
+    .println("").
 
 @obtain[atomic]
 +! obtain(Resource)[source(Requester)]
@@ -101,8 +108,11 @@ contribution(agent5, 0).
     : stock(Resource, Quantity)
     & min_stock(Resource, Minimum)
     & Quantity <= Minimum 
+    & allocated(Requester, Resource, Owned)
 <- 
-    .println("REQUEST DENIED TO: ", Requester, "RESOURCE: ", Resource);
+    -allocated(Requester, Resource, Owned);
+    +allocated(Requester, Resource, 0);
+    .println("REQUEST DENIED TO: ", Requester, "RESOURCE: ", Resource, "OBTAINED: ", Owned);
 
     .send(Requester, achieve, denied(Resource, Quantity)).
 
@@ -146,10 +156,9 @@ contribution(agent5, 0).
 @record_contribution[atomic]
 +!contribute(Resource, Added)[source(Requester)]
     : stock(Resource, _)
-    & contribution(Requester, Current)
-    & Added > 0
+    & contribution(Requester, Current) // removed Added > 0 condition 
 <- 
-
+    .println("CONTRIBUTION OF ", Added, "FROM AGENT: ", Requester);
     !record_contribution(Requester, Resource, Added, Current).
 
 +!record_contribution(Requester, Resource, Added, Current)
@@ -175,45 +184,79 @@ contribution(agent5, 0).
 
     .send(Requester, achieve, unknown_resource(Resource)).    
 
-@release_resource[atomic]
-+!release(Resource)[source(Requester)]
-    : stock(Resource, Quantity)
-      & allocated(Requester, Resource, Owned)
-      & Owned > 0
-<-
-    !deallocate_resource(Requester, Resource).
-
-
-+!deallocate_resource(Requester, Resource)
-    :stock(Resource, Quantity)
-    & allocated(Requester, Resource, Owned)
+@consume_resource[atomic]
++!consume(Resource, Amount)[source(Requester)]
+    : allocated(Requester, Resource, Owned)
     & Owned > 0
-<- 
-    
-    NewStock = Quantity + 1;
-    NewOwned = Owned - 1;
-
-    -stock(Resource, Quantity);
-    +stock(Resource, NewStock);
-
-    -allocated(Requester, Resource, Owned);
-    +allocated(Requester, Resource, NewOwned);
-
-    !notify_released(Requester, Resource, NewStock, NewOwned).
-
-+!notify_released(Requester, Resource, NewStock, NewOwned)
-<-
-    .send(Requester, achieve, released(Resource, NewStock, NewOwned)).
-
-+!release(Resource)[source(Requester)]
-    : allocated(Requester, Resource, 0)
 <-
     .println(
-        "RELEASE DENIED TO: ", Requester,
-        ". NO ALLOCATED RESOURCE: ", Resource
+        "RESOURCE CONSUMED BY: ", Requester,
+        " RESOURCE: ", Resource,
+        " AMOUNT: ", Amount
     );
 
-    .send(Requester, achieve, release_denied(Resource)).    
+    -allocated(Requester, Resource, Owned);
+    +allocated(Requester, Resource, 0);
+
+    .send(
+        Requester,
+        achieve,
+        consumed(Resource, Amount)
+    ).
+    
+// @release_resource[atomic]
+// +!release(Resource)[source(Requester)]
+//     : stock(Resource, Quantity)
+//       & allocated(Requester, Resource, Owned)
+//       & Owned > 0
+// <-
+//     !deallocate_resource(Requester, Resource).
+
+
+// +!deallocate_resource(Requester, Resource)
+//     :stock(Resource, Quantity)
+//     & allocated(Requester, Resource, Owned)
+//     & Owned > 0
+// <- 
+    
+//     NewStock = Quantity + 1;
+//     NewOwned = Owned - 1;
+
+//     -stock(Resource, Quantity);
+//     +stock(Resource, NewStock);
+
+//     -allocated(Requester, Resource, Owned);
+//     +allocated(Requester, Resource, NewOwned);
+
+//     !notify_released(Requester, Resource, NewStock, NewOwned).
+
+// +!notify_released(Requester, Resource, NewStock, NewOwned)
+// <-
+//     .send(Requester, achieve, released(Resource, NewStock, NewOwned)).
+
+// +!release(Resource)[source(Requester)]
+//     : allocated(Requester, Resource, 0)
+// <-
+//     .println(
+//         "RELEASE DENIED TO: ", Requester,
+//         ". NO ALLOCATED RESOURCE: ", Resource
+//     );
+
+//     .send(Requester, achieve, release_denied(Resource)).    
++!regenerate_resource(Resource)
+    : stock(Resource, Current)
+    //& max_stock(Resource, Max)
+    //&contribution_effect(Resource, Effect)
+    & natural_regeneration(Resource, Natural)
+<- 
+    .count(contribution(_, 1), Contributors);
+
+    NewStock = Current + Natural + Contributors;
+
+    -stock(Resource, Current);
+    +stock(Resource, NewStock);
+
+    .println("RESOURCE STOCK UPDATE: ", " CURRENT: ", Current, " NEW STOCK: ", NewStock, " CONTRIBUTORS: ", Contributors).
 
 
 +round_finished(Round)[source(Requester)]
@@ -257,6 +300,7 @@ contribution(agent5, 0).
     & max_rounds(Max)
     & Round < Max 
 <- 
+    !regenerate_resource(resource);
     NextRound = Round + 1;
 
     -round(Round);
