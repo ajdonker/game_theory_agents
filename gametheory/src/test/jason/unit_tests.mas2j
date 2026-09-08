@@ -1,0 +1,13 @@
+MAS unit_tests {
+
+    agents:
+        test_manager [
+            goals="create_tester_agents(\"./src/test/jason/asl\",\".*.asl\",\"\")",
+            beliefs="shutdown_delay(30)"
+        ];
+
+    aslSourcePath:
+        "src/test/jason/asl";
+        "src/main/asl";
+        "$jasonJar/test/jason/inc";
+}

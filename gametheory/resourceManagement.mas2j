@@ -1,7 +1,11 @@
 MAS resource_management {
     
     agents: 
-    agent;
+    agent1 agent.asl;
+    agent2 agent.asl;
+    agent3 agent.asl;
+    agent4 agent.asl;
+    agent5 agent.asl;
     planner;
 
     aslSourcePath:

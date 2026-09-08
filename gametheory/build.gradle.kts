@@ -34,8 +34,24 @@ application {
     mainClass.set("strips.Main")
 }
 
+val testJason by tasks.registering(JavaExec::class) {
+    group = "verification"
+    description = "Runs Jason AgentSpeak unit tests"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+
+    args(
+        file("src/test/jason/unit_tests.mas2j").absolutePath
+    )
+}
 tasks.test {
     useJUnit()
+    dependsOn(testJason)
 }
 
 tasks.register<JavaExec>("runResourceManagement") {

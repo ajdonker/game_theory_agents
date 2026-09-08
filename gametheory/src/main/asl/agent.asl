@@ -27,6 +27,17 @@ current_round(0).
     .send(planner, achieve, contribute(resource, 1)).
 
 
++! set_contribution_choice(Round, Amount)
+<-
+    -chosen_contribution(Round, _);
+    +chosen_contribution(Round, Amount);
+
+    !submit_contribution(Round, Amount).
+
++! submit_contribution(Round, Amount)
+<-
+    .send(planner, achieve, contribute(resource, Amount)).
+        
 +!satisfy_need(Resource) 
     : need(Resource, Required)
     & obtained(Resource, Current)
@@ -84,7 +95,7 @@ current_round(0).
     .println("FINISHED ROUND: ", Round);
     .send(planner, tell, round_finished(Round)).
 
-+release_denied(Resource)[source(planner)]
++!release_denied(Resource)[source(planner)]
 <-
     .println(
         "CANNOT RELEASE RESOURCE: ", Resource,

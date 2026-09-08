@@ -3,39 +3,15 @@
 
 round(1).
 max_rounds(5).
-active_agent(agent1).
-active_agent(agent2).
-active_agent(agent3).
-active_agent(agent4).
-active_agent(agent5).
+active_agent(agent).
 
-stock(resource, 15).
+stock(resource, 3).
 min_stock(resource, 1).
 
-acted(agent1, 0).
-acted(agent2, 0).
-acted(agent3, 0).
-acted(agent4, 0).
-acted(agent5, 0).
-allocated(agent1, resource, 0).
-allocated(agent2, resource, 0).
-allocated(agent3, resource, 0).
-allocated(agent4, resource, 0).
-allocated(agent5, resource, 0).
-
-contribution_quota(agent1, 1).
-contribution_quota(agent2, 1).
-contribution_quota(agent3, 1).
-contribution_quota(agent4, 1).
-contribution_quota(agent5, 1).
-
-
-contribution(agent1, 0).
-contribution(agent2, 0).
-contribution(agent3, 0).
-contribution(agent4, 0).
-contribution(agent5, 0).
-
+acted(agent, 0).
+allocated(agent, resource, 0).
+contribution_quota(agent, 1).
+contribution(agent, 0).
 //starting goals
 !start.
 // plans
@@ -46,18 +22,19 @@ contribution(agent5, 0).
 
 +!start_round
     : round(Round)
+    & contribution(agent, PrevContrib)
+    & acted(agent, PrevAction)
 <-
-    for (active_agent(A)) {
-        -contribution(A, _);
-        +contribution(A, 0);
+    -contribution(agent, PrevContrib);
+    +contribution(agent, 0);
 
-        -acted(A, _);
-        +acted(A, _);
-    }
+    -acted(agent, PrevAction);
+    +acted(agent, 0);
+
     .println("");
-    .println("===============");
+    .println("======================");
     .println("STARTING ROUND: ", Round);
-    .println("===============");
+    .println("======================");
 
     .broadcast(tell, start_round(Round)).
 
@@ -233,24 +210,9 @@ contribution(agent5, 0).
 
 
 +!check_round_complete
-    : acted(agent1, 1)
-    & acted(agent2, 1)
-    & acted(agent3, 1)
-    & acted(agent4, 1)
-    & acted(agent5, 1)
+: acted(agent, 1)
 <-
     !advance_round.
-
-+!check_round_complete
-    : not (
-        acted(agent1, 1)
-        & acted(agent2, 1)
-        & acted(agent3, 1)
-        & acted(agent4, 1)
-        & acted(agent5, 1)
-    )
-<-
-    true.
 
 +!advance_round
     : round(Round)
