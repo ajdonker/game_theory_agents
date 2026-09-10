@@ -6,15 +6,6 @@ contribution_cost(2).
 unmet_penalty(4).
 current_round(0).
 current_quota(0).
-// contribution_quota(resource, 1).
-//!start. 
-// !keep_resource_in_check as the starting goal then request as plan
-
-// is there a point in making trying to req a resource a test goal 
-// +!start <-
-//     .println("Starting resource acquisition...");
-//     //.send(planner, achieve, obtain(resource)).
-//     !satisfy_need(resource).
 
 +start_round(Round, Required)[source(planner)]
 <- 

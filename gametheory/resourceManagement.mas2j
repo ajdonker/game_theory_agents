@@ -1,12 +1,15 @@
 MAS resource_management {
     
     agents: 
-    agent1 agent.asl;
-    agent2 agent.asl;
-    agent3 agent.asl;
-    agent4 agent.asl;
-    agent5 agent.asl;
-    planner;
+    agent1 investing_agent.asl;
+    agent2 investing_agent.asl;
+    agent3 investing_agent.asl;
+    agent4 investing_agent.asl;
+    agent5 investing_agent.asl;
+    agent6 investing_agent.asl;
+    agent7 investing_agent.asl;
+    agent8 investing_agent.asl;
+    investing_planner;
 
     aslSourcePath:
     "src/main/asl";
