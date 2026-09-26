@@ -1,3 +1,6 @@
+run_id(3).
+seed(42).
+
 round(1).
 max_rounds(5).
 
@@ -24,6 +27,7 @@ cpr_b(0.25).
 
 +!start_round
     : round(Round)
+    & seed(Seed)
 <-
     .println("");
     .println("===============");
@@ -34,20 +38,21 @@ cpr_b(0.25).
 
     for(active_agent(A))
     {
-        .send(A, tell, start_round(Round));
+        .send(A, tell, start_round(Round, Seed));
     }
     .println("").
 
 
 
 @submit_bid[atomic] // otherwise race condition triggers mutliple recalcs of round
-+!submit_bid(Round, Bid)[source(Requester)]
++!submit_bid(Round, Bid, Strategy)[source(Requester)]
     : round(Round)
     & Bid >= 0
     & Bid <= 10
+    & not bid(Requester, Round, _)
 <-
     +bid(Requester, Round, Bid);
-
+    +played_strategy(Requester, Round, Strategy);
     .println(
         "ROUND ", Round,
         " BY: ", Requester,
@@ -83,21 +88,52 @@ cpr_b(0.25).
     & bid(agent6, Round, B6)
     & bid(agent7, Round, B7)
     & bid(agent8, Round, B8)
+    & market1_return(W)
+    & cpr_a(CprA)
+    & cpr_b(CprB)
+    & seed(Seed)
+    & run_id(RunId)
 <-
     Total = B1+B2+B3+B4+B5+B6+B7+B8;
     Average = Total / 8;
 
-    .println(
-        "TOTAL MARKET 2 INVESTMENT: ", Total,
-        " | GROUP AVERAGE: ", Average
-    );
+    GroupMarket2Return =
+    Total * (CprA - CprB * Total);
 
+    OpportunityCost =
+        W * Total;
+
+    GroupRent =
+        GroupMarket2Return - OpportunityCost;
+
+    OptimalBid =
+        (CprA - W) / (2 * CprB);
+
+    OptimalMarket2Return =
+        OptimalBid * (CprA - CprB * OptimalBid);
+
+    OptimalRent =
+        OptimalMarket2Return - W * OptimalBid;
+
+    RentPct =
+        100 * GroupRent / OptimalRent;
+
+    .println(
+    "ROUND ", Round,
+    " | M2=", Total,
+    " | GROUP AVG = ", Average,
+    " | RENT=", GroupRent,
+    " | % OPTIMUM=", RentPct
+    );
+    results.append("results/rounds.csv", RunId, Seed, Round, Total, Average, GroupRent, RentPct);
     !calculate_returns(Round, Total, Average).
 
 +!calculate_returns(Round, Total, Average)
 <-
     for (
-        bid(A, Round, Bid)
+        seed(Seed)
+        & bid(A, Round, Bid)
+        & played_strategy(A, Round, Strategy)
         & endowment(E)
         & market1_return(W)
         & cpr_a(CprA)
@@ -106,6 +142,8 @@ cpr_b(0.25).
         Market1 = W * (E - Bid);
         Market2 = Bid * (CprA - CprB * Total);
         Payoff = Market1 + Market2;
+        
+        results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
 
         .println(
             A,
