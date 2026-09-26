@@ -2,9 +2,9 @@
 round(1).   
 endowment(10).
 
-current_strategy(total_return_1).
 last_bid(0).
 last_total_return(0).
+
 
 
 last_market1_return(0).
@@ -17,7 +17,7 @@ market1_return(5).
 cpr_a(23).
 cpr_b(0.25).
 
-total_return_direction(1). // can be +- of direction
+//total_return_direction(1). // replaced with strategy_direction belief that is modified if incr/decr return
 // avg scores for each strategy even not played
 // strat, type, incr, decr 
 strategy_rule(total_return_1, total_return, 1, 1).
@@ -95,6 +95,11 @@ agent_index(agent8, 8).
     +strategy_score(S3, 0, 0);
     +strategy_score(S4, 0, 0);
 
+    !init_strategy_state(S1);
+    !init_strategy_state(S2);
+    !init_strategy_state(S3);
+    !init_strategy_state(S4);
+
     +strategy_pool([S1,S2,S3,S4]);
 
     +current_strategy(S1);
@@ -107,7 +112,27 @@ agent_index(agent8, 8).
     : strategies_picked 
 <- 
     true.
-    
+
++! init_strategy_state(Strategy)
+    : strategy_rule(Strategy, total_return, _, _)
+<-  
+    +strategy_last_bid(Strategy, 0);
+    +strategy_direction(Strategy, 1);
+    +strategy_last_payoff(Strategy, 0);
+    +strategy_has_payoff(Strategy, false).
+
++! init_strategy_state(Strategy)
+    : strategy_rule(Strategy, unit_return, _, _)
+<- 
+    +strategy_last_bid(Strategy, 0);
+    +strategy_last_market1_return(Strategy, 0);
+    +strategy_last_market2_return(Strategy, 0).
+
++!init_strategy_state(Strategy)
+    : strategy_rule(Strategy, group_average, _)
+<-
+    true.
+
 +!generate_strategy_bids(_)
 <- 
     for(strategy_score(Strategy, _, _)) {
@@ -116,8 +141,10 @@ agent_index(agent8, 8).
 
 +!generate_strategy_bid(Strategy)
     : strategy_rule(Strategy, total_return, Increment, Decrement)
-    & last_bid(LastBid)
-    & total_return_direction(Direction)
+    //& last_bid(LastBid)
+    & strategy_last_bid(Strategy, LastBid)
+    // & total_return_direction(Direction)
+    & strategy_direction(Strategy, Direction)
     & endowment(Max)
 <-
     !generate_directional_bid(Strategy, LastBid, Direction, Increment, Decrement, Max).
@@ -142,39 +169,44 @@ agent_index(agent8, 8).
     -candidate_bid(Strategy, _);
     +candidate_bid(Strategy, Bid).
 
-
-+!generate_strategy_bid(Strategy)
-    : strategy_rule(Strategy, unit_return, Increment, Decrement)
-    & last_bid(LastBid)
-    & endowment(Max)
-    & last_market1_return(M1Return)
-    & last_market2_return(M2Return)
-    & LastBid > 0
-    & LastBid < Max
-<-
-    M1Tokens = Max - LastBid;
-
-    M1UnitReturn = M1Return / M1Tokens;
-    M2UnitReturn = M2Return / LastBid;
-
-    !generate_unit_direction(Strategy,LastBid,M1UnitReturn,M2UnitReturn,Increment,Decrement,Max).
-
 +!generate_strategy_bid(Strategy)
     : strategy_rule(Strategy, unit_return, Increment, _)
     & Increment \== all
-    & last_bid(0)
+    & strategy_last_bid(Strategy, LastBid)
+    & strategy_last_market1_return(Strategy, M1Return)
+    & strategy_last_market2_return(Strategy, M2Return)
     & endowment(Max)
+    & LastBid > 0
+    & LastBid < Max
+    & M2Return / LastBid > M1Return / (Max - LastBid)
 <-
-    Bid = math.min(Max, Increment);
+    Bid = math.min(Max, LastBid + Increment);
 
     -candidate_bid(Strategy, _);
     +candidate_bid(Strategy, Bid).
 
++!generate_strategy_bid(Strategy)
+    : strategy_rule(Strategy, unit_return, all, _)
+    & strategy_last_bid(Strategy, LastBid)
+    & strategy_last_market1_return(Strategy, M1Return)
+    & strategy_last_market2_return(Strategy, M2Return)
+    & endowment(Max)
+    & LastBid > 0
+    & LastBid < Max
+    & M2Return / LastBid > M1Return / (Max - LastBid)
+<-
+    -candidate_bid(Strategy, _);
+    +candidate_bid(Strategy, Max).
 
 +!generate_strategy_bid(Strategy)
     : strategy_rule(Strategy, unit_return, _, Decrement)
-    & last_bid(LastBid)
-    & endowment(LastBid)
+    & strategy_last_bid(Strategy, LastBid)
+    & strategy_last_market1_return(Strategy, M1Return)
+    & strategy_last_market2_return(Strategy, M2Return)
+    & endowment(Max)
+    & LastBid > 0
+    & LastBid < Max
+    & M1Return / (Max - LastBid) >= M2Return / LastBid
 <-
     Bid = math.max(0, LastBid - Decrement);
 
@@ -182,30 +214,29 @@ agent_index(agent8, 8).
     +candidate_bid(Strategy, Bid).
 
 +!generate_strategy_bid(Strategy)
-    : strategy_rule(Strategy, unit_return, all, _)
-    & last_bid(0)
+    : strategy_rule(Strategy, unit_return, Increment, _)
+    & Increment \== all
+    & strategy_last_bid(Strategy, 0)
     & endowment(Max)
 <-
-    -candidate_bid(Strategy, _);
-    +candidate_bid(Strategy, Max).
-
-+!generate_unit_direction(Strategy, LastBid, M1Unit, M2Unit, Increment, _, Max)
-    : M2Unit > M1Unit
-    & Increment \== all
-<-
-    Bid = math.min(Max, LastBid + Increment);
+    Bid = math.min(Max, Increment);
 
     -candidate_bid(Strategy, _);
     +candidate_bid(Strategy, Bid).
 
-+!generate_unit_direction(Strategy, _, M1Unit, M2Unit, all, _, Max)
-    : M2Unit > M1Unit
++!generate_strategy_bid(Strategy)
+    : strategy_rule(Strategy, unit_return, all, _)
+    & strategy_last_bid(Strategy, 0)
+    & endowment(Max)
 <-
     -candidate_bid(Strategy, _);
-    +candidate_bid(Strategy, Max).
+    +candidate_bid(Strategy, Max).        
 
-+!generate_unit_direction(Strategy, LastBid, M1Unit, M2Unit, _, Decrement, _)
-    : M1Unit >= M2Unit
++!generate_strategy_bid(Strategy)
+    : strategy_rule(Strategy, unit_return, _, Decrement)
+    & strategy_last_bid(Strategy, LastBid)
+    & endowment(Max)
+    & LastBid == Max
 <-
     Bid = math.max(0, LastBid - Decrement);
 
@@ -221,85 +252,6 @@ agent_index(agent8, 8).
 
     -candidate_bid(Strategy, _);
     +candidate_bid(Strategy, Bid).
-
-
-// +!generate_total_return_bid(_)
-//     : last_bid(LastBid)
-//     & total_return_direction(Dir)
-//     & endowment(Max)
-// <-
-//     NewBid = LastBid + Dir;
-
-//     Bid = math.max(0, math.min(Max, NewBid));
-    
-//     -candidate_bid(total_return_1, _);
-//     +candidate_bid(total_return_1, Bid).
-
-
-// +!generate_unit_return_bid(_)
-//     : last_bid(LastBid)
-//     & endowment(Max)
-//     & last_market1_return(M1Return)
-//     & last_market2_return(M2Return)
-//     & LastBid > 0 
-//     & LastBid < Max
-// <-  
-//     M1Tokens = Max - LastBid; 
-//     M1UnitReturn = M1Return / M1Tokens; 
-//     M2UnitReturn = M2Return / LastBid;
-
-//     !unit_return_choice(LastBid, M1UnitReturn, M2UnitReturn).
-
-
-// +!unit_return_choice(LastBid, M1UnitReturn, M2UnitReturn)
-//     : M2UnitReturn > M1UnitReturn 
-//     & endowment(Max)
-// <- 
-//     Bid = math.min(Max, LastBid + 1);
-//     -candidate_bid(unit_return_1, _);
-//     +candidate_bid(unit_return_1, Bid).
-
-// +!unit_return_choice(LastBid, M1UnitReturn, M2UnitReturn)
-//     : M1UnitReturn >= M2UnitReturn
-// <-
-//     Bid = math.max(0, LastBid - 1);
-
-//     -candidate_bid(unit_return_1, _);
-//     +candidate_bid(unit_return_1, Bid).
-
-// +!generate_unit_return_bid(_)
-//     : last_bid(0)
-// <- 
-//     -candidate_bid(unit_return_1, _);
-//     +candidate_bid(unit_return_1, 1).
-
-// +!generate_unit_return_bid(_)
-//     : last_bid(LastBid)
-//     & endowment(LastBid)  // check if endowment eq lastbid?
-// <-  
-//     Bid = LastBid - 1;
-
-//     -candidate_bid(unit_return_1, _);
-//     +candidate_bid(unit_return_1, Bid).
-
-// +!generate_group_avg_bid(_)
-//     : endowment(Max)
-//     & last_group_average(Avg)
-// <-
-//     Bid = math.max(0, math.min(Max, math.floor(Avg)));
-
-//     -candidate_bid(group_average, _);
-//     +candidate_bid(group_average, Bid).
-
-// +!generate_group_avg_plus_1_bid(_)
-//     : last_group_average(Avg)
-//     & endowment(Max)
-// <-        
-
-//     Bid = math.max(0, math.min(Max, math.floor(Avg) + 1));
-
-//     -candidate_bid(group_average_plus1, _);
-//     +candidate_bid(group_average_plus1, Bid).
 
 +!play_current_strategy(Round)
     : current_strategy(Strategy)
@@ -349,7 +301,8 @@ agent_index(agent8, 8).
         ActualPayoff
     );
 
-    !select_best_strategy;
+    //!select_best_strategy;
+    !maybe_select_strategy(Round);
 
     .send(Planner, tell, round_finished(Round)).
 
@@ -368,11 +321,11 @@ agent_index(agent8, 8).
     -last_total_return(_);
     +last_total_return(ActualPayoff);
 
-    -last_market1_return(_);
-    +last_market1_return(Market1);
+    // -last_market1_return(_);
+    // +last_market1_return(Market1);
 
-    -last_market2_return(_);
-    +last_market2_return(Market2);
+    // -last_market2_return(_);
+    // +last_market2_return(Market2);
 
     -last_group_total(_);
     +last_group_total(GroupTotal);
@@ -396,6 +349,8 @@ agent_index(agent8, 8).
     & cpr_b(CprB)
     & strategy_score(Strategy, Sum, N)
 <-
+    .my_name(Me);
+
     CounterTotal = GroupTotal - ActualBid + AlternativeBid;
 
     CounterMarket1 = W * (E - AlternativeBid);
@@ -407,9 +362,15 @@ agent_index(agent8, 8).
     NewSum = Sum + CounterPayoff;
     NewN = N + 1;
 
+    !update_total_return_direction(Strategy, CounterPayoff);
+
     .my_name(Me);
     -strategy_score(Strategy, Sum, N);
     +strategy_score(Strategy, NewSum, NewN);
+
+    !update_strategy_last_bid(Strategy, AlternativeBid);
+
+    !update_strategy_returns(Strategy, CounterMarket1, CounterMarket2);
 
     results.append(
     "results/strategies.csv", Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
@@ -421,6 +382,54 @@ agent_index(agent8, 8).
         AlternativeBid,
         CounterPayoff
     ).
+
++!update_strategy_last_bid(Strategy, Bid)
+    : strategy_rule(Strategy, total_return, _, _)
+    & strategy_last_bid(Strategy, _)
+<-
+    -strategy_last_bid(Strategy, _);
+    +strategy_last_bid(Strategy, Bid).
+
++!update_strategy_last_bid(Strategy, Bid)
+    : strategy_rule(Strategy, unit_return, _, _)
+    & strategy_last_bid(Strategy, _)
+<-
+    -strategy_last_bid(Strategy, _);
+    +strategy_last_bid(Strategy, Bid).
+
++!update_strategy_last_bid(Strategy, _)
+    : strategy_rule(Strategy, group_average, _)
+<-
+    true.
+
++!update_strategy_returns(Strategy, Market1, Market2) // market returns relevant only for unit return strats
+    : strategy_rule(Strategy, unit_return, _, _)
+<-
+    -strategy_last_market1_return(Strategy, _);
+    +strategy_last_market1_return(Strategy, Market1);
+
+    -strategy_last_market2_return(Strategy, _);
+    +strategy_last_market2_return(Strategy, Market2).
+
++!update_strategy_returns(Strategy, _, _)
+    : strategy_rule(Strategy, total_return, _, _)
+<-
+    true.
+
++!update_strategy_returns(Strategy, _, _)
+    : strategy_rule(Strategy, group_average, _)
+<-
+    true.
+
++! maybe_select_strategy(Round) 
+    : Round mod 3 == 0
+<-
+    !select_best_strategy.
+
++! maybe_select_strategy(Round)
+    : Round mod 3 \== 0
+<- 
+    true.
 
 +!select_best_strategy
 <- 
@@ -454,7 +463,7 @@ agent_index(agent8, 8).
 <-
     !scan_strategies(Rest, Strategy, Avg).
 
-+!compare_strategy(Strategy, Avg, _, BestAvg, Rest)
++!compare_strategy(_, Avg, BestStrategy, BestAvg, Rest)
     : BestAvg >= Avg
 <-    
     !scan_strategies(Rest, BestStrategy, BestAvg).
@@ -469,33 +478,52 @@ agent_index(agent8, 8).
         BestStrategy,
         BestAvg
     ).
-// +!choose_max_strategy(S1, A1, S2, A2, S3, A3, S4, A4)
-//     : A1 >= A2 & A1 >= A3 & A1 >= A4
-// <-
-//     -current_strategy(_);
-//     +current_strategy(S1);
-//     .println("SELECTED STRATEGY: ", S1, " AVG RETURN: ", A1).
++!update_total_return_direction(Strategy, Payoff)
+    : strategy_rule(Strategy, total_return, _, _)
+    & strategy_has_payoff(Strategy, false)
+<-
+    -strategy_last_payoff(Strategy, _);
+    +strategy_last_payoff(Strategy, Payoff);
 
-// +!choose_max_strategy(S1, A1, S2, A2, S3, A3, S4, A4)
-//     : A2 > A1 & A2 >= A3 & A2 >= A4
-// <-
-//     -current_strategy(_);
-//     +current_strategy(S2);
-//     .println("SELECTED STRATEGY: ", S2, " AVG RETURN: ", A2).
+    -strategy_has_payoff(Strategy, false);
+    +strategy_has_payoff(Strategy, true).
 
-// +!choose_max_strategy(S1, A1, S2, A2, S3, A3, S4, A4)
-//     : A3 > A1 & A3 > A2 & A3 >= A4
-// <-
-//     -current_strategy(_);
-//     +current_strategy(S3);
-//     .println("SELECTED STRATEGY: ", S3, " AVG RETURN: ", A3).
++!update_total_return_direction(Strategy, Payoff)
+    : strategy_rule(Strategy, total_return, _, _)
+    & strategy_has_payoff(Strategy, true)
+    & strategy_last_payoff(Strategy, Previous)
+    & Payoff >= Previous
+<-
+    -strategy_last_payoff(Strategy, Previous);
+    +strategy_last_payoff(Strategy, Payoff).
 
-// +!choose_max_strategy(S1, A1, S2, A2, S3, A3, S4, A4)
-//     : A4 > A1 & A4 > A2 & A4 > A3
-// <-
-//     -current_strategy(_);
-//     +current_strategy(S4);
-//     .println("SELECTED STRATEGY: ", S4, " AVG RETURN: ", A4).
++!update_total_return_direction(Strategy, Payoff)
+    : strategy_rule(Strategy, total_return, _, _)
+    & strategy_has_payoff(Strategy, true)
+    & strategy_last_payoff(Strategy, Previous)
+    & strategy_direction(Strategy, Direction)
+    & Payoff < Previous
+<-
+    NewDirection = Direction * -1;
+
+    -strategy_direction(Strategy, Direction);
+    +strategy_direction(Strategy, NewDirection);
+
+    -strategy_last_payoff(Strategy, Previous);
+    +strategy_last_payoff(Strategy, Payoff);
+
+    .println(
+        "REVERSED ", Strategy,
+        " DIRECTION ", Direction,
+        " -> ", NewDirection,
+        " PAYOFF ", Previous,
+        " -> ", Payoff
+    ).
+
++!update_total_return_direction(Strategy, _)
+    : not strategy_rule(Strategy, total_return, _, _)
+<-
+    true.    
 
 
 
