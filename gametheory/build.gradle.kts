@@ -68,3 +68,11 @@ tasks.register<JavaExec>("runResourceManagement") {
 
     standardInput = System.`in`
 }
+tasks.register<Delete>("cleanSimulationResults") {
+    delete(
+        file("results/rounds.csv"),
+        file("results/agents.csv"),
+        file("results/strategies.csv")
+    )
+}
+

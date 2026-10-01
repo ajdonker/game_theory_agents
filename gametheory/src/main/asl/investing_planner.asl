@@ -2,7 +2,7 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(5).
+max_rounds(100).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -28,6 +28,7 @@ cpr_b(0.25).
 +!start_round
     : round(Round)
     & seed(Seed)
+    & run_id(RunId)
 <-
     .println("");
     .println("===============");
@@ -38,7 +39,7 @@ cpr_b(0.25).
 
     for(active_agent(A))
     {
-        .send(A, tell, start_round(Round, Seed));
+        .send(A, tell, start_round(RunId, Round, Seed));
     }
     .println("").
 
@@ -125,7 +126,12 @@ cpr_b(0.25).
     " | RENT=", GroupRent,
     " | % OPTIMUM=", RentPct
     );
-    results.append("results/rounds.csv", RunId, Seed, Round, Total, Average, GroupRent, RentPct);
+    //results.append("results/rounds.csv", Seed, RunId, Round, Total, Average, GroupRent, RentPct);
+    results.append(
+        "results/rounds.csv",
+        RunId, Seed, Round,
+        Total, Average, GroupRent, RentPct
+    );
     !calculate_returns(Round, Total, Average).
 
 +!calculate_returns(Round, Total, Average)
@@ -138,12 +144,19 @@ cpr_b(0.25).
         & market1_return(W)
         & cpr_a(CprA)
         & cpr_b(CprB)
+        & run_id(RunId)
     ) {
         Market1 = W * (E - Bid);
         Market2 = Bid * (CprA - CprB * Total);
         Payoff = Market1 + Market2;
         
-        results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
+        //results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
+        results.append(
+            "results/agents.csv",
+            RunId, Seed, Round,
+            A, Strategy, Bid,
+            Market1, Market2, Payoff
+        );
 
         .println(
             A,
@@ -156,18 +169,6 @@ cpr_b(0.25).
         .send(A, achieve, round_result(Round, Bid, Total, Average, Market1, Market2, Payoff)
         );
     }.
-
-+!advance_round
-    : round(Round)
-    & max_rounds(MaxRounds)
-    & Round < MaxRounds 
-<- 
-    NextRound = Round + 1;
-
-    -round(Round);
-    +round(NextRound);
-
-    !start_round.
 
 @finish_agent[atomic]
 +round_finished(Round)[source(A)]
@@ -209,4 +210,5 @@ cpr_b(0.25).
     & max_rounds(Max)
     & Round >= Max
 <-
-    .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS").
+    .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
+    .stopMAS(500).

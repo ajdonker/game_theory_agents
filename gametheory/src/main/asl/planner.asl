@@ -47,6 +47,7 @@ contribution(agent5, 0).
 
 +!start_round
     : round(Round)
+    & run_id(RunId)
 <-
     for (active_agent(A)) {
         -contribution(A, _);
@@ -64,7 +65,7 @@ contribution(agent5, 0).
 
     for(active_agent(A)
     & contribution_quota(A, Required)) {
-        .send(A, tell, start_round(Round, Required));
+        .send(A, tell, start_round(RunId, Round, Required));
     }
     .println("").
 

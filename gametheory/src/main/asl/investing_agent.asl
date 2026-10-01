@@ -59,13 +59,19 @@ agent_index(agent6, 6).
 agent_index(agent7, 7).
 agent_index(agent8, 8).
 
-+start_round(Round, Seed)[source(Planner)]
++start_round(RunId, Round, Seed)[source(Planner)]
 <- 
+    -run_id(_);
+    +run_id(RunId);
+    
     -current_round(_);
     +current_round(Round);
 
     -planner_name(_);
     +planner_name(Planner);
+
+    -planner_seed(_);
+    +planner_seed(Seed);
 
     !pick_random_strategies(Seed);
 
@@ -348,6 +354,8 @@ agent_index(agent8, 8).
     & cpr_a(CprA)
     & cpr_b(CprB)
     & strategy_score(Strategy, Sum, N)
+    & planner_seed(Seed)
+    & run_id(RunId)
 <-
     .my_name(Me);
 
@@ -372,9 +380,14 @@ agent_index(agent8, 8).
 
     !update_strategy_returns(Strategy, CounterMarket1, CounterMarket2);
 
+    // results.append(
+    // "results/strategies.csv", Seed, Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
     results.append(
-    "results/strategies.csv", Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
-
+    "results/strategies.csv",
+        RunId, Seed, Round,
+        Me, Strategy, AlternativeBid,
+        CounterPayoff, NewSum, NewN
+    );
     .printf(
         "ROUND %.0f EVALUATED %s BID=%.0f PAYOFF=%.2f\n",
         Round,
