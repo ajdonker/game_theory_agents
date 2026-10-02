@@ -1,7 +1,10 @@
 fehr-gachter/
 gametheory/build/
 gametheory/results/
-./run_baseline.sh
+run_baseline_30.sh
+
+
+
 
 
 

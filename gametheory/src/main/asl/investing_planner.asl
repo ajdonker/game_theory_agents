@@ -13,6 +13,25 @@ active_agent(agent6).
 active_agent(agent7).
 active_agent(agent8).
 
+candidate_strategy(total_return_1).
+candidate_strategy(total_return_2).
+candidate_strategy(total_return_3).
+candidate_strategy(total_return_4).
+candidate_strategy(total_return_all_dec3).
+candidate_strategy(total_return_all_dec5).
+
+candidate_strategy(unit_return_1).
+candidate_strategy(unit_return_2).
+candidate_strategy(unit_return_3).
+candidate_strategy(unit_return_4).
+candidate_strategy(unit_return_all_dec3).
+candidate_strategy(unit_return_all_dec5).
+
+candidate_strategy(group_average_0).
+candidate_strategy(group_average_1).
+candidate_strategy(group_average_2).
+candidate_strategy(group_average_3).
+
 endowment(10).
 market1_return(5).
 cpr_a(23).
@@ -170,6 +189,235 @@ cpr_b(0.25).
         );
     }.
 
+@receive_counterfactual[atomic]
++!counterfactual_bid(Round, Strategy, CandidateBid, CounterPayoff, ExpectedCount)[source(A)]
+    : active_agent(A)
+    & not cf_bid(A, Round, Strategy, _, _)
+<-
+    +cf_bid(A, Round, Strategy, CandidateBid, CounterPayoff);
+
+    .count(cf_bid(A, Round, _, _, _), Count);
+
+    !check_agent_counterfactuals(A, Round, Count, ExpectedCount);
+
+    .println(
+        "CF FROM ", A,
+        " | ROUND ", Round,
+        " | STRATEGY ", Strategy,
+        " | BID ", CandidateBid,
+        " | PAYOFF ", CounterPayoff
+    ).    
+
++!check_agent_counterfactuals(
+    A,
+    Round,
+    Count,
+    ExpectedCount
+)
+    : Count == ExpectedCount
+    & not cf_finished(A, Round)
+<-
+    +cf_finished(A, Round);
+
+    .println(
+        A,
+        " FINISHED COUNTERFACTUALS: ",
+        Count
+    );
+
+    .count(
+        cf_finished(_, Round),
+        FinishedCount
+    );
+
+    !check_all_counterfactuals(
+        Round,
+        FinishedCount
+    ).    
+
++!check_agent_counterfactuals(
+    _,
+    _,
+    Count,
+    ExpectedCount
+)
+    : Count < ExpectedCount
+<-
+    true.
+
++!check_all_counterfactuals(Round, 8)
+<-
+    .println(
+        "ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND ",
+        Round
+    );
+
+    !find_best_social_strategy(Round).
+
++!check_all_counterfactuals(_, Count)
+    : Count < 8
+<- 
+    true.
+
++! evaluate_social_strategies(Round, [Strategy | Rest], W, CprA, CprB)
+<-
+    !evaluate_social_strategy(Round, Strategy, W, CprA, CprB);
+
+    !evaluate_social_strategies(Round, Rest, W, CprA, CprB).
+
++! evaluate_social_strategies(_, [], _, _, _)
+<-  
+    !select_best_social_strategy(Round).
+
++!evaluate_social_strategy(
+    Round,
+    Strategy,
+    W,
+    CprA,
+    CprB
+)
+<-
+    .findall(
+        Bid,
+        cf_bid(_, Round, Strategy, Bid, _),
+        Bids
+    );
+
+    !sum_bids(Bids, 0, TotalBid);
+
+    GroupMarket2Return =
+        TotalBid * (CprA - CprB * TotalBid);
+
+    OpportunityCost =
+        W * TotalBid;
+
+    GroupRent =
+        GroupMarket2Return - OpportunityCost;
+
+    +social_strategy_score(
+        Round,
+        Strategy,
+        GroupRent
+    );
+
+    .println(
+        "SOCIAL STRATEGY ",
+        Strategy,
+        " | TOTAL BID ",
+        TotalBid,
+        " | RENT ",
+        GroupRent
+    ).
+
++!sum_bids([Bid | Rest], Acc, Total)
+<-
+    NewAcc = Acc + Bid;
+    !sum_bids(Rest, NewAcc, Total).
+
++!sum_bids([], Total, Total)
+<-
+    true.
++!find_best_social_strategy(Round)
+: market1_return(W)
+& cpr_a(CprA)
+& cpr_b(CprB)
+<-
+    for(social_strategy_score(Round, S, R))
+    {
+        -social_strategy_score(Round, S, R);
+    };
+
+    for(
+        candidate_strategy(S)
+    )
+    {
+        !maybe_evaluate_social_strategy(Round, S, W, CprA, CprB);
+    };
+
+    !select_best_social_strategy(Round).
+
++!maybe_evaluate_social_strategy(Round, Strategy, W, CprA, CprB)
+    : cf_bid(_, Round, Strategy, _, _)
+<-
+    !evaluate_social_strategy(Round, Strategy, W, CprA, CprB).
+
++!maybe_evaluate_social_strategy(Round,Strategy, _, _, _)
+    : not cf_bid(_, Round, Strategy, _, _)
+<-
+    true.
+
++!select_best_social_strategy(Round)
+<-
+    .findall(
+        [Strategy, Rent],
+        social_strategy_score(Round, Strategy, Rent),
+        Scores
+    );
+
+    !choose_best_social_strategy(
+        Round,
+        Scores
+    ).
+
++!choose_best_social_strategy(
+    Round,
+    [[Strategy, Rent] | Rest]
+)
+<-
+    !scan_social_strategies(
+        Round,
+        Rest,
+        Strategy,
+        Rent
+    ).
+
++!scan_social_strategies(
+    Round,
+    [[Strategy, Rent] | Rest],
+    BestStrategy,
+    BestRent
+)
+    : Rent > BestRent
+<-
+    !scan_social_strategies(
+        Round,
+        Rest,
+        Strategy,
+        Rent
+    ).
+
++!scan_social_strategies(
+    Round,
+    [[_, Rent] | Rest],
+    BestStrategy,
+    BestRent
+)
+    : BestRent >= Rent
+<-
+    !scan_social_strategies(
+        Round,
+        Rest,
+        BestStrategy,
+        BestRent
+    ).
++!scan_social_strategies(
+    Round, 
+    [],
+    BestStrategy,
+    BestRent
+)        
+<- 
+    .println(
+        "BEST SOCIAL STRATEGY ROUND ",
+        Round,
+        ": ",
+        BestStrategy,
+        " | GROUP RENT = ",
+        BestRent
+    );
+    -best_social_strategy(Round, _, _);
+    +best_social_strategy(Round, BestStrategy, BestRent).
+
 @finish_agent[atomic]
 +round_finished(Round)[source(A)]
     : round(Round)
@@ -203,6 +451,13 @@ cpr_b(0.25).
     -round(Round);
     +round(NextRound);
 
+    for(cf_finished(A, Round)) {
+        -cf_finished(A, Round);
+    };
+
+    for(cf_bid(A, Round, S, B, P)) {
+        -cf_bid(A, Round, S, B, P);
+    };
     !start_round.
 
 +!advance_round
@@ -211,4 +466,5 @@ cpr_b(0.25).
     & Round >= Max
 <-
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
-    .stopMAS(500).
+    // .stopMAS(500).
+    true.

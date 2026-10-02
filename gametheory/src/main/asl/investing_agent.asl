@@ -356,6 +356,8 @@ agent_index(agent8, 8).
     & strategy_score(Strategy, Sum, N)
     & planner_seed(Seed)
     & run_id(RunId)
+    & planner_name(Planner)
+    & strategy_pool(Pool)
 <-
     .my_name(Me);
 
@@ -380,6 +382,9 @@ agent_index(agent8, 8).
 
     !update_strategy_returns(Strategy, CounterMarket1, CounterMarket2);
 
+    .length(Pool, PoolSize);
+    // send to planner bid with alternative strategy 
+    .send(Planner, achieve, counterfactual_bid(Round, Strategy, AlternativeBid, CounterPayoff, PoolSize));
     // results.append(
     // "results/strategies.csv", Seed, Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
     results.append(

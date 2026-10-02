@@ -13,6 +13,7 @@ PLOTS.mkdir(parents=True, exist_ok=True)
 RUN_ID = 3
 SEED = 42
 
+SINGLE_RUN_ID = 1
 
 # ---------------------------------------------------------
 # Read data
@@ -48,17 +49,27 @@ agents = pd.read_csv(
     ]
 )
 
+rounds_all = rounds.copy()
+agents_all = agents.copy()
+# # Only one experimental run
+# rounds = rounds[
+#     (rounds["run_id"] == RUN_ID) &
+#     (rounds["seed"] == SEED)
+# ]
 
-# Only one experimental run
-rounds = rounds[
-    (rounds["run_id"] == RUN_ID) &
-    (rounds["seed"] == SEED)
-]
+# agents = agents[
+#     (agents["run_id"] == RUN_ID) &
+#     (agents["seed"] == SEED)
+# ]
+rounds = rounds_all[
+    rounds_all["run_id"] == SINGLE_RUN_ID
+].copy()
 
-agents = agents[
-    (agents["run_id"] == RUN_ID) &
-    (agents["seed"] == SEED)
-]
+agents = agents_all[
+    agents_all["run_id"] == SINGLE_RUN_ID
+].copy()
+
+SEED = int(rounds["seed"].iloc[0])
 
 agent_order = sorted(agents["agent"].unique())
 strategy_order = sorted(agents["strategy"].unique())
@@ -272,10 +283,15 @@ strategies = pd.read_csv(
     ]
 )
 
-strategies = strategies[
-    (strategies["run_id"] == RUN_ID) &
-    (strategies["seed"] == SEED)
-]
+# strategies = strategies[
+#     (strategies["run_id"] == RUN_ID) &
+#     (strategies["seed"] == SEED)
+# ]
+strategies_all = strategies.copy()
+
+strategies = strategies_all[
+    strategies_all["run_id"] == SINGLE_RUN_ID
+].copy() 
 
 initial = strategies[strategies["round"] == 1]
 
@@ -562,6 +578,279 @@ plt.tight_layout()
 
 plt.savefig(
     PLOTS / "investment_change_vs_performance_change.png",
+    dpi=300
+)
+
+plt.close()
+
+early = rounds[rounds["round"] <= 50]
+late  = rounds[rounds["round"] > 50]
+
+print("Early investment SD:", early["total_bid"].std())
+print("Late investment SD:", late["total_bid"].std())
+
+print("Early performance SD:", early["rent_pct"].std())
+print("Late performance SD:", late["rent_pct"].std())
+
+# ---------------------------------------------------------
+# 30-run baseline summary
+# ---------------------------------------------------------
+
+summaries = []
+
+for (run_id, seed), data in rounds_all.groupby(
+    ["run_id", "seed"]
+):
+    data = data.sort_values("round").copy()
+
+    early = data[data["round"] <= 50]
+    late = data[data["round"] > 50]
+
+    # Current performance -> next-round investment change
+    analysis = data.copy()
+
+    analysis["next_total_bid"] = (
+        analysis["total_bid"].shift(-1)
+    )
+
+    analysis["delta_bid_next"] = (
+        analysis["next_total_bid"]
+        - analysis["total_bid"]
+    )
+
+    analysis["next_rent_pct"] = (
+        analysis["rent_pct"].shift(-1)
+    )
+
+    analysis["delta_rent_next"] = (
+        analysis["next_rent_pct"]
+        - analysis["rent_pct"]
+    )
+
+    analysis = analysis.dropna()
+
+    performance_to_investment = (
+        analysis["rent_pct"]
+        .corr(analysis["delta_bid_next"])
+    )
+
+    over = analysis[
+        analysis["total_bid"] > 36
+    ]
+
+    if len(over) > 1:
+        overinvestment_effect = (
+            over["delta_bid_next"]
+            .corr(over["delta_rent_next"])
+        )
+    else:
+        overinvestment_effect = float("nan")
+
+    summaries.append({
+        "run_id": run_id,
+        "seed": seed,
+
+        "mean_rent_pct":
+            data["rent_pct"].mean(),
+
+        "mean_total_bid":
+            data["total_bid"].mean(),
+
+        "final_total_bid":
+            data.iloc[-1]["total_bid"],
+
+        "final_rent_pct":
+            data.iloc[-1]["rent_pct"],
+
+        "early_investment_sd":
+            early["total_bid"].std(),
+
+        "late_investment_sd":
+            late["total_bid"].std(),
+
+        "early_performance_sd":
+            early["rent_pct"].std(),
+
+        "late_performance_sd":
+            late["rent_pct"].std(),
+
+        "fraction_above_optimum":
+            (data["total_bid"] > 36).mean(),
+
+        "performance_to_next_investment_corr":
+            performance_to_investment,
+
+        "overinvestment_change_corr":
+            overinvestment_effect
+    })
+
+
+summary = pd.DataFrame(summaries)
+
+summary.to_csv(
+    RESULTS / "baseline_30_summary.csv",
+    index=False
+)
+
+# print("\n=== 30-RUN SUMMARY ===")
+# print(summary)
+
+switch_rows = []
+
+for (run_id, seed, agent), data in agents_all.groupby(
+    ["run_id", "seed", "agent"]
+):
+    data = data.sort_values("round")
+
+    switches = (
+        data["strategy"]
+        .ne(data["strategy"].shift())
+        .iloc[1:]
+        .sum()
+    )
+
+    switch_rows.append({
+        "run_id": run_id,
+        "seed": seed,
+        "agent": agent,
+        "switches": switches
+    })
+
+
+switches = pd.DataFrame(switch_rows)
+
+switch_summary = (
+    switches
+    .groupby(["run_id", "seed"])["switches"]
+    .sum()
+    .reset_index(name="total_strategy_switches")
+)
+
+summary = summary.merge(
+    switch_summary,
+    on=["run_id", "seed"]
+)
+
+plt.figure(figsize=(7, 6))
+
+plt.scatter(
+    summary["early_investment_sd"],
+    summary["late_investment_sd"]
+)
+
+limit = max(
+    summary["early_investment_sd"].max(),
+    summary["late_investment_sd"].max()
+)
+
+plt.plot(
+    [0, limit],
+    [0, limit],
+    linestyle="--"
+)
+
+plt.xlabel("Investment SD — rounds 1–50")
+plt.ylabel("Investment SD — rounds 51–100")
+plt.title("Does CPR investment oscillation damp over time?")
+
+plt.tight_layout()
+
+plt.savefig(
+    PLOTS / "oscillation_damping_30_runs.png",
+    dpi=300
+)
+
+plt.close()
+
+plt.figure(figsize=(11, 6))
+
+for run_id, data in rounds_all.groupby("run_id"):
+    data = data.sort_values("round")
+
+    plt.plot(
+        data["round"],
+        data["total_bid"],
+        alpha=0.25
+    )
+
+mean_by_round = (
+    rounds_all
+    .groupby("round")["total_bid"]
+    .mean()
+)
+
+plt.plot(
+    mean_by_round.index,
+    mean_by_round.values,
+    linewidth=3,
+    label="Mean across 30 runs"
+)
+
+plt.axhline(
+    36,
+    linestyle="--",
+    label="Social optimum (36)"
+)
+
+plt.axhline(
+    64,
+    linestyle=":",
+    label="Nash equilibrium (64)"
+)
+
+plt.xlabel("Round")
+plt.ylabel("Total Market 2 investment")
+plt.title("Market 2 investment across 30 baseline runs")
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig(
+    PLOTS / "investment_30_runs.png",
+    dpi=300
+)
+
+plt.close()
+
+plt.figure(figsize=(11, 6))
+
+for run_id, data in rounds_all.groupby("run_id"):
+    data = data.sort_values("round")
+
+    plt.plot(
+        data["round"],
+        data["rent_pct"],
+        alpha=0.25
+    )
+
+mean_by_round = (
+    rounds_all
+    .groupby("round")["rent_pct"]
+    .mean()
+)
+
+plt.plot(
+    mean_by_round.index,
+    mean_by_round.values,
+    linewidth=3,
+    label="Mean across 30 runs"
+)
+
+plt.axhline(
+    100,
+    linestyle="--",
+    label="Social optimum"
+)
+
+plt.xlabel("Round")
+plt.ylabel("Group rent (% of optimum)")
+plt.title("Group performance across 30 baseline runs")
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig(
+    PLOTS / "performance_30_runs.png",
     dpi=300
 )
 
