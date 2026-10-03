@@ -79,6 +79,20 @@ agent_index(agent8, 8).
     !play_current_strategy(Round).
 
 //plans
++!init_all_strategy_states
+    : all_strategies(All)
+<- 
+    !init_strategy_list_all(All).
+
++!init_strategy_list_all([S | Rest])
+<-
+    !init_strategy_state(S);
+    !init_strategy_list_all(Rest).
+
++!init_strategy_list_all([])
+<- 
+    true.
+
 +! pick_random_strategies(Seed)
     : not strategies_picked
     & all_strategies(All)
@@ -87,6 +101,9 @@ agent_index(agent8, 8).
     ?agent_index(Me, Index);
 
     AgentSeed = Seed * 100 + Index;
+
+    !init_all_strategy_states;
+
     .set_random_seed(AgentSeed);
 
     .shuffle(All, Shuffled);
@@ -100,11 +117,6 @@ agent_index(agent8, 8).
     +strategy_score(S2, 0, 0);
     +strategy_score(S3, 0, 0);
     +strategy_score(S4, 0, 0);
-
-    !init_strategy_state(S1);
-    !init_strategy_state(S2);
-    !init_strategy_state(S3);
-    !init_strategy_state(S4);
 
     +strategy_pool([S1,S2,S3,S4]);
 
@@ -541,7 +553,31 @@ agent_index(agent8, 8).
 +!update_total_return_direction(Strategy, _)
     : not strategy_rule(Strategy, total_return, _, _)
 <-
-    true.    
+    true.   
 
++!simulate_all_strategy_bids(Round)[source(Planner)]
+    : all_strategies(All)
+<-
+    !collect_social_bids(All, [], Results);
 
+    .send(Planner, achieve, simulated_social_bids(Round, Results)).
+
++!collect_social_bids([], Acc, Acc)
+<-
+    true.
+
++!collect_social_bids([Strategy | Rest], Acc, Results)
+<- 
+    !generate_strategy_bid(Strategy);
+
+    ?candidate_bid(Strategy, Bid);
+
+    !collect_social_bids(Rest, [[Strategy, Bid] | Acc], Results).
+
++!adopt_central_strategy(Round, Strategy)[source(Planner)]
+<-
+    -current_strategy(_);
+    +current_strategy(Strategy);
+
+    .println("CENTRAL AUTHORITY: ROUND ", Round, "-> ADOPT: ", Strategy).
 

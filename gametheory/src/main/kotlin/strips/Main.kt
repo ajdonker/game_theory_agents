@@ -55,7 +55,7 @@ object Main {
         println(SolutionFormatter.withOperators(operators).format(current))
     }
 
-    private fun createEngineWithTheory(theory: Theory): MutableSolver {
+    fun createEngineWithTheory(theory: Theory): MutableSolver {
         return Solver.prolog.newBuilder()
                 .staticKb(theory)
                 .flag(TrackVariables) { ON }
