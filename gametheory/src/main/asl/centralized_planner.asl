@@ -252,7 +252,8 @@ cpr_b(0.25).
         Round
     );
 
-    !find_best_social_strategy(Round).
+    //!find_best_social_strategy(Round).
+    !maybe_central_communication(Round).
 
 +!check_all_counterfactuals(_, Count)
     : Count < 8
@@ -350,10 +351,10 @@ cpr_b(0.25).
         .send(
             A,
             achieve,
-            simulate_all_strategy_bids(Round)
+            send_best_comm_bid(Round)
         );
     }.
-    
+    // simulate_all_strategy_bids(Round)
 
 +!request_social_strategy(
     Round,
@@ -501,6 +502,11 @@ cpr_b(0.25).
     for(social_strategy_score(Round, S, R)) {
         -social_strategy_score(Round, S, R);
     };
+
+    for(central_adoption_done(A, Round))
+    {
+        -central_adoption_done(A, Round);
+    };
     !start_round.
 
 +!advance_round
@@ -513,19 +519,19 @@ cpr_b(0.25).
     
 +!apply_strips_decision(
     Round,
-    BestStrategy
+    BestBid 
 )
 <-
     .println(
         "ASKING STRIPS TO REACH GOAL FOR ",
-        BestStrategy
+        BestBid
     );
 
-    strips.plan(BestStrategy);
+    strips.plan(BestBid);
 
     .println(
         "STRIPS PLAN FOUND: enforce_strategy(",
-        BestStrategy,
+        BestBid,
         ")"
     );
 
@@ -534,17 +540,57 @@ cpr_b(0.25).
         .send(
             A,
             achieve,
-            adopt_central_strategy(
+            adopt_central_bid(
                 Round,
-                BestStrategy
+                BestBid
             )
         );
     };
+    .
+@central_adoption_ack[atomic]
++central_bid_adopted(Round)[source(A)]
+    : active_agent(A)
+    & not central_adoption_done(A, Round)
+<-
+    +central_adoption_done(A, Round);
+
+    .count(
+        central_adoption_done(_, Round),
+        Count
+    );
+
+    .println(
+        "CENTRAL BID ACK ",
+        A,
+        " ROUND ",
+        Round,
+        " | ",
+        Count,
+        "/8"
+    );
+
+    !check_central_adoption(
+        Round,
+        Count
+    ).
+
++!check_central_adoption(Round, 8)
+<-
+    .println(
+        "ALL AGENTS ADOPTED CENTRAL BID FOR ROUND ",
+        Round
+    );
 
     +social_choice_finished(Round);
 
     !maybe_advance_round(Round).
 
+
++!check_central_adoption(_, Count)
+    : Count < 8
+<-
+    true.   
+   
 +!maybe_central_communication(Round)
     : Round mod 5 == 0 
 <-
@@ -555,3 +601,85 @@ cpr_b(0.25).
 <-
     +social_choice_finished(Round);
     !maybe_advance_round(Round).            
+
+@receive_comm_bid[atomic]
++!best_bid_suggestion(Round, Bid, Strategy, Avg)[source(A)]
+    : active_agent(A)
+    & not comm_bid(A, Round, _, _, _)
+<-
+    +comm_bid(A, Round, Bid, Strategy, Avg);
+
+    .count(comm_bid(_, Round, _, _, _), Count);
+
+    !check_all_comm_bids(Round, Count).    
+
++!check_all_comm_bids(_, Count)
+    : Count < 8
+<- 
+    true. 
+
++!check_all_comm_bids(Round, 8)
+    : market1_return(W)
+    & cpr_a(CprA)
+    & cpr_b(CprB)
+<-
+    .findall([A, Bid, Strategy, Avg],
+    comm_bid(A, Round, Bid, Strategy, Avg),
+    Suggestions);
+
+    !choose_best_uniform_bid(Round, Suggestions, W, CprA, CprB).
+
++!choose_best_uniform_bid(Round, [[_, Bid, Strategy, _] | Rest], W, CprA, CprB) 
+<-  
+    !calculate_uniform_rent(Bid, W, CprA, CprB, Rent);
+
+    !scan_uniform_bids(Round, Rest, Bid, Strategy, Rent, W, CprA, CprB).
+
++!scan_uniform_bids(Round, [[_, Bid, Strategy, _] | Rest], BestBid, BestStrategy, BestRent, W, CprA, CprB)
+<-
+    !calculate_uniform_rent(Bid, W, CprA, CprB, Rent);
+
+    !compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB).
+
+
++!compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB)
+    : Rent > BestRent
+<-
+    !scan_uniform_bids(Round, Rest, Bid, Strategy, Rent, W, CprA, CprB).
+
+
++!compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB)
+    : Rent <= BestRent
+<-
+    !scan_uniform_bids(Round, Rest, BestBid, BestStrategy, BestRent, W, CprA, CprB).
+
++!scan_uniform_bids(Round, [], BestBid, SourceStrategy, BestRent, _, _, _)
+<-
+    .println(
+        "CENTRAL BEST BID ROUND ",
+        Round,
+        ": ",
+        BestBid,
+        " | SOURCE ",
+        SourceStrategy,
+        " | GROUP RENT ",
+        BestRent);
+
+    +best_social_bid(Round, BestBid, BestRent);
+
+    !apply_strips_decision(Round, BestBid).
+
+
++!calculate_uniform_rent(
+    Bid,
+    W,
+    CprA,
+    CprB,
+    Rent
+)
+<-
+    Total = 8 * Bid;
+
+    Rent =
+        Total * (CprA - CprB * Total)
+        - W * Total.

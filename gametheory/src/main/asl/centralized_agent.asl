@@ -568,10 +568,71 @@ agent_index(agent8, 8).
 
     !collect_social_bids(Rest, [[Strategy, Bid] | Acc], Results).
 
-+!adopt_central_strategy(Round, Strategy)[source(Planner)]
+// +!adopt_central_strategy(Round, Strategy)[source(Planner)]
+// <-
+//     -current_strategy(_);
+//     +current_strategy(Strategy);
+
+//     .println("CENTRAL AUTHORITY: ROUND ", Round, "-> ADOPT: ", Strategy).
+
++!adopt_central_bid(Round, Bid)[source(Planner)]
 <-
     -current_strategy(_);
-    +current_strategy(Strategy);
 
-    .println("CENTRAL AUTHORITY: ROUND ", Round, "-> ADOPT: ", Strategy).
+    +current_strategy(central_bid(Bid));
+
+    .println(
+        "CENTRAL AUTHORITY ROUND ",
+        Round,
+        " -> BID ",
+        Bid
+    );
+
+    .send(Planner, tell, central_bid_adopted(Round)).
+
++!play_current_strategy(Round)
+    : current_strategy(central_bid(Bid))
+    & planner_name(Planner)
+<-
+    .println(
+        "ROUND ",
+        Round,
+        " CENTRAL BID: ",
+        Bid
+    );
+    .send(Planner, achieve, submit_bid(Round, Bid, central_imposed)).
+
++!send_best_comm_bid(Round)[source(Planner)]
+<- 
+    .findall([Strategy, Sum, N], strategy_score(Strategy, Sum, N) & N > 0, Scores);
+
+    !choose_best_comm_bid(Round, Scores, Planner).
+
++!choose_best_comm_bid(Round, [[Strategy, Sum, N] | Rest], Planner)
+<-
+    Avg = Sum / N;
+
+    !scan_comm_bids(Round, Rest, Strategy, Avg, Planner).
+
++!scan_comm_bids(Round, [[Strategy, Sum, N] | Rest], BestStrategy, BestAvg, Planner)
+<- 
+    Avg = Sum / N; 
+    !compare_comm_bid(Round, Strategy, Avg, BestStrategy, BestAvg, Rest, Planner).
+
++!compare_comm_bid(Round, Strategy, Avg, BestStrategy, BestAvg, Rest, Planner)
+    : Avg > BestAvg
+<-
+    !scan_comm_bids(Round, Rest, Strategy, Avg, Planner).
+
+
+
++!compare_comm_bid(Round, _, Avg, BestStrategy, BestAvg, Rest, Planner)
+    : Avg <= BestAvg
+<-
+    !scan_comm_bids(Round, Rest, BestStrategy, BestAvg, Planner).
+
++!scan_comm_bids(Round, [], BestStrategy, BestAvg, Planner)
+    : candidate_bid(BestStrategy, Bid)
+<-
+    .send(Planner, achieve, best_bid_suggestion(Round, Bid, BestStrategy, BestAvg)).
 

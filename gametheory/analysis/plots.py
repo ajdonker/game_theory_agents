@@ -20,12 +20,21 @@ parser.add_argument(
     default=None
 )
 
+parser.add_argument(
+    "--seed",
+    type=int,
+    default=None
+)
+
 args = parser.parse_args()
 
 PROJECT = Path(__file__).resolve().parent.parent
 
 RESULTS = PROJECT / "results" / args.scenario
 PLOTS = RESULTS / "plots"
+
+RUN_ID = args.run_id
+SEED = args.seed
 
 PLOTS.mkdir(parents=True, exist_ok=True)
 
@@ -62,24 +71,18 @@ agents = pd.read_csv(
         "payoff"
     ]
 )
+rounds_all = rounds.copy()
+agents_all = agents.copy()
 
 rounds_all = rounds.copy()
 agents_all = agents.copy()
+
+# Pick one run for the single-run plots
 if args.run_id is None:
     SINGLE_RUN_ID = int(rounds_all["run_id"].iloc[0])
 else:
     SINGLE_RUN_ID = args.run_id
 
-# # Only one experimental run
-# rounds = rounds[
-#     (rounds["run_id"] == RUN_ID) &
-#     (rounds["seed"] == SEED)
-# ]
-
-# agents = agents[
-#     (agents["run_id"] == RUN_ID) &
-#     (agents["seed"] == SEED)
-# ]
 rounds = rounds_all[
     rounds_all["run_id"] == SINGLE_RUN_ID
 ].copy()
@@ -88,7 +91,27 @@ agents = agents_all[
     agents_all["run_id"] == SINGLE_RUN_ID
 ].copy()
 
+# Optional seed check/filter
+if args.seed is not None:
+    rounds = rounds[
+        rounds["seed"] == args.seed
+    ].copy()
+
+    agents = agents[
+        agents["seed"] == args.seed
+    ].copy()
+
+if rounds.empty:
+    raise ValueError(
+        f"No data for run_id={SINGLE_RUN_ID}, seed={args.seed}"
+    )
+
 SEED = int(rounds["seed"].iloc[0])
+
+if args.run_id is None:
+    SINGLE_RUN_ID = int(rounds_all["run_id"].iloc[0])
+else:
+    SINGLE_RUN_ID = args.run_id
 
 agent_order = sorted(agents["agent"].unique())
 strategy_order = sorted(agents["strategy"].unique())
@@ -239,6 +262,8 @@ plt.close()
 # ---------------------------------------------------------
 
 def strategy_family(s: str) -> str:
+    if s.startswith("central_imposed"):
+        return "central_imposed"
     if s.startswith("total_return"):
         return "total_return"
     if s.startswith("unit_return"):
@@ -310,7 +335,12 @@ strategies_all = strategies.copy()
 
 strategies = strategies_all[
     strategies_all["run_id"] == SINGLE_RUN_ID
-].copy() 
+].copy()
+
+if args.seed is not None:
+    strategies = strategies[
+        strategies["seed"] == args.seed
+    ].copy()
 
 initial = strategies[strategies["round"] == 1]
 
@@ -897,3 +927,15 @@ plt.savefig(
 )
 
 plt.close()
+
+check = rounds[
+    (rounds["round"] % 5 == 0) |
+    (rounds["round"] % 5 == 1) |
+    (rounds["round"] % 5 == 2)
+]
+
+print(
+    check[
+        ["round", "total_bid", "rent_pct"]
+    ].to_string(index=False)
+)

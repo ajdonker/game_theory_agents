@@ -1,11 +1,11 @@
 action(
-    enforce_strategy(S),
+    enforce_bid(B),
     'if'([
         evaluations_collected,
-        best_strategy(S)
+        best_bid(B)
     ]),
     '+'([
-        strategy_enforced(S)
+        bid_enforced(B)
     ]),
     '-'([]),
     where(true)
@@ -14,11 +14,11 @@ action(
 central_plan(BestStrategy, Plan) :-
     InitState = [
         evaluations_collected,
-        best_strategy(BestStrategy)
+        best_bid(BestBid)
     ],
 
     Goal = [
-        strategy_enforced(BestStrategy)
+        bid_enforced(BestBid)
     ],
 
     strips(
