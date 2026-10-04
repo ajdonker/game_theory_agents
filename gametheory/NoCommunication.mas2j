@@ -1,0 +1,16 @@
+MAS no_communication {
+    agents: 
+    agent1 no_comm_agent.asl;
+    agent2 no_comm_agent.asl;
+    agent3 no_comm_agent.asl;
+    agent4 no_comm_agent.asl;
+    agent5 no_comm_agent.asl;
+    agent6 no_comm_agent.asl;
+    agent7 no_comm_agent.asl;
+    agent8 no_comm_agent.asl;
+    no_comm_planner;
+
+    aslSourcePath:
+    "src/main/asl";
+
+}

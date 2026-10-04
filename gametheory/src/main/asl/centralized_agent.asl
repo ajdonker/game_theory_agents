@@ -339,12 +339,6 @@ agent_index(agent8, 8).
     -last_total_return(_);
     +last_total_return(ActualPayoff);
 
-    // -last_market1_return(_);
-    // +last_market1_return(Market1);
-
-    // -last_market2_return(_);
-    // +last_market2_return(Market2);
-
     -last_group_total(_);
     +last_group_total(GroupTotal);
 
@@ -400,7 +394,7 @@ agent_index(agent8, 8).
     // results.append(
     // "results/strategies.csv", Seed, Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
     results.append(
-    "results/strategies.csv",
+    "results/centralized/strategies.csv",
         RunId, Seed, Round,
         Me, Strategy, AlternativeBid,
         CounterPayoff, NewSum, NewN

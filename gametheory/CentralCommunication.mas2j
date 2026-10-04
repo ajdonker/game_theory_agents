@@ -1,0 +1,16 @@
+MAS resource_management {
+    
+    agents: 
+    agent1 centralized_agent.asl;
+    agent2 centralized_agent.asl;
+    agent3 centralized_agent.asl;
+    agent4 centralized_agent.asl;
+    agent5 centralized_agent.asl;
+    agent6 centralized_agent.asl;
+    agent7 centralized_agent.asl;
+    agent8 centralized_agent.asl;
+    centralized_planner;
+
+    aslSourcePath:
+    "src/main/asl";
+}

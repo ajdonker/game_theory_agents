@@ -54,9 +54,9 @@ tasks.test {
     dependsOn(testJason)
 }
 
-tasks.register<JavaExec>("runResourceManagement") {
+tasks.register<JavaExec>("runNoCommunication") {
     group = "application"
-    description = "Runs the resource-management Jason scenario"
+    description = "Runs the resource-management no communication Jason scenario"
 
     dependsOn("classes")
 
@@ -64,7 +64,22 @@ tasks.register<JavaExec>("runResourceManagement") {
     mainClass.set("jason.infra.local.RunLocalMAS")
 
     workingDir = projectDir
-    args(file("resourceManagement.mas2j").absolutePath)
+    args(file("NoCommunication.mas2j").absolutePath)
+
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runCentralizedCommunication") {
+    group = "application"
+    description = "Runs the resource-management centralized communication Jason scenario"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+    args(file("CentralCommunication.mas2j").absolutePath)
 
     standardInput = System.`in`
 }

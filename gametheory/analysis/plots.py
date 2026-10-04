@@ -1,19 +1,33 @@
 from pathlib import Path
 
+import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "scenario",
+    choices=[
+        "no_comm",
+        "centralized",
+        "decentralized"
+    ]
+)
+
+parser.add_argument(
+    "--run-id",
+    type=int,
+    default=None
+)
+
+args = parser.parse_args()
+
 PROJECT = Path(__file__).resolve().parent.parent
 
-RESULTS = PROJECT / "results"
+RESULTS = PROJECT / "results" / args.scenario
 PLOTS = RESULTS / "plots"
 
 PLOTS.mkdir(parents=True, exist_ok=True)
-
-RUN_ID = 3
-SEED = 42
-
-SINGLE_RUN_ID = 1
 
 # ---------------------------------------------------------
 # Read data
@@ -51,6 +65,11 @@ agents = pd.read_csv(
 
 rounds_all = rounds.copy()
 agents_all = agents.copy()
+if args.run_id is None:
+    SINGLE_RUN_ID = int(rounds_all["run_id"].iloc[0])
+else:
+    SINGLE_RUN_ID = args.run_id
+
 # # Only one experimental run
 # rounds = rounds[
 #     (rounds["run_id"] == RUN_ID) &
@@ -549,10 +568,28 @@ over = analysis[
     analysis["total_bid"] > 36
 ].copy()
 
-overinvestment_effect = (
-    over["delta_bid_next"]
-    .corr(over["delta_rent_next"])
+print("Above optimum rows:", len(over))
+print("delta bid SD:", over["delta_bid_next"].std())
+print("delta rent SD:", over["delta_rent_next"].std())
+
+print(
+    over[
+        ["total_bid", "rent_pct",
+         "delta_bid_next", "delta_rent_next"]
+    ]
 )
+
+if (
+    len(over) > 1
+    and over["delta_bid_next"].std() > 0
+    and over["delta_rent_next"].std() > 0
+):
+    overinvestment_effect = (
+        over["delta_bid_next"]
+        .corr(over["delta_rent_next"])
+    )
+else:
+    overinvestment_effect = float("nan")
 
 print(
     "Correlation: change in investment -> "
@@ -629,10 +666,15 @@ for (run_id, seed), data in rounds_all.groupby(
 
     analysis = analysis.dropna()
 
-    performance_to_investment = (
-        analysis["rent_pct"]
-        .corr(analysis["delta_bid_next"])
-    )
+    if (len(analysis) > 1
+    and analysis["rent_pct"].std() > 0
+    and analysis["delta_bid_next"].std() > 0):
+        performance_to_investment = (
+            analysis["rent_pct"]
+            .corr(analysis["delta_bid_next"])
+        )
+else:
+    performance_to_investment = float("nan")
 
     over = analysis[
         analysis["total_bid"] > 36

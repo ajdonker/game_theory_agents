@@ -147,7 +147,7 @@ cpr_b(0.25).
     );
     //results.append("results/rounds.csv", Seed, RunId, Round, Total, Average, GroupRent, RentPct);
     results.append(
-        "results/rounds.csv",
+        "results/centralized/rounds.csv",
         RunId, Seed, Round,
         Total, Average, GroupRent, RentPct
     );
@@ -171,7 +171,7 @@ cpr_b(0.25).
         
         //results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
         results.append(
-            "results/agents.csv",
+            "results/centralized/agents.csv",
             RunId, Seed, Round,
             A, Strategy, Bid,
             Market1, Market2, Payoff
@@ -509,9 +509,8 @@ cpr_b(0.25).
     & Round >= Max
 <-
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
-    // .stopMAS(500).
-    true.
-
+    .stopMAS(500).
+    
 +!apply_strips_decision(
     Round,
     BestStrategy
@@ -545,3 +544,14 @@ cpr_b(0.25).
     +social_choice_finished(Round);
 
     !maybe_advance_round(Round).
+
++!maybe_central_communication(Round)
+    : Round mod 5 == 0 
+<-
+    !find_best_social_strategy(Round).
+
++!maybe_central_communication(Round)
+    : Round mod 5 \== 0
+<-
+    +social_choice_finished(Round);
+    !maybe_advance_round(Round).            
