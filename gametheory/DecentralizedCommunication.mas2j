@@ -1,0 +1,16 @@
+MAS decentralized_communication {
+    agents: 
+    agent1 decentralized_agent.asl;
+    agent2 decentralized_agent.asl;
+    agent3 decentralized_agent.asl;
+    agent4 decentralized_agent.asl;
+    agent5 decentralized_agent.asl;
+    agent6 decentralized_agent.asl;
+    agent7 decentralized_agent.asl;
+    agent8 decentralized_agent.asl;
+    decentralized_planner;
+
+    aslSourcePath:
+    "src/main/asl";
+
+}
