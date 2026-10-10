@@ -10,7 +10,8 @@ parser.add_argument(
     choices=[
         "no_comm",
         "centralized",
-        "decentralized"
+        "decentralized",
+        "coalition"
     ]
 )
 
@@ -71,6 +72,17 @@ agents = pd.read_csv(
         "payoff"
     ]
 )
+if args.scenario == "coalition":
+    coalitions = pd.read_csv(
+        RESULTS / "coalitions.csv",
+        header= None, 
+        names= [
+            "run_id", "seed", "round", "agent", "other_agent", "bid1", "bid2", "trust1", "trust2"
+        ]
+    )
+else:
+    coalitions = None
+    
 rounds_all = rounds.copy()
 agents_all = agents.copy()
 
@@ -939,3 +951,143 @@ print(
         ["round", "total_bid", "rent_pct"]
     ].to_string(index=False)
 )
+
+coalitions["edge"] = coalitions.apply(
+    lambda row: "-".join(
+        sorted([row["agent"], row["other_agent"]])
+    ),
+    axis=1
+)
+unique_coalitions = coalitions.drop_duplicates(
+    ["run_id", "round", "edge"]
+)
+coalition_counts = (
+    unique_coalitions
+    .groupby(["run_id", "round"])
+    .size()
+    .reset_index(name="coalition_links")
+)
+mean_coalitions = (
+    coalition_counts
+    .groupby("round")["coalition_links"]
+    .agg(["mean", "std"])
+    .reset_index()
+)
+
+link_counts = (
+    unique_coalitions
+    .groupby(["run_id", "round"])
+    .size()
+    .reset_index(name="coalition_links")
+)
+
+# Coalition formation happens every 5 rounds
+runs = coalitions["run_id"].unique()
+rounds = range(
+    5,
+    int(coalitions["round"].max()) + 1,
+    5
+)
+
+full_index = pd.MultiIndex.from_product(
+    [runs, rounds],
+    names=["run_id", "round"]
+)
+
+link_counts = (
+    link_counts
+    .set_index(["run_id", "round"])
+    .reindex(full_index, fill_value=0)
+    .reset_index()
+)
+
+link_summary = (
+    link_counts
+    .groupby("round")["coalition_links"]
+    .agg(["mean", "std"])
+    .reset_index()
+)
+
+plt.figure(figsize=(8, 5))
+
+plt.plot(
+    link_summary["round"],
+    link_summary["mean"],
+    marker="o"
+)
+
+plt.fill_between(
+    link_summary["round"],
+    link_summary["mean"] - link_summary["std"],
+    link_summary["mean"] + link_summary["std"],
+    alpha=0.2
+)
+
+plt.xlabel("Round")
+plt.ylabel("Mean coalition links")
+plt.title("Coalition Formation Over Time")
+
+plt.tight_layout()
+plt.savefig(
+    PLOTS / "coalition_links_over_time.png",
+    dpi=300
+)
+plt.close()
+
+run_id = unique_coalitions["run_id"].iloc[0]
+
+one_run = unique_coalitions[
+    unique_coalitions["run_id"] == run_id
+]
+
+print("RUN:", run_id)
+
+for round_num, group in one_run.groupby("round"):
+    print(f"\nROUND {round_num}")
+    print(
+        group[
+            [
+                "agent",
+                "other_agent",
+                "trust1",
+                "trust2",
+                "bid1",
+                "bid2"
+            ]
+        ]
+    )
+
+print("\nLINK COUNTS:")
+print(
+    one_run
+    .groupby("round")["edge"]
+    .nunique()
+)
+
+previous = None
+
+for round_num, group in one_run.groupby("round"):
+
+    current = set(group["edge"])
+
+    if previous is not None:
+
+        added = current - previous
+        removed = previous - current
+
+        print(
+            round_num,
+            "added:", added,
+            "removed:", removed
+        )
+
+    previous = current
+
+link_summary = (
+    link_counts
+    .groupby("round")["coalition_links"]
+    .agg(["mean", "std"])
+    .reset_index()
+)
+
+print(link_summary)    

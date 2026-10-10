@@ -59,6 +59,23 @@ agent_index(agent6, 6).
 agent_index(agent7, 7).
 agent_index(agent8, 8).
 
+all_agents([agent1, agent2, agent3, agent4, agent5, agent6, agent7, agent8]).
+
+// coalition beliefs 
+
+bid_threshold(2).
+trust_threshold(0.6).
+trust_learning_rate(0.02).
+trust_max_step(0.1).
+default_trust(0.5).
+max_coalition_peers(3).
+
++agent_list(Agents)
+<-
+    -all_agents(_);
+    +all_agents(Agents);
+    !init_trust.
+
 +start_round(RunId, Round, Seed)[source(Planner)]
 <- 
     -run_id(_);
@@ -73,10 +90,28 @@ agent_index(agent8, 8).
     -planner_seed(_);
     +planner_seed(Seed);
 
+    !clear_round_state;
+    !init_trust;
     !pick_random_strategies(Seed);
-
     !generate_strategy_bids(Round);
     !play_current_strategy(Round).
+
++!clear_round_state
+<- 
+    for (round_finished_reported(R)) { -round_finished_reported(R); };
+    for (coalition_built(R)) { -coalition_built(R); };
+    for (coalition_preferences_started(R)) { -coalition_preferences_started(R); };
+    for (trust_updated(R)) { -trust_updated(R); };
+    for (coalition_context(R, _, _)) { -coalition_context(R, _, _); };
+    for (comm_context(R, _, _)) { -comm_context(R, _, _); };
+    for (comm_done(R)) { -comm_done(R); };
+    for (received_preferences(R, S, P)) { -received_preferences(R, S, P); };
+    for (received_comm_bid(R, S, B)) { -received_comm_bid(R, S, B); };
+    for (preferred_peer(R, P)) { -preferred_peer(R, P); };
+    for (coalition_peer(R, P)) { -coalition_peer(R, P); };
+    for (preferences_ready(R)) {-preferences_ready(R); };
+    for (coalition_candidate(Round, Score, Other, MyTrust, TheirTrust, Bid)) { -coalition_candidate(Round, Score, Other, MyTrust, TheirTrust, Bid); };
+    for (best_comm_bid(Round, Bid, Payoff)) { -best_comm_bid(Round, Bid, Payoff); }.
 
 //plans
 +! pick_random_strategies(Seed)
@@ -119,6 +154,33 @@ agent_index(agent8, 8).
 <- 
     true.
 
++! init_trust
+    : all_agents(Agents)
+    & not trust_initialized
+<-
+    .my_name(Me);
+    +trust_initialized;
+    !init_trust_except_me(Agents, Me).
+
++!init_trust
+    : trust_initialized
+<-
+    true.
++!init_trust_except_me([Agent | Rest], Me)
+    : Agent \== Me
+    & default_trust(Default)
+<-
+    +trust(Agent, Default);
+    !init_trust_except_me(Rest, Me).
+
++!init_trust_except_me([Agent | Rest], Me)
+    : Agent == Me
+<-
+    !init_trust_except_me(Rest, Me).
+
++!init_trust_except_me([], _)
+<-
+    true.        
 +! init_strategy_state(Strategy)
     : strategy_rule(Strategy, total_return, _, _)
 <-  
@@ -317,23 +379,414 @@ agent_index(agent8, 8).
 
     // .send(Planner, tell, round_finished(Round)).
 
-    !after_round(Round, ActualBid, GroupTotal).
+    // !after_round(Round, ActualBid, GroupTotal).
+    +round_context(Round, ActualBid, GroupTotal, ActualPayoff);
 
-+!after_round(Round, ActualBid, GroupTotal)
-    : Round mod 5 == 0
+    .my_name(Me);
+
+    +agent_bid(Me, Round, ActualBid); // add own bid so exact 8 bids after receives
+    .broadcast(tell, observed_bid(Round, ActualBid));
+
+    !check_bid_observations(Round).
+
++observed_bid(Round, Bid)[source(Sender)]
+    : not agent_bid(Sender, Round, _)
 <-
+    +agent_bid(Sender, Round, Bid);
+
+    !check_bid_observations(Round).
+
++observed_bid(Round, _)[source(Sender)]
+    : agent_bid(Sender, Round, _)
+<-
+    true.
+
++!check_bid_observations(Round)
+    : round_context(Round, ActualBid, GroupTotal, ActualPayoff)
+    & all_agents(Agents)
+    & not trust_updated(Round)
+<-
+    .length(Agents, Expected);
+
+    .count(agent_bid(_, Round, _), Count);
+
+    !check_bid_count(Round, Count, Expected, ActualBid, GroupTotal, ActualPayoff).
+
++!check_bid_observations(_)
+<-
+    true. 
+
+@bid_barrier[atomic]
++!check_bid_count(Round, Count, Expected, ActualBid, GroupTotal, ActualPayoff)
+    : Count == Expected
+    & not trust_updated(Round)
+<-
+    +trust_updated(Round);
+
+    !update_all_trust(Round, ActualBid, GroupTotal, ActualPayoff);
+
+    !after_trust_update(Round, ActualBid, GroupTotal).
+
++!check_bid_count(Round, Count, Expected, _, _, _)
+    : trust_updated(Round)
+<-
+    true.
++!check_bid_count(_, Count, Expected, _, _, _)
+    : Count < Expected
+<-
+    true.
+
++!update_all_trust(1, _, _, _)
+<-
+    true.
++!update_all_trust(Round, MyBid, GroupTotal, ActualPayoff)
+    : Round > 1
+<-
+    PreviousRound = Round - 1;
+
+    .my_name(Me);
+
+    for(
+        agent_bid(Other, Round, OtherBid)
+        & agent_bid(Other, PreviousRound, PreviousBid)
+        & Other \== Me
+    ){
+        !update_trust_from_bid(Other, MyBid, GroupTotal, ActualPayoff, OtherBid, PreviousBid);
+    }.
+
++!update_trust_from_bid(Other, MyBid, GroupTotal, ActualPayoff, OtherBid, PreviousBid)
+    : trust(Other, OldTrust)
+    & endowment(E)
+    & market1_return(W)
+    & cpr_a(CprA)
+    & cpr_b(CprB)
+    & trust_learning_rate(Alpha)
+    & trust_max_step(MaxStep)
+<-
+    CounterTotal = GroupTotal - OtherBid + PreviousBid;
+
+    CounterMarket1 = W * (E - MyBid);
+
+    CounterMarket2 = MyBid * (CprA - CprB * CounterTotal);
+
+    CounterPayoff = CounterMarket1 + CounterMarket2;
+
+    Delta = ActualPayoff - CounterPayoff;
+
+    RawChange = Alpha * Delta;
+
+    Change = math.max(-MaxStep, math.min(MaxStep, RawChange));
+
+    RawTrust = OldTrust + Change;
+
+    NewTrust = math.max(0, math.min(1, RawTrust));
+
+    -trust(Other, OldTrust);
+    +trust(Other, NewTrust);
+
+    .printf(
+        "TRUST %s %.3f -> %.3f | BID %.0f -> %.0f | PAYOFF EFFECT %.3f\n",
+        Other,
+        OldTrust,
+        NewTrust,
+        PreviousBid,
+        OtherBid,
+        Delta
+    ).
+
++!after_trust_update(Round, ActualBid, GroupTotal)
+    : Round mod 5 == 0 
+<-
+    !start_coalition_phase(Round, ActualBid, GroupTotal).
+
++!start_coalition_phase(Round, ActualBid, GroupTotal)
+<-
+    +coalition_context(Round, ActualBid, GroupTotal);
+
+    .findall([Agent, Trust], trust(Agent, Trust), Profile);
+
+    .broadcast(tell, trust_profile(Round, Profile));
+
+    !check_trust_profiles(Round).
+
++trust_profile(Round, Profile)[source(Sender)]
+<-
+    .my_name(Me);
+
+    .member([Me, TheirTrustInMe], Profile);
+
+    -reported_trust(Round, Sender, _);
+
+    +reported_trust(Round, Sender, TheirTrustInMe);
+
+    !check_trust_profiles(Round).
+
++!check_trust_profiles(Round)
+    : coalition_context(Round, ActualBid, GroupTotal)
+    & all_agents(Agents)
+    & not coalition_built(Round)
+<-
+    .length(Agents, Len);
+
+    Expected = Len - 1;
+
+    .count(reported_trust(Round, _, _), Count);
+
+    !check_trust_profile_count(Round, Count, Expected, ActualBid, GroupTotal).
+
++!check_trust_profiles(_)
+<-
+    true.
+
+@trust_profile_barrier[atomic]
++!check_trust_profile_count(Round, Count, Expected, ActualBid, GroupTotal)
+    : Count == Expected
+    & not coalition_preferences_started(Round)
+<-
+    //+coalition_built(Round);
+    +coalition_preferences_started(Round);
+
+    .println("R", Round, " TRUST PROFILES COMPLETE");
+
+    !build_coalition_preferences(Round, ActualBid).
+
+    // !build_coalition(Round, ActualBid);
+
+    // !start_comm(Round, ActualBid, GroupTotal).
+
++!check_trust_profile_count(Round, Count, Expected, _, _)
+    : Count == Expected
+    & coalition_preferences_started(Round)
+<-
+    true.
++!check_trust_profile_count(_, Count, Expected, _, _)
+    : Count < Expected
+<-
+    true.
+
++!build_coalition_preferences(Round, MyBid)
+    : max_coalition_peers(MaxPeers)
+<-
+    for(coalition_peer(Round, OldPeer)) {
+        -coalition_peer(Round, OldPeer);
+    };
+
+    for(coalition_candidate(Round, OldScore, OldOther, OldMyTrust, OldTheirTrust, OldBid)) {
+        -coalition_candidate(Round, OldScore, OldOther, OldMyTrust, OldTheirTrust, OldBid);
+    };
+
+    for(preferred_peer(Round, OldPreferred)) {
+        -preferred_peer(Round, OldPreferred);
+    };
+
+    for(trust(Other, MyTrust) & reported_trust(Round, Other, TheirTrust)) {
+        !consider_coalition_candidate(Other, MyTrust, Round, TheirTrust, MyBid);
+    };
+
+    .findall([Score, Other, MyTrust, TheirTrust, OtherBid], coalition_candidate(Round, Score, Other, MyTrust, TheirTrust, OtherBid), Candidates);
+
+    .sort(Candidates, Sorted);
+
+    .reverse(Sorted, Ranked);
+
+    !take_top_candidates(Ranked, MaxPeers);
+
+    .findall(Peer, preferred_peer(Round, Peer), PreferredPeers);
+
+    .my_name(Me);
+
+    .println(
+        "COALITION PREFERENCES | ",
+        Me,
+        " -> ",
+        PreferredPeers
+    );
+
+    .broadcast(tell, coalition_preferences(Round, PreferredPeers));
+
+    +preferences_ready(Round);
+    .println(
+        "R", Round,
+        " PREFERENCES SENT BY ",
+        Me
+    );
+    !check_coalition_preferences(Round).
+
++!consider_coalition_candidate(Other, MyTrust, Round, TheirTrust, MyBid)
+: trust_threshold(TrustThreshold)
+    & bid_threshold(BidThreshold)
+    & MyTrust >= TrustThreshold
+    & TheirTrust >= TrustThreshold
+    & agent_bid(Other, Round, OtherBid)
+    & math.abs(MyBid - OtherBid) <= BidThreshold
+<-
+    Score = (MyTrust + TheirTrust) / 2;
+
+    +coalition_candidate(Round, Score, Other, MyTrust, TheirTrust, OtherBid).    
+
+    //results.append("results/decentralized/coalitions.csv", RunId, Seed, Round, Me, Other, MyBid, OtherBid, MyTrust, TheirTrust);
+    
++!consider_coalition_candidate(_, _, _, _, _)
+<-
+    true.
+
++!take_top_candidates(_, Remaining)
+    : Remaining <= 0 
+<-
+    true.
+
++!take_top_candidates([], Remaining)
+    : Remaining > 0
+<-
+    true.
+
++!take_top_candidates([[Score, Other, MyTrust, TheirTrust, OtherBid] | Rest], Remaining)
+    : Remaining > 0
+<-
+    +preferred_peer(Round, Other);
+    .println(
+        "PREFERRED PEER: ",
+        Other,
+        " | SCORE ",
+        Score,
+        " | MY TRUST ",
+        MyTrust,
+        " | THEIR TRUST ",
+        TheirTrust,
+        " | BID ",
+        OtherBid
+    );
+    Next = Remaining - 1;
+    !take_top_candidates(Rest, Next).
+
++coalition_preferences(Round, PreferredPeers)[source(Sender)]
+    : not received_preferences(Round, Sender, _)
+<-
+    +received_preferences(Round, Sender, PreferredPeers);
+
+    !check_coalition_preferences(Round).
+
++coalition_preferences(Round, _)[source(Sender)]
+    : received_preferences(Round, Sender, _)
+<-
+    true.
+
++!check_coalition_preferences(Round)
+    : coalition_context(Round, ActualBid, GroupTotal)
+    & all_agents(Agents)
+    & not coalition_built(Round)
+    & preferences_ready(Round)
+<-
+    .length(Agents, Len);
+
+    Expected = Len - 1;
+
+    .count(received_preferences(Round, _, _), Count);
+
+    !check_coalition_preference_count(Round, Count, Expected, ActualBid, GroupTotal).
+
++!check_coalition_preferences(_)
+<-
+    true.
+
+@coalition_preference_barrier[atomic]
++!check_coalition_preference_count(Round, Count, Expected, ActualBid, GroupTotal)
+    : Count == Expected
+    & not coalition_built(Round)
+<-
+    +coalition_built(Round);
+
+    !finalize_mutual_coalition(Round, ActualBid);
+
+    .println("R", Round, " COALITION FINALIZED");
+
     !start_comm(Round, ActualBid, GroupTotal).
 
-+!after_round(Round, _, _)
-    : Round mod 5 \== 0
++!check_coalition_preference_count(_, Count, Expected, _, _)
+    : Count < Expected
+<-
+    true.
+
++!check_coalition_preference_count(_, _, _, _, _)
+<-
+    true.
+
++!finalize_mutual_coalition(Round, MyBid)
+<-
+    .my_name(Me);
+    ?run_id(RunId);
+    ?planner_seed(Seed);
+
+    for(preferred_peer(Round, Other)
+        & received_preferences(Round, Other, TheirPreferredPeers)
+        & .member(Me, TheirPreferredPeers)
+        & coalition_candidate(Round, Score, Other, MyTrust, TheirTrust, OtherBid)) {
+        +coalition_peer(Round,Other);
+
+        results.append("results/coalition/coalitions.csv", RunId, Seed, Round, Me, Other, MyBid, OtherBid, MyTrust, TheirTrust);
+        .println(
+            "COALITION FORMED: ",
+            Me,
+            " <-> ",
+            Other,
+            " | SCORE ",
+            Score,
+            " | TRUST ",
+            MyTrust,
+            "/",
+            TheirTrust
+        );
+    };
+
+    .count(coalition_peer(Round, _), PeerCount);
+
+    .println(
+        "ROUND ",
+        Round,
+        " | ",
+        Me,
+        " | FINAL COALITION PEERS = ",
+        PeerCount
+    ).
+
+// +!build_coalition(Round, MyBid)
+//     : trust_threshold(TrustThreshold)
+// <-
+//     for(coalition_peer(OldPeer)) {
+//         -coalition_peer(OldPeer);
+//     };
+//     for(trust(Other, MyTrust)
+//         & reported_trust(Round, Other, TheirTrust)) {
+//             !consider_coalition_peer(Other, MyTrust, Round, TheirTrust, MyBid);
+//         }.
+
+// +!after_trust_update(Round, _, _)
+// : Round mod 5 == 0 
+//     & planner_name(Planner)
+// & not round_finished_reported(Round)
+// <-
+// !finish_round(Round, Planner).
+
++!after_trust_update(Round, _, _)
+    : Round mod 5 \== 0 
     & planner_name(Planner)
+    & not round_finished_reported(Round)
 <-
     !maybe_select_strategy(Round);
+    !finish_round(Round, Planner).
 
++!finish_round(Round, Planner)
+    : not round_finished_reported(Round)
+<-
+    +round_finished_reported(Round);
     .send(Planner, tell, round_finished(Round)).
 
-+!start_comm(Round, ActualBid, GroupTotal)
++!finish_round(_, _)
 <-
+    true.
+
++!start_comm(Round, ActualBid, GroupTotal)
+<- 
     !select_best_strategy;
 
     ?current_strategy(BestStrategy);
@@ -351,8 +804,33 @@ agent_index(agent8, 8).
         " FROM ", BestStrategy
     );   
 
-    .broadcast(tell, comm_suggestion(Round, BestBid));
+    //.broadcast(tell, comm_suggestion(Round, BestBid));
 
+    //for(coalition_peer(Other)) 
+    for(
+        preferred_peer(Round, Other)
+        & received_preferences(Round, Other, TheirPreferredPeers)
+        & .member(Me, TheirPreferredPeers)
+    )
+    {
+        .println(
+            "R", Round,
+            " | ", Me,
+            " SENDS TO ", Other
+        );
+        .send(Other, tell, comm_suggestion(Round, BestBid));
+    };
+    !check_comm_ready(Round).
+
++comm_suggestion(Round, Bid)[source(Sender)]
+    : not received_comm_bid(Round, Sender, _)
+<-
+    +received_comm_bid(Round, Sender, Bid);
+    .println(
+        "R", Round,
+        " | ", Me,
+        " RECEIVED FROM ", Sender
+    );
     !check_comm_ready(Round).
 
 +comm_suggestion(Round, Bid)[source(Sender)]
@@ -360,30 +838,117 @@ agent_index(agent8, 8).
 <-
     +received_comm_bid(Round, Sender, Bid);
 
+    .my_name(Me);
+
+    .println(
+        "R", Round,
+        " | ", Me,
+        " RECEIVED FROM ", Sender
+    );
+
     !check_comm_ready(Round).
 
 +!check_comm_ready(Round)
     : comm_context(Round, _, _)
     & not comm_done(Round)
 <-
-    .count(received_comm_bid(Round, _, _), Count);
+    .my_name(Me);
+    .findall(
+        Other,
+        preferred_peer(Round, Other)
+        & received_preferences(Round, Other, TheirPreferredPeers)
+        & .member(Me, TheirPreferredPeers),
+        ExpectedPeers
+    );
+    .length(ExpectedPeers, Expected);
 
-    !check_comm_count(Round, Count).
+    .findall(
+        Sender,
+        received_comm_bid(Round, Sender, _),
+        ReceivedPeers
+    );
+
+    .length(ReceivedPeers, Count);
+
+    .println(
+        "R", Round,
+        " | ", Me,
+        " EXPECTS ", ExpectedPeers,
+        " | RECEIVED ", ReceivedPeers,
+        " | ", Count, "/", Expected
+    );
+    // wait for no of msgs as no of prefered peers that also prefer us 
+    .count(preferred_peer(Round, Other) & received_preferences(Round, Other, TheirPreferredPeers) & .member(Me, TheirPreferredPeers), Expected);
+    //.count(coalition_peer(_), Expected);
+    .count(received_comm_bid(Round, _, _), Count);
+    .println(
+        "R", Round,
+        " COMM WAIT ",
+        Count, "/", Expected
+    );
+    !check_comm_count(Round, Count, Expected).
 
 +!check_comm_ready(_)
 <-
-    true.
+true.
 
-+!check_comm_count(Round, 7)
-    : comm_context(Round, ActualBid, GroupTotal)
+@comm_barrier[atomic]
++!check_comm_count(Round, Count, Expected)
+    : Expected > 0
+    & Count == Expected
+    & comm_context(Round, ActualBid, GroupTotal)
     & not comm_done(Round)
 <-
     +comm_done(Round);
 
     !evaluate_comm_bids(Round, ActualBid, GroupTotal).
 
-+!check_comm_count(_, Count)
-    : Count < 7
+@comm_barrier[atomic]
++!check_comm_count(Round, Count, Expected)
+    : Expected > 0
+    & Count == Expected
+    & comm_context(Round, ActualBid, GroupTotal)
+    & not comm_done(Round)
+<-
+    +comm_done(Round);
+
+    !evaluate_comm_bids(
+        Round,
+        ActualBid,
+        GroupTotal
+    ).
+
+
+@no_comm_barrier[atomic]
++!check_comm_count(Round, 0, 0)
+    : planner_name(Planner)
+    & not comm_done(Round)
+<-
+    +comm_done(Round);
+
+    .println(
+        "ROUND ", Round,
+        " | NO COALITION PARTNERS"
+    );
+
+    !maybe_select_strategy(Round);
+
+    !finish_round(Round, Planner).
+
+
++!check_comm_count(_, Count, Expected)
+    : Count < Expected
+<-
+    true.
+
+
++!check_comm_count(Round, _, _)
+    : comm_done(Round)
+<-
+    true.
+
+
++comm_suggestion(Round, _)[source(Sender)]
 <-
     true.
 
@@ -405,7 +970,7 @@ agent_index(agent8, 8).
 
     ?planner_name(Planner);
 
-    .send(Planner, tell, round_finished(Round)).
+    !finish_round(Round, Planner).
 
 +!evaluate_comm_bid(Round, Sender, Bid, ActualBid, GroupTotal)
     : endowment(E)
@@ -539,7 +1104,7 @@ agent_index(agent8, 8).
     // results.append(
     // "results/strategies.csv", Seed, Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
     results.append(
-    "results/decentralized/strategies.csv",
+    "results/coalition/strategies.csv",
         RunId, Seed, Round,
         Me, Strategy, AlternativeBid,
         CounterPayoff, NewSum, NewN
@@ -700,4 +1265,4 @@ agent_index(agent8, 8).
 +!update_total_return_direction(Strategy, _)
     : not strategy_rule(Strategy, total_return, _, _)
 <-
-    true.    
+    true.   

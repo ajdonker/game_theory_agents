@@ -1,8 +1,8 @@
-run_id(28).
-seed(69).
+run_id(3).
+seed(42).
 
 round(1).
-max_rounds(300).
+max_rounds(100).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -128,7 +128,7 @@ cpr_b(0.25).
     );
     //results.append("results/rounds.csv", Seed, RunId, Round, Total, Average, GroupRent, RentPct);
     results.append(
-        "results/no_comm/rounds.csv",
+        "results/coalition/rounds.csv",
         RunId, Seed, Round,
         Total, Average, GroupRent, RentPct
     );
@@ -152,7 +152,7 @@ cpr_b(0.25).
         
         //results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
         results.append(
-            "results/no_comm/agents.csv",
+            "results/coalition/agents.csv",
             RunId, Seed, Round,
             A, Strategy, Bid,
             Market1, Market2, Payoff

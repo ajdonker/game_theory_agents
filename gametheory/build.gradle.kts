@@ -98,11 +98,26 @@ tasks.register<JavaExec>("runDecentralizedCommunication") {
     standardInput = System.`in`
 }
 
+tasks.register<JavaExec>("runCoalitionCommunication") {
+    group = "application"
+    description = "Runs the resource-management coalition communication Jason scenario"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+    args(file("Coalition.mas2j").absolutePath)
+
+    standardInput = System.`in`
+}
 tasks.register<Delete>("cleanSimulationResults") {
     delete(
         file("results/rounds.csv"),
         file("results/agents.csv"),
         file("results/strategies.csv")
+        //file("results/coalitions.csv")
     )
 }
 

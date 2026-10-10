@@ -11,6 +11,12 @@ action(
     where(true)
 ).
 
+action (
+    enable_coalitions,
+    [coalitions_disabled],
+    [coalitions_enabled],
+    [coalitions_disabled]
+).
 central_plan(BestStrategy, Plan) :-
     InitState = [
         evaluations_collected,
