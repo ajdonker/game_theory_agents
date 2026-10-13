@@ -1,3 +1,5 @@
+run_id(3).
+seed(42).
 //beliefs
 round(1).   
 endowment(10).
@@ -17,6 +19,7 @@ market1_return(5).
 cpr_a(23).
 cpr_b(0.25).
 
+select_strat_interval(3).
 //total_return_direction(1). // replaced with strategy_direction belief that is modified if incr/decr return
 // avg scores for each strategy even not played
 // strat, type, incr, decr 
@@ -69,7 +72,7 @@ trust_learning_rate(0.02).
 trust_max_step(0.1).
 default_trust(0.5).
 max_coalition_peers(3).
-
+coalitioning_rate(5).
 +agent_list(Agents)
 <-
     -all_agents(_);
@@ -495,7 +498,8 @@ max_coalition_peers(3).
     ).
 
 +!after_trust_update(Round, ActualBid, GroupTotal)
-    : Round mod 5 == 0 
+    : coalitioning_rate(Rate)
+    & Round mod Rate == 0 
 <-
     !start_coalition_phase(Round, ActualBid, GroupTotal).
 
@@ -768,7 +772,8 @@ max_coalition_peers(3).
 // !finish_round(Round, Planner).
 
 +!after_trust_update(Round, _, _)
-    : Round mod 5 \== 0 
+    : coalitioning_rate(Rate)
+    & Round mod Rate \== 0 
     & planner_name(Planner)
     & not round_finished_reported(Round)
 <-
@@ -1164,12 +1169,14 @@ true.
     true.
 
 +! maybe_select_strategy(Round) 
-    : Round mod 3 == 0
+    : select_strat_interval(Interval)
+    & Round mod Interval == 0
 <-
     !select_best_strategy.
 
 +! maybe_select_strategy(Round)
-    : Round mod 3 \== 0
+    : select_strat_interval(Interval)
+    & Round mod Interval \== 0
 <- 
     true.
 

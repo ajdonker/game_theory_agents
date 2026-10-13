@@ -1,3 +1,4 @@
+planner_enabled(true);
 run_id(3).
 seed(42).
 
@@ -17,10 +18,11 @@ endowment(10).
 market1_return(5).
 cpr_a(23).
 cpr_b(0.25).
+intervention(no_intervention).
 //starting goals
 !start.
 // plans
-+!start <- 
++!start <-
     .println("STARTING SIM");
     !start_round.
 
@@ -132,6 +134,9 @@ cpr_b(0.25).
         RunId, Seed, Round,
         Total, Average, GroupRent, RentPct
     );
+
+    strips.decide(Total, OptimalBid, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, Intervention);
+    !apply_intervention(Intervention);
     !calculate_returns(Round, Total, Average).
 
 +!calculate_returns(Round, Total, Average)
@@ -149,7 +154,7 @@ cpr_b(0.25).
         Market1 = W * (E - Bid);
         Market2 = Bid * (CprA - CprB * Total);
         Payoff = Market1 + Market2;
-        
+
         //results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
         results.append(
             "results/no_comm/agents.csv",
@@ -212,3 +217,24 @@ cpr_b(0.25).
 <-
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).
+
++!apply_intervention(none)
+<-
+    true.
+
++!apply_intervention(coalition)
+<-
+   .println("APPLYING COALITION INTERVENTION");
+   -+intervention(coalition);
+
+
++!apply_intervention(centralized)
+<-
+  .println("APPLYING CENTRALIZED INTERVENTION");
+  -+intervention(centralized);
+
++!apply_intervention(decentralized)
+<-
+    .println("APPLYING DECENTRALIZED INTERVENTION");
+    -+intervention(decentralized);
+
