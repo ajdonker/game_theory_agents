@@ -1,9 +1,7 @@
 gametheory/build/
 gametheory/results/
 build/
-
-
-
+.gradle/
 
 
 
