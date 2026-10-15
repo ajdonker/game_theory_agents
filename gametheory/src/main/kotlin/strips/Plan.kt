@@ -35,8 +35,14 @@ class plan : DefaultInternalAction() {
                 return null
             }
 
-            val planTerm = solution.substitution[Var.of("Plan")] ?: return null
+            val planVariable = query.args[1] as? Var ?: return null
+            val planTerm = solution.substitution[planVariable] ?: return null
             val plan = planTerm.toString()
+            if (plan == "[]") {
+                return normalizedState.firstOrNull { it.startsWith("mode_") }
+                    ?.removePrefix("mode_")
+            }
+
             val action = plan
                 .removePrefix("[")
                 .removeSuffix("]")
@@ -47,9 +53,16 @@ class plan : DefaultInternalAction() {
 
             return when (action) {
                 "enable_centralized" -> "centralized"
+                "switch_decentralized_to_centralized",
+                "switch_coalition_to_centralized" -> "centralized"
                 "enable_coalitions" -> "coalition"
                 "enable_decentralized" -> "decentralized"
-                "disable_centralized", "disable_coalitions", "disable_decentralized" -> "none"
+                "switch_centralized_to_decentralized",
+                "switch_coalition_to_decentralized",
+                "disable_coalitions" -> "decentralized"
+                "disable_centralized",
+                "disable_decentralized",
+                "disable_coalition_for_optimal_investment" -> "none"
                 else -> action
             }
         }

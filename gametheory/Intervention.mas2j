@@ -1,0 +1,15 @@
+MAS interventions {
+    agents:
+    agent1 main_agent.asl;
+    agent2 main_agent.asl;
+    agent3 main_agent.asl;
+    agent4 main_agent.asl;
+    agent5 main_agent.asl;
+    agent6 main_agent.asl;
+    agent7 main_agent.asl;
+    agent8 main_agent.asl;
+    main_planner;
+
+    aslSourcePath:
+    "src/main/asl";
+}

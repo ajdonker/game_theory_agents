@@ -4,9 +4,6 @@ endowment(10).
 
 last_bid(0).
 last_total_return(0).
-
-
-
 last_market1_return(0).
 last_market2_return(0).
 
@@ -16,6 +13,8 @@ last_group_average(0).
 market1_return(5).
 cpr_a(23).
 cpr_b(0.25).
+
+comm_interval(5).
 
 //total_return_direction(1). // replaced with strategy_direction belief that is modified if incr/decr return
 // avg scores for each strategy even not played
@@ -320,12 +319,14 @@ agent_index(agent8, 8).
     !after_round(Round, ActualBid, GroupTotal).
 
 +!after_round(Round, ActualBid, GroupTotal)
-    : Round mod 5 == 0
+    : comm_interval(Interval)
+    & Round mod Interval == 0
 <-
     !start_comm(Round, ActualBid, GroupTotal).
 
 +!after_round(Round, _, _)
-    : Round mod 5 \== 0
+    : comm_interval(Interval)
+    & Round mod Interval \== 0
     & planner_name(Planner)
 <-
     !maybe_select_strategy(Round);

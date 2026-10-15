@@ -68,6 +68,21 @@ tasks.register<JavaExec>("runNoCommunication") {
     standardInput = System.`in`
 }
 
+tasks.register<JavaExec>("runInterventions") {
+    group = "application"
+    description = "Runs the STRIPS-controlled intervention scenario"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+    args(file("Intervention.mas2j").absolutePath)
+
+    standardInput = System.`in`
+}
+
 tasks.register<JavaExec>("runCentralizedCommunication") {
     group = "application"
     description = "Runs the resource-management centralized communication Jason scenario"
@@ -120,4 +135,3 @@ tasks.register<Delete>("cleanSimulationResults") {
         //file("results/coalitions.csv")
     )
 }
-

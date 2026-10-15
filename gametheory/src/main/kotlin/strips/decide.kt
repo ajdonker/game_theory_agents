@@ -19,18 +19,27 @@ class decide : DefaultInternalAction() {
     ): Any {
         fun number(i: Int): Double = (args[i] as NumberTerm).solve()
 
-        val total = number(0)
-        val optimal = number(1)
-        val rentPct = number(2)
-        val bids = (3..10).map(::number)
+        val groupTotal = number(0)
+        val optimalGroupInvestment = number(1)
+        val bids = (2..9).map(::number)
+        val currentMode = when (args[10].toString()) {
+            "no_intervention", "none" -> "mode_none"
+            "centralized" -> "mode_centralized"
+            "decentralized" -> "mode_decentralized"
+            "coalition" -> "mode_coalition"
+            else -> {
+                ts.ag.logger.warning("Unknown current intervention: ${args[10]}")
+                return false
+            }
+        }
 
         val relativeErr = when {
-            optimal == 0.0 -> when {
-                total == 0.0 -> 0.0
-                total > 0.0 -> Double.POSITIVE_INFINITY
+            optimalGroupInvestment == 0.0 -> when {
+                groupTotal == 0.0 -> 0.0
+                groupTotal > 0.0 -> Double.POSITIVE_INFINITY
                 else -> Double.NEGATIVE_INFINITY
             }
-            else -> (total - optimal) / optimal
+            else -> (groupTotal - optimalGroupInvestment) / optimalGroupInvestment
         }
 
         val investment = when {
@@ -39,25 +48,15 @@ class decide : DefaultInternalAction() {
             else -> "investment_optimal"
         }
 
-        val performance = when {
-            rentPct >= 90.0 -> "performance_high"
-            rentPct >= 60.0 -> "performance_medium"
-            else -> "performance_low"
-        }
-
         val avg = bids.average()
         val variance = bids.map { (it - avg) * (it - avg) }.average()
         val dispersion = if (sqrt(variance) > 2.0) "dispersion_high" else "dispersion_low"
 
-        val intervention = plan.solveInterventionPlan(listOf(investment, performance, dispersion))
-            ?: when {
-                investment == "investment_optimal" -> "none"
-                investment == "investment_high" && performance == "performance_low" -> "centralized"
-                investment == "investment_high" && dispersion == "dispersion_high" -> "coalition"
-                investment == "investment_high" -> "centralized"
-                investment == "investment_low" -> "coalition"
-                else -> "none"
-            }
+        val intervention = plan.solveInterventionPlan(listOf(investment, dispersion, currentMode))
+        if (intervention == null) {
+            ts.ag.logger.warning("STRIPS could not find an intervention for $investment, $dispersion, $currentMode")
+            return false
+        }
 
         return un.unifies(args[11], Atom(intervention))
     }

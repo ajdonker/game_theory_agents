@@ -1,4 +1,4 @@
-planner_enabled(true);
+planner_enabled(true).
 run_id(3).
 seed(42).
 
@@ -31,17 +31,20 @@ intervention(no_intervention).
     : round(Round)
     & seed(Seed)
     & run_id(RunId)
+    & intervention(CurrentIntervention)
 <-
     .println("");
     .println("===============");
     .println("STARTING ROUND: ", Round);
     .println("===============");
 
+    +round_mode(Round, CurrentIntervention);
+
     //.broadcast(tell, start_round(Round)).
 
     for(active_agent(A))
     {
-        .send(A, tell, start_round(RunId, Round, Seed));
+        .send(A, tell, start_round(RunId, Round, Seed, CurrentIntervention));
     }
     .println("").
 
@@ -96,6 +99,7 @@ intervention(no_intervention).
     & cpr_b(CprB)
     & seed(Seed)
     & run_id(RunId)
+    & intervention(CurrentIntervention)
 <-
     Total = B1+B2+B3+B4+B5+B6+B7+B8;
     Average = Total / 8;
@@ -109,14 +113,14 @@ intervention(no_intervention).
     GroupRent =
         GroupMarket2Return - OpportunityCost;
 
-    OptimalBid =
+    OptimalGroupInvestment =
         (CprA - W) / (2 * CprB);
 
     OptimalMarket2Return =
-        OptimalBid * (CprA - CprB * OptimalBid);
+        OptimalGroupInvestment * (CprA - CprB * OptimalGroupInvestment);
 
     OptimalRent =
-        OptimalMarket2Return - W * OptimalBid;
+        OptimalMarket2Return - W * OptimalGroupInvestment;
 
     RentPct =
         100 * GroupRent / OptimalRent;
@@ -135,7 +139,7 @@ intervention(no_intervention).
         Total, Average, GroupRent, RentPct
     );
 
-    strips.decide(Total, OptimalBid, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, Intervention);
+    strips.decide(Total, OptimalGroupInvestment, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Intervention);
     !apply_intervention(Intervention);
     !calculate_returns(Round, Total, Average).
 
@@ -175,18 +179,238 @@ intervention(no_intervention).
         );
     }.
 
-@finish_agent[atomic]
+@central_bid_suggestions[atomic]
++!best_bid_suggestion(Round, Bid, Strategy, Average)[source(A)]
+    : round(Round)
+    & round_mode(Round, centralized)
+    & active_agent(A)
+    & Bid >= 0
+    & Bid <= 10
+    & not central_bid_suggestion(A, Round, _, _, _)
+<-
+    +central_bid_suggestion(A, Round, Bid, Strategy, Average);
+    .count(central_bid_suggestion(_, Round, _, _, _), Count);
+    !check_central_bid_suggestions(Round, Count).
+
++!check_central_bid_suggestions(Round, 8)
+    : market1_return(W)
+    & cpr_a(CprA)
+    & cpr_b(CprB)
+<-
+    .findall(
+        [Bid, Strategy],
+        central_bid_suggestion(_, Round, Bid, Strategy, _),
+        Suggestions
+    );
+    !choose_central_bid(Round, Suggestions, W, CprA, CprB).
+
++!check_central_bid_suggestions(_, Count)
+    : Count < 8
+<-
+    true.
+
++!choose_central_bid(
+    Round,
+    [[Bid, Strategy] | Rest],
+    W,
+    CprA,
+    CprB
+)
+<-
+    !calculate_central_bid_rent(Bid, W, CprA, CprB, Rent);
+    !scan_central_bids(
+        Round,
+        Rest,
+        Bid,
+        Strategy,
+        Rent,
+        W,
+        CprA,
+        CprB
+    ).
+
++!scan_central_bids(
+    Round,
+    [[Bid, Strategy] | Rest],
+    BestBid,
+    BestStrategy,
+    BestRent,
+    W,
+    CprA,
+    CprB
+)
+<-
+    !calculate_central_bid_rent(Bid, W, CprA, CprB, Rent);
+    !compare_central_bid(
+        Round,
+        Rest,
+        Bid,
+        Strategy,
+        Rent,
+        BestBid,
+        BestStrategy,
+        BestRent,
+        W,
+        CprA,
+        CprB
+    ).
+
++!compare_central_bid(
+    Round,
+    Rest,
+    Bid,
+    Strategy,
+    Rent,
+    _,
+    _,
+    BestRent,
+    W,
+    CprA,
+    CprB
+)
+    : Rent > BestRent
+<-
+    !scan_central_bids(
+        Round,
+        Rest,
+        Bid,
+        Strategy,
+        Rent,
+        W,
+        CprA,
+        CprB
+    ).
+
++!compare_central_bid(
+    Round,
+    Rest,
+    _,
+    _,
+    Rent,
+    BestBid,
+    BestStrategy,
+    BestRent,
+    W,
+    CprA,
+    CprB
+)
+    : BestRent >= Rent
+<-
+    !scan_central_bids(
+        Round,
+        Rest,
+        BestBid,
+        BestStrategy,
+        BestRent,
+        W,
+        CprA,
+        CprB
+    ).
+
++!scan_central_bids(
+    Round,
+    [],
+    BestBid,
+    BestStrategy,
+    BestRent,
+    _,
+    _,
+    _
+)
+<-
+    .println(
+        "CENTRAL BEST BID ROUND ",
+        Round,
+        ": ",
+        BestBid,
+        " | SOURCE ",
+        BestStrategy,
+        " | GROUP RENT ",
+        BestRent
+    );
+    !adopt_central_bid(Round, BestBid).
+
++!calculate_central_bid_rent(Bid, W, CprA, CprB, Rent)
+<-
+    Total = 8 * Bid;
+    Rent = Total * (CprA - CprB * Total) - W * Total.
+
++!adopt_central_bid(Round, Bid)
+<-
+    for(active_agent(A))
+    {
+        .send(A, achieve, adopt_central_bid(Round, Bid));
+    }.
+
+@central_bid_adoption_ack[atomic]
++central_bid_adopted(Round)[source(A)]
+    : round(Round)
+    & round_mode(Round, centralized)
+    & active_agent(A)
+    & not central_adoption_done(A, Round)
+<-
+    +central_adoption_done(A, Round);
+    .count(central_adoption_done(_, Round), Count);
+    .println("CENTRAL BID ACK ", A, " ROUND ", Round, " | ", Count, "/8");
+    !check_central_adoption(Round, Count).
+
++!check_central_adoption(Round, 8)
+    : not central_adoption_complete(Round)
+<-
+    +central_adoption_complete(Round);
+    .println("ALL AGENTS ADOPTED CENTRAL BID FOR ROUND ", Round);
+    for(round_finished_pending(A, Round))
+    {
+        !accept_central_round_finished(A, Round);
+    }.
+
++!check_central_adoption(_, Count)
+    : Count < 8
+<-
+    true.
+
+@finish_non_centralized[atomic]
 +round_finished(Round)[source(A)]
     : round(Round)
     & active_agent(A)
+    & round_mode(Round, Mode)
+    & Mode \== centralized
     & not finished(A, Round)
 <-
     +finished(A, Round);
 
     .count(finished(_, Round), Count);
-
     !check_finished_count(Round, Count).
 
+@finish_central_agent[atomic]
++round_finished(Round)[source(A)]
+    : round(Round)
+    & round_mode(Round, centralized)
+    & active_agent(A)
+    & not finished(A, Round)
+<-
+    +round_finished_pending(A, Round);
+    !accept_central_round_finished(A, Round).
+
++!accept_central_round_finished(A, Round)
+    : central_adoption_complete(Round)
+    & round_finished_pending(A, Round)
+    & not finished(A, Round)
+<-
+    -round_finished_pending(A, Round);
+    !record_finished_agent(A, Round).
+
++!accept_central_round_finished(_, _)
+<-
+    true.
+
++!record_finished_agent(A, Round)
+    : active_agent(A)
+    & not finished(A, Round)
+<-
+    +finished(A, Round);
+    .count(finished(_, Round), Count);
+    !check_finished_count(Round, Count).
 
 +!check_finished_count(Round, 8)
 <-
@@ -205,6 +429,27 @@ intervention(no_intervention).
 <-
     NextRound = Round + 1;
 
+    for(central_bid_suggestion(A, Round, Bid, Strategy, Average))
+    {
+        -central_bid_suggestion(A, Round, Bid, Strategy, Average);
+    };
+    for(central_adoption_done(A, Round))
+    {
+        -central_adoption_done(A, Round);
+    };
+    for(round_finished_pending(A, Round))
+    {
+        -round_finished_pending(A, Round);
+    };
+    for(central_adoption_complete(Round))
+    {
+        -central_adoption_complete(Round);
+    };
+    for(round_mode(Round, Mode))
+    {
+        -round_mode(Round, Mode);
+    };
+
     -round(Round);
     +round(NextRound);
 
@@ -220,21 +465,24 @@ intervention(no_intervention).
 
 +!apply_intervention(none)
 <-
-    true.
+    -intervention(_);
+    +intervention(no_intervention).
 
 +!apply_intervention(coalition)
 <-
    .println("APPLYING COALITION INTERVENTION");
-   -+intervention(coalition);
+   -intervention(_);
+   +intervention(coalition).
 
 
 +!apply_intervention(centralized)
 <-
   .println("APPLYING CENTRALIZED INTERVENTION");
-  -+intervention(centralized);
+  -intervention(_);
+  +intervention(centralized).
 
 +!apply_intervention(decentralized)
 <-
     .println("APPLYING DECENTRALIZED INTERVENTION");
-    -+intervention(decentralized);
-
+    -intervention(_);
+    +intervention(decentralized).
