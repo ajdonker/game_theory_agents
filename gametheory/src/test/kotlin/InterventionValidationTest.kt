@@ -196,8 +196,10 @@ class InterventionValidationTest {
 
             if (r > 1 && current != modes.getValue(r - 1)) enteredModeAtRound = r
             val independentlyComputedAge = r - enteredModeAtRound + 1
-            streak = if (optimal(rounds.getValue(r))) streak + 1 else 0
+            //streak = if (optimal(rounds.getValue(r))) streak + 1 else 0
 
+            val optimalCount = (maxOf(1, r - 4)..r)
+                .count { optimal(rounds.getValue(it)) }
             assertEquals(independentlyComputedAge, decision.age,
                 "Incorrect current mode duration at round $r")
             assertEquals(streak, decision.optimalStreak,

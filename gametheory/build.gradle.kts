@@ -171,3 +171,13 @@ tasks.register<Delete>("cleanDecentralizedResults") {
         }
     )
 }
+tasks.register<Delete>("cleanInterventionResults") {
+    group = "verification"
+    description = "Cleans intervention simulation CSV files"
+
+    delete (
+        fileTree("results/centralized") {
+            include("*.csv")
+        }
+    )
+}

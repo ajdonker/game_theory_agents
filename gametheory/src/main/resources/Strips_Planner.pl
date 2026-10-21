@@ -1,27 +1,21 @@
-
 action(
-    enforce_bid(B),
-    'if'([
-        evaluations_collected,
-        best_bid(B)
-    ]),
-    '+'([
-        bid_enforced(B)
-    ]),
+    enforce_strategy(S),
+    'if'([evaluations_collected, best_strategy(S)]),
+    '+'([strategy_enforced(S)]),
     '-'([]),
     where(true)
 ).
+% enforce bid was deleted here, with central planning for BestBid 
 % =========================================
 % CENTRALIZED BID ENFORCEMENT
 % =========================================
 
-central_plan(BestBid, Plan) :-
+central_plan(BestStrategy, Plan) :-
     strips(
-        [evaluations_collected, best_bid(BestBid)],
-        [bid_enforced(BestBid)],
+        [evaluations_collected, best_strategy(BestStrategy)],
+        [strategy_enforced(BestStrategy)],
         Plan
     ).
-
     
 % =========================================
 % HIGH INVESTMENT -> CENTRALIZED

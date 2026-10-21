@@ -22,12 +22,11 @@ cpr_b(0.25).
 intervention(none).
 intervention_min_duration(5).
 min_rounds_optimal(3).
+optimality_window(5).
 
 // Duration counts rounds in which a mode was active at round START.
 // New modes chosen at the end of round R begin in round R+1.
 intervention_since(1).
-optimal_streak(0).
-
 //starting goals
 !start.
 // plans
@@ -155,14 +154,20 @@ optimal_streak(0).
 
     // Update the consecutive-optimal-round count from the CURRENT round.
     RelativeError = (Total - OptimalGroupInvestment) / OptimalGroupInvestment;
-    !update_optimal_streak(RelativeError);
-    ?optimal_streak(Streak);
+    //!update_optimal_streak(RelativeError);
+
+    !record_optimal_round(Round, RelativeError);
+
+    ?optimality_window(Window);
+    //?optimal_streak(Streak);
+    FirstRound = math.max(1, Round - Window + 1);
+    .count(optimal_round(R) & R >= FirstRound & R <= Round, OptimalCount);
     ?intervention_since(Since);
     ModeAge = Round - Since + 1;
 
     // STRIPS proposes a mode; stability constraints may veto the change.
     strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Proposed);
-    !gate_intervention(CurrentIntervention, Proposed, ModeAge, Streak, Intervention);
+    !gate_intervention(CurrentIntervention, Proposed, ModeAge, OptimalCount, Intervention);
 
     results.append(
         "results/adaptive/decisions.csv",
@@ -530,22 +535,18 @@ optimal_streak(0).
 // ===========================================================
 
 // Count consecutive rounds in the +/-15% optimal-investment band.
-+!update_optimal_streak(Error)
+// An active intervention must run at least Min rounds before switching.
+// Record rounds within +/-15% of optimal investment.
++!record_optimal_round(Round, Error)
     : Error >= -0.15
     & Error <= 0.15
-    & optimal_streak(Previous)
 <-
-    Next = Previous + 1;
-    -optimal_streak(Previous);
-    +optimal_streak(Next).
+    +optimal_round(Round).
 
-+!update_optimal_streak(_)
-    : optimal_streak(Previous)
++!record_optimal_round(_, _)
 <-
-    -optimal_streak(Previous);
-    +optimal_streak(0).
+    true.
 
-// An active intervention must run at least Min rounds before switching.
 +!gate_intervention(Current, Proposed, Age, _, keep)
     : Current \== none
     & Proposed \== keep
@@ -555,10 +556,10 @@ optimal_streak(0).
     .println("INTERVENTION HOLD: min duration (", Age, "/", Min, ")").
 
 // Even after the minimum duration, disable only after N optimal rounds.
-+!gate_intervention(Current, none, _, Streak, keep)
++!gate_intervention(Current, none, _, OptimalCount, keep)
     : Current \== none
     & min_rounds_optimal(Required)
-    & Streak < Required
+    & OptimalCount < Required
 <-
     .println("INTERVENTION HOLD: optimal streak (", Streak, "/", Required, ")").
 

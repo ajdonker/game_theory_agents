@@ -241,6 +241,13 @@ print(f"Plots written to {PLOTS}")
 # ---------------------------------------------------------
 # Figure 4: Heatmap
 # ---------------------------------------------------------
+print(
+    agents.duplicated(
+        subset=["run_id", "seed", "agent", "round"]
+    ).sum()
+)
+print(agents.groupby(["run_id", "seed"]).size())
+heatmap_agents = agents[agents["run_id"] == 1].copy()
 
 heatmap = (
     agents

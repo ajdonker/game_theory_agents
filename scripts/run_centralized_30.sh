@@ -10,12 +10,11 @@ ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 # .../game_theory_agents/gametheory
 GAMETHEORY_DIR="$ROOT_DIR/gametheory"
 
-PLANNER="$GAMETHEORY_DIR/src/main/asl/centralized_planner.asl"
+PLANNER="$GAMETHEORY_DIR/src/main/asl/centralized_strat_planner.asl"
 RESULTS="$GAMETHEORY_DIR/results/centralized"
 
-rm -f "$RESULTS/rounds.csv"
-rm -f "$RESULTS/agents.csv"
-rm -f "$RESULTS/strategies.csv"
+mkdir -p "$RESULTS"
+rm -f "$RESULTS"/*.csv
 
 # Keep a backup of the planner.
 cp "$PLANNER" "$PLANNER.batch_backup"
