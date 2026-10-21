@@ -58,7 +58,7 @@ data class StrategyRow(
 )
 
     private fun readLines(file: String): List<String> =
-        Files.readAllLines(Path.of("results", file))
+        Files.readAllLines(Path.of("results", "no_comm", file))
             .filter { it.isNotBlank() }
 
     private fun csvRows(

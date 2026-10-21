@@ -3,7 +3,7 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(300).
+max_rounds(100).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -18,7 +18,16 @@ endowment(10).
 market1_return(5).
 cpr_a(23).
 cpr_b(0.25).
-intervention(no_intervention).
+
+intervention(none).
+intervention_min_duration(5).
+min_rounds_optimal(3).
+
+// Duration counts rounds in which a mode was active at round START.
+// New modes chosen at the end of round R begin in round R+1.
+intervention_since(1).
+optimal_streak(0).
+
 //starting goals
 !start.
 // plans
@@ -39,6 +48,11 @@ intervention(no_intervention).
     .println("===============");
 
     +round_mode(Round, CurrentIntervention);
+
+    results.append(
+        "results/adaptive/modes.csv",
+        RunId, Seed, Round, CurrentIntervention
+    );
 
     //.broadcast(tell, start_round(Round)).
 
@@ -134,13 +148,29 @@ intervention(no_intervention).
     );
     //results.append("results/rounds.csv", Seed, RunId, Round, Total, Average, GroupRent, RentPct);
     results.append(
-        "results/no_comm/rounds.csv",
+        "results/adaptive/rounds.csv",
         RunId, Seed, Round,
         Total, Average, GroupRent, RentPct
     );
 
-    strips.decide(Total, OptimalGroupInvestment, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Intervention);
+    // Update the consecutive-optimal-round count from the CURRENT round.
+    RelativeError = (Total - OptimalGroupInvestment) / OptimalGroupInvestment;
+    !update_optimal_streak(RelativeError);
+    ?optimal_streak(Streak);
+    ?intervention_since(Since);
+    ModeAge = Round - Since + 1;
+
+    // STRIPS proposes a mode; stability constraints may veto the change.
+    strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Proposed);
+    !gate_intervention(CurrentIntervention, Proposed, ModeAge, Streak, Intervention);
+
+    results.append(
+        "results/adaptive/decisions.csv",
+        RunId, Seed, Round, CurrentIntervention, Proposed, Intervention, ModeAge, Streak
+    );
+
     !apply_intervention(Intervention);
+    !record_intervention_change(Round, CurrentIntervention, Intervention);
     !calculate_returns(Round, Total, Average).
 
 +!calculate_returns(Round, Total, Average)
@@ -161,7 +191,7 @@ intervention(no_intervention).
 
         //results.append("results/agents.csv", Seed, Round, A, Strategy, Bid, Market1, Market2, Payoff);
         results.append(
-            "results/no_comm/agents.csv",
+            "results/adaptive/agents.csv",
             RunId, Seed, Round,
             A, Strategy, Bid,
             Market1, Market2, Payoff
@@ -328,6 +358,9 @@ intervention(no_intervention).
         " | GROUP RENT ",
         BestRent
     );
+    ?run_id(RunId);
+    ?seed(Seed);
+    results.append("results/adaptive/central_choices.csv", RunId, Seed, Round, BestBid);
     !adopt_central_bid(Round, BestBid).
 
 +!calculate_central_bid_rent(Bid, W, CprA, CprB, Rent)
@@ -466,7 +499,7 @@ intervention(no_intervention).
 +!apply_intervention(none)
 <-
     -intervention(_);
-    +intervention(no_intervention).
+    +intervention(none).
 
 +!apply_intervention(coalition)
 <-
@@ -486,3 +519,66 @@ intervention(no_intervention).
     .println("APPLYING DECENTRALIZED INTERVENTION");
     -intervention(_);
     +intervention(decentralized).
+
++!apply_intervention(keep)
+<-
+    true.
+
+
+// ===========================================================
+// INTERVENTION STABILITY POLICY
+// ===========================================================
+
+// Count consecutive rounds in the +/-15% optimal-investment band.
++!update_optimal_streak(Error)
+    : Error >= -0.15
+    & Error <= 0.15
+    & optimal_streak(Previous)
+<-
+    Next = Previous + 1;
+    -optimal_streak(Previous);
+    +optimal_streak(Next).
+
++!update_optimal_streak(_)
+    : optimal_streak(Previous)
+<-
+    -optimal_streak(Previous);
+    +optimal_streak(0).
+
+// An active intervention must run at least Min rounds before switching.
++!gate_intervention(Current, Proposed, Age, _, keep)
+    : Current \== none
+    & Proposed \== keep
+    & intervention_min_duration(Min)
+    & Age < Min
+<-
+    .println("INTERVENTION HOLD: min duration (", Age, "/", Min, ")").
+
+// Even after the minimum duration, disable only after N optimal rounds.
++!gate_intervention(Current, none, _, Streak, keep)
+    : Current \== none
+    & min_rounds_optimal(Required)
+    & Streak < Required
+<-
+    .println("INTERVENTION HOLD: optimal streak (", Streak, "/", Required, ")").
+
+// Otherwise accept STRIPS's proposed intervention.
++!gate_intervention(_, Proposed, _, _, Proposed)
+<-
+    true.
+
+// 'keep' and unchanged mode leave the start round unchanged.
++!record_intervention_change(_, _, keep)
+<-
+    true.
+
++!record_intervention_change(_, Mode, Mode)
+<-
+    true.
+
+// Mode selected at the end of R takes effect at the start of R+1.
++!record_intervention_change(Round, _, _)
+<-
+    NextStart = Round + 1;
+    -intervention_since(_);
+    +intervention_since(NextStart).

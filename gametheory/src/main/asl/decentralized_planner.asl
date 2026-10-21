@@ -2,7 +2,7 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(300).
+max_rounds(100).
 
 active_agent(agent1).
 active_agent(agent2).

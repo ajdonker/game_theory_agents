@@ -36,6 +36,10 @@ endowment(10).
 market1_return(5).
 cpr_a(23).
 cpr_b(0.25).
+
+// A centralized communication occurs at the END of every fifth round.
+// The selected bid will first be played in the following round.
+comm_interval(5).
 //starting goals
 !start.
 // plans
@@ -530,26 +534,18 @@ cpr_b(0.25).
     strips.plan(BestBid);
 
     .println(
-        "STRIPS PLAN FOUND: enforce_strategy(",
+        "STRIPS PLAN FOUND: enforce_bid(",
         BestBid,
         ")"
     );
-
-    for(active_agent(A))
-    {
-        .send(
-            A,
-            achieve,
-            adopt_central_bid(
-                Round,
-                BestBid
-            )
-        );
-    };
-    .
+    
+    for(active_agent(A)) {
+        .send(A, achieve, adopt_central_bid(Round, BestBid));
+    }.
 @central_adoption_ack[atomic]
 +central_bid_adopted(Round)[source(A)]
-    : active_agent(A)
+    : round(Round)
+    & active_agent(A)
     & not central_adoption_done(A, Round)
 <-
     +central_adoption_done(A, Round);
@@ -592,19 +588,22 @@ cpr_b(0.25).
     true.   
    
 +!maybe_central_communication(Round)
-    : Round mod 5 == 0 
+    : comm_interval(Interval)
+    & Round mod Interval == 0 
 <-
     !find_best_social_strategy(Round).
 
 +!maybe_central_communication(Round)
-    : Round mod 5 \== 0
+    : comm_interval(Interval)
+    & Round mod Interval \== 0
 <-
     +social_choice_finished(Round);
     !maybe_advance_round(Round).            
 
 @receive_comm_bid[atomic]
 +!best_bid_suggestion(Round, Bid, Strategy, Avg)[source(A)]
-    : active_agent(A)
+    : round(Round)
+    & active_agent(A)
     & not comm_bid(A, Round, _, _, _)
 <-
     +comm_bid(A, Round, Bid, Strategy, Avg);
@@ -666,6 +665,13 @@ cpr_b(0.25).
         BestRent);
 
     +best_social_bid(Round, BestBid, BestRent);
+
+    ?run_id(RunId);
+    ?seed(Seed);
+    results.append(
+        "results/centralized/central_choices.csv",
+        RunId, Seed, Round, BestBid, BestRent
+    );
 
     !apply_strips_decision(Round, BestBid).
 

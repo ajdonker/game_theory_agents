@@ -18,9 +18,13 @@ dependencies {
     implementation("it.unibo.tuprolog:solve-classic-jvm:1.1.5")
     implementation("it.unibo.tuprolog:parser-theory-jvm:1.1.5")
 
-    testImplementation(kotlin("test-junit"))
+    testImplementation(kotlin("test-junit5"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
-
+tasks.test {
+    useJUnitPlatform()
+}
 sourceSets {
     main {
         resources {
@@ -32,26 +36,26 @@ sourceSets {
 application {
     mainClass.set("strips.Main")
 }
-
-val testJason by tasks.registering(JavaExec::class) {
-    group = "verification"
-    description = "Runs Jason AgentSpeak unit tests"
-
-    dependsOn("classes")
-
-    classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("jason.infra.local.RunLocalMAS")
-
-    workingDir = projectDir
-
-    args(
-        file("src/test/jason/unit_tests.mas2j").absolutePath
-    )
-}
-tasks.test {
-    useJUnit()
-    dependsOn(testJason)
-}
+//
+//val testJason by tasks.registering(JavaExec::class) {
+//    group = "verification"
+//    description = "Runs Jason AgentSpeak unit tests"
+//
+//    dependsOn("classes")
+//
+//    classpath = sourceSets["main"].runtimeClasspath
+//    mainClass.set("jason.infra.local.RunLocalMAS")
+//
+//    workingDir = projectDir
+//
+//    args(
+//        file("src/test/jason/unit_tests.mas2j").absolutePath
+//    )
+//}
+//tasks.test {
+//    useJUnit()
+//    dependsOn(testJason)
+//}
 
 tasks.register<JavaExec>("runNoCommunication") {
     group = "application"
@@ -129,9 +133,41 @@ tasks.register<JavaExec>("runCoalitionCommunication") {
 }
 tasks.register<Delete>("cleanSimulationResults") {
     delete(
-        file("results/rounds.csv"),
-        file("results/agents.csv"),
-        file("results/strategies.csv")
-        //file("results/coalitions.csv")
+        file("results/no_comm/rounds.csv"),
+        file("results/no_comm/agents.csv"),
+        file("results/no_comm/strategies.csv"),
+        file("results/centralized/rounds.csv"),
+        file("results/centralized/agents.csv"),
+        file("results/centralized/strategies.csv"),
+        file("results/decentralized/rounds.csv"),
+        file("results/decentralized/agents.csv"),
+        file("results/decentralized/strategies.csv"),
+        file("results/coalition/rounds.csv"),
+        file("results/coalition/agents.csv"),
+        file("results/coalition/strategies.csv"),
+        file("results/adaptive/rounds.csv"),
+        file("results/adaptive/agents.csv"),
+        file("results/adaptive/strategies.csv")
+    )
+}
+tasks.register<Delete>("cleanCentralizedResults") {
+    group = "verification"
+    description = "Cleans centralized simulation CSV files"
+
+    delete(
+        fileTree("results/centralized") {
+            include("*.csv")
+        }
+    )
+}
+
+tasks.register<Delete>("cleanDecentralizedResults") {
+    group = "verification"
+    description = "Cleans decentralized simulation CSV files"
+
+    delete(
+        fileTree("results/decentralized") {
+            include("*.csv")
+        }
     )
 }

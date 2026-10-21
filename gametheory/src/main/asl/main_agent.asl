@@ -62,6 +62,7 @@ agent_index(agent8, 8).
 
 all_agents([agent1, agent2, agent3, agent4, agent5, agent6, agent7, agent8]).
 comm_interval(5).
+strat_reeval_interval(3).
 trust_threshold(0.6).
 trust_learning_rate(0.02).
 trust_max_step(0.1).
@@ -293,6 +294,41 @@ coalition_bid_threshold(2).
     -candidate_bid(central_bid(_), _);
     +candidate_bid(central_bid(Bid), Bid).
 
++!generate_strategy_bid(comm(_)) <-
+    true.
+
++!init_trust
+    : all_agents(Agents)
+    & not trust_initialized
+    & default_trust(Default)
+<-
+    .my_name(Me);
+    +trust_initialized;
+    !init_trust_except_me(Agents, Me, Default).
+
++!init_trust
+    : trust_initialized
+<-
+    true.
+
++!init_trust_except_me([Agent | Rest], Me, Default)
+    : Agent \== Me
+<-
+    +trust(Agent, Default);
+    !init_trust_except_me(Rest, Me, Default).
+
++!init_trust_except_me([Agent | Rest], Me, Default)
+    : Agent == Me
+<-
+    !init_trust_except_me(Rest, Me, Default).
+
++!init_trust_except_me([], _, _)
+<-
+    true.
+
+// generation plans end
+
+//
 +!play_current_strategy(Round)
     : current_strategy(Strategy)
     & candidate_bid(Strategy, Bid)
@@ -365,18 +401,12 @@ coalition_bid_threshold(2).
     !maybe_select_strategy(Round);
     .send(Planner, tell, round_finished(Round)).
 
-+!finish_intervention_round(Round, _, _, Planner)
-    : intervention(no_intervention)
-<-
-    !maybe_select_strategy(Round);
-    .send(Planner, tell, round_finished(Round)).
-
 +!finish_intervention_round(Round, ActualBid, GroupTotal, Planner)
     : intervention(decentralized)
     & comm_interval(Interval)
     & Round mod Interval == 0
 <-
-    !start_decentralized_communication(Round, ActualBid, GroupTotal).
+            !start_decentralized_communication(Round, ActualBid, GroupTotal).
 
 +!finish_intervention_round(Round, _, _, Planner)
     : intervention(decentralized)
@@ -591,6 +621,12 @@ coalition_bid_threshold(2).
         & received_preferences(Round, Peer, PeerPreferences)
         & .member(Me, PeerPreferences)) {
         +coalition_peer(Round, Peer);
+        ?run_id(RunId);
+        ?planner_seed(Seed);
+        results.append(
+            "results/adaptive/coalition_links.csv",
+            RunId, Seed, Round, Me, Peer
+        );
     };
     .count(coalition_peer(Round, _), PeerCount);
     !start_coalition_exchange(Round).
@@ -681,6 +717,13 @@ coalition_bid_threshold(2).
 
 +!scan_coalition_bids(Round, [], BestBid, _, _, _, Planner)
 <-
+    ?run_id(RunId);
+    ?planner_seed(Seed);
+    .my_name(Me);
+    results.append(
+        "results/adaptive/coalition_choices.csv",
+        RunId, Seed, Round, Me, BestBid
+    );
     !install_comm_strategy(BestBid);
     .send(Planner, tell, round_finished(Round)).
 
@@ -697,6 +740,13 @@ coalition_bid_threshold(2).
     : not received_comm_bid(Round, Sender, _)
 <-
     +received_comm_bid(Round, Sender, Bid);
+    ?run_id(RunId);
+    ?planner_seed(Seed);
+    .my_name(Me);
+    results.append(
+        "results/adaptive/decentralized_suggestions.csv",
+        RunId, Seed, Round, Me, Sender, Bid
+    );
     !check_comm_ready(Round).
 
 +!check_comm_ready(Round)
@@ -730,6 +780,13 @@ coalition_bid_threshold(2).
     };
     ?best_comm_bid(Round, BestBid, BestPayoff);
     .println("COMM ROUND ", Round, " | SELECTED BID ", BestBid, " | EXPECTED PAYOFF ", BestPayoff);
+    ?run_id(RunId);
+    ?planner_seed(Seed);
+    .my_name(Me);
+    results.append(
+        "results/adaptive/decentralized_choices.csv",
+        RunId, Seed, Round, Me, BestBid
+    );
     !install_comm_strategy(BestBid);
     ?planner_name(Planner);
     .send(Planner, tell, round_finished(Round)).
@@ -780,35 +837,6 @@ coalition_bid_threshold(2).
 
 +!remove_old_comm_strategy
     : not strategy_score(comm(_), _, _)
-<-
-    true.
-
-+!init_trust
-    : all_agents(Agents)
-    & not trust_initialized
-    & default_trust(Default)
-<-
-    .my_name(Me);
-    +trust_initialized;
-    !init_trust_except_me(Agents, Me, Default).
-
-+!init_trust
-    : trust_initialized
-<-
-    true.
-
-+!init_trust_except_me([Agent | Rest], Me, Default)
-    : Agent \== Me
-<-
-    +trust(Agent, Default);
-    !init_trust_except_me(Rest, Me, Default).
-
-+!init_trust_except_me([Agent | Rest], Me, Default)
-    : Agent == Me
-<-
-    !init_trust_except_me(Rest, Me, Default).
-
-+!init_trust_except_me([], _, _)
 <-
     true.
 
@@ -883,7 +911,7 @@ coalition_bid_threshold(2).
     // results.append(
     // "results/strategies.csv", Seed, Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
     results.append(
-    "results/no_comm/strategies.csv",
+    "results/adaptive/strategies.csv",
         RunId, Seed, Round,
         Me, Strategy, AlternativeBid,
         CounterPayoff, NewSum, NewN
@@ -943,12 +971,14 @@ coalition_bid_threshold(2).
     true.
 
 +! maybe_select_strategy(Round)
-    : Round mod 3 == 0
+    : strat_reeval_interval(Interval)
+    & Round mod Interval == 0
 <-
     !select_best_strategy.
 
 +! maybe_select_strategy(Round)
-    : Round mod 3 \== 0
+    : strat_reeval_interval(Interval)
+        & Round mod Interval \== 0
 <-
     true.
 

@@ -73,6 +73,11 @@ agent_index(agent8, 8).
     -planner_seed(_);
     +planner_seed(Seed);
 
+    // Remove last round's counterfactual observations.
+    for(counterfactual_return(OldRound, Strategy, Payoff)) {
+        -counterfactual_return(OldRound, Strategy, Payoff);
+    };
+
     !pick_random_strategies(Seed);
 
     !generate_strategy_bids(Round);
@@ -375,6 +380,9 @@ agent_index(agent8, 8).
 
     CounterPayoff = CounterMarket1 + CounterMarket2;
 
+    // Needed to compare an imposed bid with this round's individual alternatives.
+    +counterfactual_return(Round, Strategy, CounterPayoff);
+
     NewSum = Sum + CounterPayoff;
     NewN = N + 1;
 
@@ -445,14 +453,70 @@ agent_index(agent8, 8).
 <-
     true.
 
-+! maybe_select_strategy(Round) 
+// Regular agents reevaluate their strategy every three rounds.
++!maybe_select_strategy(Round)
     : Round mod 3 == 0
+    & not current_strategy(central_bid(_))
 <-
     !select_best_strategy.
 
-+! maybe_select_strategy(Round)
+// An agent following the central bid can defect only when its OWN
+// current-round counterfactual payoff is strictly higher.
++!maybe_select_strategy(Round)
+    : Round mod 3 == 0
+    & current_strategy(central_bid(_))
+    & last_total_return(ActualPayoff)
+<-
+    !consider_central_defection(Round, ActualPayoff).
+
++!maybe_select_strategy(Round)
     : Round mod 3 \== 0
-<- 
+<-
+    true.
+
++!consider_central_defection(Round, ActualPayoff)
+    : counterfactual_return(Round, _, _)
+<-
+    .findall([Payoff, Strategy],
+        counterfactual_return(Round, Strategy, Payoff),
+        Alternatives);
+    .sort(Alternatives, Sorted);
+    .length(Sorted, Size);
+    Last = Size - 1;
+    .nth(Last, Sorted, [BestPayoff, BestStrategy]);
+    !switch_from_central_if_better(Round, ActualPayoff, BestStrategy, BestPayoff).
+
++!consider_central_defection(Round, _)
+    : not counterfactual_return(Round, _, _)
+<-
+    true.
+
++!switch_from_central_if_better(Round, ActualPayoff, BestStrategy, BestPayoff)
+    : current_strategy(central_bid(ImposedBid))
+    & BestPayoff > ActualPayoff
+    & candidate_bid(BestStrategy, AlternativeBid)
+    & run_id(RunId)
+    & planner_seed(Seed)
+<-
+    .my_name(Me);
+    results.append(
+        "results/centralized/defections.csv",
+        RunId, Seed, Round, Me, ImposedBid,
+        BestStrategy, AlternativeBid, ActualPayoff, BestPayoff
+    );
+    -current_strategy(_);
+    +current_strategy(BestStrategy);
+    .println("DEFECTED FROM CENTRAL: ", Me,
+        " round ", Round,
+        " central bid ", ImposedBid,
+        " -> ", BestStrategy,
+        " bid ", AlternativeBid,
+        " | payoff ", ActualPayoff,
+        " -> ", BestPayoff).
+
++!switch_from_central_if_better(_, ActualPayoff, _, BestPayoff)
+    : ActualPayoff >= BestPayoff
+<-
     true.
 
 +!select_best_strategy
@@ -635,4 +699,3 @@ agent_index(agent8, 8).
     : candidate_bid(BestStrategy, Bid)
 <-
     .send(Planner, achieve, best_bid_suggestion(Round, Bid, BestStrategy, BestAvg)).
-

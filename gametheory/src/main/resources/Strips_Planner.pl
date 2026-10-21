@@ -1,3 +1,4 @@
+
 action(
     enforce_bid(B),
     'if'([
@@ -10,60 +11,118 @@ action(
     '-'([]),
     where(true)
 ).
+% =========================================
+% CENTRALIZED BID ENFORCEMENT
+% =========================================
 
-action(
-    enable_coalitions,
-    'if'([mode_decentralized, investment_low, dispersion_high]),
-    '+'([mode_coalition]),
-    '-'([mode_decentralized]),
-    where(true)
-).
-action(
-    disable_coalitions,
-    'if'([mode_coalition, investment_low, dispersion_low]),
-    '+'([mode_decentralized]),
-    '-'([mode_coalition]),
-    where(true)
-).
+central_plan(BestBid, Plan) :-
+    strips(
+        [evaluations_collected, best_bid(BestBid)],
+        [bid_enforced(BestBid)],
+        Plan
+    ).
+
+    
+% =========================================
+% HIGH INVESTMENT -> CENTRALIZED
+% =========================================
 action(
     enable_centralized,
     'if'([mode_none, investment_high]),
-    '+'([mode_centralized]),
-    '-'([mode_none]),
+    '+'([mode_centralized, investment_optimal]),
+    '-'([mode_none, investment_high]),
     where(true)
 ).
 action(
     switch_decentralized_to_centralized,
     'if'([mode_decentralized, investment_high]),
-    '+'([mode_centralized]),
-    '-'([mode_decentralized]),
+    '+'([mode_centralized, investment_optimal]),
+    '-'([mode_decentralized, investment_high]),
     where(true)
 ).
 action(
     switch_coalition_to_centralized,
     'if'([mode_coalition, investment_high]),
-    '+'([mode_centralized]),
-    '-'([mode_coalition]),
+    '+'([mode_centralized, investment_optimal]),
+    '-'([mode_coalition, investment_high]),
     where(true)
 ).
 action(
+    maintain_centralized,
+    'if'([mode_centralized, investment_high]),
+    '+'([investment_optimal]),
+    '-'([investment_high]),
+    where(true)
+).
+% =========================================
+% LOW INVESTMENT, LOW DISPERSION
+% -> DECENTRALIZED
+% =========================================
+action(
     enable_decentralized,
-    'if'([mode_none, investment_low]),
-    '+'([mode_decentralized]),
-    '-'([mode_none]),
+    'if'([mode_none, investment_low, dispersion_low]),
+    '+'([mode_decentralized, investment_optimal]),
+    '-'([mode_none, investment_low]),
     where(true)
 ).
 action(
     switch_centralized_to_decentralized,
-    'if'([mode_centralized, investment_low]),
-    '+'([mode_decentralized]),
-    '-'([mode_centralized]),
+    'if'([mode_centralized, investment_low, dispersion_low]),
+    '+'([mode_decentralized, investment_optimal]),
+    '-'([mode_centralized, investment_low]),
     where(true)
 ).
 action(
     switch_coalition_to_decentralized,
     'if'([mode_coalition, investment_low, dispersion_low]),
+    '+'([mode_decentralized, investment_optimal]),
+    '-'([mode_coalition, investment_low]),
+    where(true)
+).
+action(
+maintain_decentralized,
+    'if'([mode_decentralized, investment_low, dispersion_low]),
+    '+'([investment_optimal]),
+    '-'([investment_low]),
+    where(true)
+).
+% =========================================
+% LOW INVESTMENT, HIGH DISPERSION
+% -> COALITIONS
+% =========================================
+% First establish decentralized communication.
+action(
+    prepare_coalitions_from_none,
+    'if'([mode_none, investment_low, dispersion_high]),
     '+'([mode_decentralized]),
+    '-'([mode_none]),
+    where(true)
+).
+action(
+    prepare_coalitions_from_centralized,
+    'if'([mode_centralized, investment_low, dispersion_high]),
+    '+'([mode_decentralized]),
+    '-'([mode_centralized]),
+    where(true)
+).
+action(
+    enable_coalitions,
+    'if'([mode_decentralized, investment_low, dispersion_high]),
+    '+'([mode_coalition, investment_optimal]),
+    '-'([mode_decentralized, investment_low]),
+    where(true)
+).
+action(
+    maintain_coalitions,
+    'if'([mode_coalition, investment_low, dispersion_high]),
+    '+'([investment_optimal]),
+    '-'([investment_low]),
+    where(true)
+).
+action(
+    disable_coalitions,
+    'if'([mode_coalition, investment_optimal, dispersion_low]),
+    '+'([mode_none]),
     '-'([mode_coalition]),
     where(true)
 ).
@@ -89,20 +148,20 @@ action(
     where(true)
 ).
 
-desired_mode(State, mode_coalition) :-
-    member(investment_low, State),
-    member(dispersion_high, State),
-    member(mode_decentralized, State),
-    !.
-desired_mode(State, mode_coalition) :-
-    member(investment_low, State),
-    member(dispersion_high, State),
-    member(mode_coalition, State),
-    !.
-desired_mode(State, mode_centralized) :- member(investment_high, State), !.
-desired_mode(State, mode_decentralized) :- member(investment_low, State), !.
-desired_mode(State, mode_none) :- member(investment_optimal, State), !.
-
+% Investment already optimal: disable intervention
 intervention_plan(InitState, Plan) :-
-    desired_mode(InitState, GoalMode),
-    strips(InitState, [GoalMode], Plan).
+    member(investment_optimal, InitState),
+    !,
+    strips(
+        InitState,
+        [investment_optimal, mode_none],
+        Plan
+    ).
+
+% Investment not optimal: achieve optimal investment
+intervention_plan(InitState, Plan) :-
+    strips(
+        InitState,
+        [investment_optimal],
+        Plan
+    ).
