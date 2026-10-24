@@ -1,0 +1,3111 @@
+> Task :gametheory:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gametheory:compileKotlin UP-TO-DATE
+> Task :gametheory:compileJava NO-SOURCE
+> Task :gametheory:processResources
+> Task :gametheory:classes
+
+> Task :gametheory:runCentralizedCommunication
+Runtime Services (RTS) is running at 192.168.5.88:45565
+Agent mind inspector is running at http://192.168.5.88:3272
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:486)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.asSyntax.Literal addAnnot
+SEVERE: addAnnot(source(self)) is not implemented in the class TrueLiteral of object true
+java.lang.Exception
+	at jason.asSyntax.Literal.addAnnot(Literal.java:286)
+	at jason.asSemantics.Agent.addBel(Agent.java:932)
+	at jason.asSemantics.Agent.addInitBel(Agent.java:493)
+	at jason.asSemantics.Agent.addInitialBelsInBB(Agent.java:466)
+	at jason.asSemantics.Agent.loadInitialAS(Agent.java:135)
+	at jason.asSemantics.Agent.create(Agent.java:102)
+	at jason.infra.local.LocalAgArch.createArchs(LocalAgArch.java:89)
+	at jason.infra.local.RunLocalMAS.createAgs(RunLocalMAS.java:622)
+	at jason.infra.local.RunLocalMAS.create(RunLocalMAS.java:329)
+	at jason.infra.local.RunLocalMAS.main(RunLocalMAS.java:83)
+
+Oct 24, 2026 4:35:32 PM jason.bb.DefaultBeliefBase add
+SEVERE: Error: 'true' can not be added in the belief base.
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STARTING SIM
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [total_return_1,group_average_1,total_return_4,unit_return_all_dec3]CURRENT: total_return_1 SEED: 4203
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [group_average_1,total_return_1,group_average_2,unit_return_3]CURRENT: group_average_1 SEED: 4208
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [unit_return_3,total_return_2,unit_return_all_dec5,group_average_1]CURRENT: unit_return_3 SEED: 4206
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [unit_return_2,group_average_0,total_return_3,unit_return_4]CURRENT: unit_return_2 SEED: 4207
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [group_average_2,unit_return_3,total_return_1,group_average_1]CURRENT: group_average_2 SEED: 4202
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: group_average_1 BID: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [total_return_all_dec3,group_average_0,group_average_2,total_return_3]CURRENT: total_return_all_dec3 SEED: 4201
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [group_average_1,group_average_2,unit_return_3,total_return_all_dec3]CURRENT: group_average_1 SEED: 4205
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent8 -> Market 2: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STRATEGY POOL: [group_average_3,total_return_2,total_return_1,total_return_all_dec5]CURRENT: group_average_3 SEED: 4204
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: total_return_1 BID: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: unit_return_3 BID: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: group_average_1 BID: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent3 -> Market 2: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: unit_return_2 BID: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: group_average_3 BID: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent6 -> Market 2: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: total_return_all_dec3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 STRATEGY: group_average_2 BID: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent5 -> Market 2: 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent7 -> Market 2: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent4 -> Market 2: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent1 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 BY: agent2 -> Market 2: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 | M2=23 | GROUP AVG = 2.875 | RENT=281.75 | % OPTIMUM=86.95987654320987
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 2 | M1 return: 40 | M2 return: 34.5 | TOTAL: 74.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 74.5 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 10 | M1 return: 0 | M2 return: 172.5 | TOTAL: 172.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 172.5 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 3 | M1 return: 35 | M2 return: 51.75 | TOTAL: 86.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 86.75 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 2 | M1 return: 40 | M2 return: 34.5 | TOTAL: 74.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 74.5 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 1 | M1 return: 45 | M2 return: 17.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_3 BID=3 PAYOFF=92.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_1 BID=1 PAYOFF=62.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_all_dec5 BID=10 PAYOFF=155.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 62.25 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 3 | M1 return: 35 | M2 return: 51.75 | TOTAL: 86.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_2 BID=2 PAYOFF=78.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 86.75 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_1 BID=1 PAYOFF=62.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 1 | M1 return: 45 | M2 return: 17.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_1 BID=1 PAYOFF=62.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_4 BID=4 PAYOFF=97.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_all_dec3 BID=10 PAYOFF=150.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 1 | M1 return: 45 | M2 return: 17.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 62.25 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_0 BID=0 PAYOFF=50.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_3 BID=3 PAYOFF=86.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_1 BID=1 PAYOFF=62.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 1 PAYOFF: 62.25 GROUP INVESTMENT: 23
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_3 BID=3 PAYOFF=86.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 1 | STRATEGY group_average_1 | BID 1 | PAYOFF 62.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_2 BID=2 PAYOFF=75.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_2 BID=2 PAYOFF=74.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_all_dec3 BID=10 PAYOFF=172.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_all_dec3 BID=10 PAYOFF=150.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 1 | STRATEGY total_return_3 | BID 3 | PAYOFF 92
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_3 BID=3 PAYOFF=85.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_3 BID=3 PAYOFF=85.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_all_dec5 BID=10 PAYOFF=155.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 1 | STRATEGY total_return_all_dec5 | BID 10 | PAYOFF 155
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 1 | STRATEGY group_average_2 | BID 2 | PAYOFF 78.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_3 BID=3 PAYOFF=86.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_4 BID=4 PAYOFF=96.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_2 BID=2 PAYOFF=74.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 1 | STRATEGY total_return_1 | BID 1 | PAYOFF 62.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_0 BID=0 PAYOFF=50.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_2 BID=2 PAYOFF=74.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_2 BID=2 PAYOFF=75.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 1 | STRATEGY total_return_1 | BID 1 | PAYOFF 62.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_1 BID=1 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_1 BID=1 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_1 BID=1 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 1 | STRATEGY unit_return_4 | BID 4 | PAYOFF 97
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_2 BID=2 PAYOFF=74.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED unit_return_3 BID=3 PAYOFF=86.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 1 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 150
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED group_average_1 BID=1 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 1 | STRATEGY group_average_0 | BID 0 | PAYOFF 50
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 1 | STRATEGY unit_return_3 | BID 3 | PAYOFF 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 1 EVALUATED total_return_1 BID=1 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 1 | STRATEGY group_average_1 | BID 1 | PAYOFF 62.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 1 | STRATEGY total_return_2 | BID 2 | PAYOFF 75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 1 | STRATEGY total_return_3 | BID 3 | PAYOFF 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 1 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 172.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 1 | STRATEGY unit_return_all_dec3 | BID 10 | PAYOFF 150
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 1 | STRATEGY group_average_2 | BID 2 | PAYOFF 74.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 1 | STRATEGY unit_return_3 | BID 3 | PAYOFF 85.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 1 | STRATEGY unit_return_3 | BID 3 | PAYOFF 85.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 1 | STRATEGY unit_return_all_dec5 | BID 10 | PAYOFF 155
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 1 | STRATEGY group_average_3 | BID 3 | PAYOFF 86.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 1 | STRATEGY group_average_0 | BID 0 | PAYOFF 50
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 1 | STRATEGY total_return_4 | BID 4 | PAYOFF 96
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 1 | STRATEGY group_average_2 | BID 2 | PAYOFF 74
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 1 | STRATEGY group_average_2 | BID 2 | PAYOFF 74
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 1 | STRATEGY total_return_2 | BID 2 | PAYOFF 75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 1 | STRATEGY group_average_1 | BID 1 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 1 | STRATEGY group_average_1 | BID 1 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 1 | STRATEGY unit_return_2 | BID 2 | PAYOFF 74.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 1 | STRATEGY total_return_1 | BID 1 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 1 | STRATEGY unit_return_3 | BID 3 | PAYOFF 86.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 1 | STRATEGY group_average_1 | BID 1 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 1 | STRATEGY total_return_1 | BID 1 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 1
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: unit_return_2 BID: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: group_average_2 BID: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: group_average_1 BID: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: group_average_1 BID: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: total_return_1 BID: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: group_average_3 BID: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent7 -> Market 2: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: unit_return_3 BID: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 STRATEGY: total_return_all_dec3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent2 -> Market 2: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent8 -> Market 2: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent5 -> Market 2: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent3 -> Market 2: 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent4 -> Market 2: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent6 -> Market 2: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 BY: agent1 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 | M2=37 | GROUP AVG = 4.625 | RENT=323.75 | % OPTIMUM=99.92283950617283
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 10 | M1 return: 0 | M2 return: 137.5 | TOTAL: 137.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 137.5 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 6 | M1 return: 20 | M2 return: 82.5 | TOTAL: 102.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 102.5 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 5 | M1 return: 25 | M2 return: 68.75 | TOTAL: 93.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION 1 -> -1 PAYOFF 172.5 -> 137.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 93.75 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 2 | M1 return: 40 | M2 return: 27.5 | TOTAL: 67.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 67.5 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_all_dec3 BID=10 PAYOFF=137.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 3 | M1 return: 35 | M2 return: 41.25 | TOTAL: 76.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_3 BID=5 PAYOFF=93.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 76.25 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 3 | M1 return: 35 | M2 return: 41.25 | TOTAL: 76.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_3 BID=6 PAYOFF=102.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_0 BID=2 PAYOFF=71.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 76.25 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 4 | M1 return: 30 | M2 return: 55 | TOTAL: 85
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_2 BID=4 PAYOFF=86.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_1 BID=2 PAYOFF=67.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_2 BID=4 PAYOFF=91.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_1 BID=3 PAYOFF=76.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_1 BID=3 PAYOFF=75.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 85 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_1 BID=2 PAYOFF=69.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_3 BID=6 PAYOFF=108.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_1 BID=2 PAYOFF=68.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 4 | M1 return: 30 | M2 return: 55 | TOTAL: 85
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec5 DIRECTION 1 -> -1 PAYOFF 155 -> 125
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_4 BID=8 PAYOFF=108.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_2 BID=4 PAYOFF=87.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 2 PAYOFF: 85 GROUP INVESTMENT: 37
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_1 BID=3 PAYOFF=76.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_all_dec5 BID=10 PAYOFF=125.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 2 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 137.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_all_dec3 BID=7 PAYOFF=102.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_2 BID=4 PAYOFF=85.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 2 | STRATEGY group_average_3 | BID 5 | PAYOFF 93.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_2 BID=4 PAYOFF=85.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_2 BID=4 PAYOFF=84.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_2 BID=4 PAYOFF=84.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 2 | STRATEGY unit_return_3 | BID 6 | PAYOFF 102.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_0 BID=2 PAYOFF=68.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 2 | STRATEGY group_average_0 | BID 2 | PAYOFF 71.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_3 BID=6 PAYOFF=98.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_all_dec5 BID=5 PAYOFF=95.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 2 | STRATEGY total_return_1 | BID 2 | PAYOFF 67.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_3 BID=6 PAYOFF=99.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION 1 -> -1 PAYOFF 150 -> 120
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_3 BID=6 PAYOFF=98.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_3 BID=6 PAYOFF=99.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_1 BID=2 PAYOFF=68.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 2 | STRATEGY total_return_2 | BID 4 | PAYOFF 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED total_return_all_dec3 BID=10 PAYOFF=120.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_1 BID=3 PAYOFF=78.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 2 | STRATEGY group_average_2 | BID 4 | PAYOFF 91
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED group_average_1 BID=3 PAYOFF=77.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 2 | STRATEGY group_average_1 | BID 3 | PAYOFF 76.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 2 | STRATEGY group_average_1 | BID 3 | PAYOFF 76.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 2 EVALUATED unit_return_4 BID=8 PAYOFF=112.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 2 | STRATEGY total_return_1 | BID 2 | PAYOFF 69
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 2 | STRATEGY group_average_1 | BID 3 | PAYOFF 75.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 2 | STRATEGY total_return_3 | BID 6 | PAYOFF 108.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 2 | STRATEGY total_return_2 | BID 4 | PAYOFF 87
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 2 | STRATEGY total_return_1 | BID 2 | PAYOFF 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 2 | STRATEGY total_return_4 | BID 8 | PAYOFF 108
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 2 | STRATEGY group_average_2 | BID 4 | PAYOFF 85
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 2 | STRATEGY total_return_all_dec5 | BID 10 | PAYOFF 125
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 2 | STRATEGY group_average_2 | BID 4 | PAYOFF 84
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 2 | STRATEGY unit_return_all_dec3 | BID 7 | PAYOFF 102.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 2 | STRATEGY unit_return_2 | BID 4 | PAYOFF 85
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 2 | STRATEGY group_average_2 | BID 4 | PAYOFF 84
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 2 | STRATEGY group_average_0 | BID 2 | PAYOFF 68.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 2 | STRATEGY unit_return_3 | BID 6 | PAYOFF 98
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 2 | STRATEGY unit_return_3 | BID 6 | PAYOFF 99.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 2 | STRATEGY unit_return_all_dec5 | BID 5 | PAYOFF 95
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 2 | STRATEGY total_return_3 | BID 6 | PAYOFF 99.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 2 | STRATEGY unit_return_3 | BID 6 | PAYOFF 98
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 2 | STRATEGY group_average_1 | BID 3 | PAYOFF 78.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 2 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 120
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 2 | STRATEGY total_return_1 | BID 2 | PAYOFF 68.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 2 | STRATEGY group_average_1 | BID 3 | PAYOFF 77
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 2 | STRATEGY unit_return_4 | BID 8 | PAYOFF 112
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 2
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: group_average_2 BID: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: group_average_1 BID: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: total_return_1 BID: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: total_return_all_dec3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent2 -> Market 2: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: group_average_3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent5 -> Market 2: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent3 -> Market 2: 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: group_average_1 BID: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent1 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: unit_return_3 BID: 9
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent4 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 STRATEGY: unit_return_2 BID: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent8 -> Market 2: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent6 -> Market 2: 9
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 BY: agent7 -> Market 2: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 | M2=48 | GROUP AVG = 6 | RENT=288 | % OPTIMUM=88.88888888888889
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 6 | M1 return: 20 | M2 return: 66 | TOTAL: 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 86 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 9 | M1 return: 5 | M2 return: 99 | TOTAL: 104
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 104 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 5 | M1 return: 25 | M2 return: 55 | TOTAL: 80
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 80 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 7 | M1 return: 15 | M2 return: 77 | TOTAL: 92
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 92 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_4 BID=10 PAYOFF=100.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_1 BID=5 PAYOFF=85.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 7 | M1 return: 15 | M2 return: 77 | TOTAL: 92
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec5 DIRECTION -1 -> 1 PAYOFF 125 -> 82.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_3 BID=9 PAYOFF=95.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 92 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION 1 -> -1 PAYOFF 99.5 -> 97.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 3 | M1 return: 35 | M2 return: 33 | TOTAL: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_all_dec5 BID=5 PAYOFF=82.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_all_dec5 BID=10 PAYOFF=107.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION 1 -> -1 PAYOFF 108.5 -> 99.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 5 | M1 return: 25 | M2 return: 55 | TOTAL: 80
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_1 BID=3 PAYOFF=71.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 6 | M1 return: 20 | M2 return: 66 | TOTAL: 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 86 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 3 | STRATEGY group_average_1 | BID 5 | PAYOFF 85
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_1 BID=5 PAYOFF=81.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 3 | STRATEGY unit_return_4 | BID 10 | PAYOFF 100
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_1 BID=3 PAYOFF=70.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_3 BID=9 PAYOFF=97.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_3 BID=9 PAYOFF=99.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_2 BID=6 PAYOFF=84.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 68 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_2 BID=6 PAYOFF=87.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_2 BID=6 PAYOFF=87.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_2 BID=6 PAYOFF=90.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_3 BID=9 PAYOFF=97.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_1 BID=3 PAYOFF=69.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_0 BID=4 PAYOFF=76.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_3 BID=7 PAYOFF=92.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_0 BID=4 PAYOFF=77.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_3 BID=9 PAYOFF=104.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION -1 -> 1 PAYOFF 137.5 -> 92
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_all_dec5 AVG RETURN: 120.83
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 3 PAYOFF: 80 GROUP INVESTMENT: 48
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 3 | STRATEGY unit_return_3 | BID 9 | PAYOFF 95
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_all_dec3 BID=10 PAYOFF=92.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_2 BID=6 PAYOFF=86.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_2 BID=6 PAYOFF=86.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_1 BID=5 PAYOFF=80.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_all_dec3 BID=7 PAYOFF=92.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_all_dec5 AVG RETURN: 119.17
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION -1 -> 1 PAYOFF 120 -> 88.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 3 | STRATEGY unit_return_all_dec5 | BID 10 | PAYOFF 107.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_4 DIRECTION 1 -> -1 PAYOFF 108 -> 92.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_3 AVG RETURN: 94.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_all_dec3 AVG RETURN: 134.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 3 | STRATEGY total_return_all_dec5 | BID 5 | PAYOFF 82.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_3 AVG RETURN: 92.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_4 BID=10 PAYOFF=92.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_all_dec3 BID=7 PAYOFF=88.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 3 | STRATEGY group_average_2 | BID 6 | PAYOFF 84.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 3 | STRATEGY total_return_3 | BID 9 | PAYOFF 97.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_1 BID=5 PAYOFF=77.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 3 | STRATEGY total_return_1 | BID 3 | PAYOFF 71
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED unit_return_3 BID=9 PAYOFF=95.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 3 | STRATEGY total_return_2 | BID 6 | PAYOFF 90.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 3 | STRATEGY total_return_3 | BID 9 | PAYOFF 99.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED total_return_1 BID=3 PAYOFF=68.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_2 BID=6 PAYOFF=84.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 3 | STRATEGY total_return_2 | BID 6 | PAYOFF 87.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_4 AVG RETURN: 103.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_all_dec3 AVG RETURN: 115.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 3 | STRATEGY group_average_1 | BID 5 | PAYOFF 81.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 3 EVALUATED group_average_1 BID=5 PAYOFF=80.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 3 | STRATEGY total_return_1 | BID 3 | PAYOFF 70.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 3 | STRATEGY unit_return_3 | BID 9 | PAYOFF 97.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_all_dec3 AVG RETURN: 119.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 3 | STRATEGY group_average_0 | BID 4 | PAYOFF 76
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 3 | STRATEGY group_average_2 | BID 6 | PAYOFF 87.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 3 | STRATEGY total_return_1 | BID 3 | PAYOFF 69.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 3 | STRATEGY unit_return_all_dec3 | BID 10 | PAYOFF 92.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 3 | STRATEGY group_average_3 | BID 7 | PAYOFF 92
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 3 | STRATEGY group_average_0 | BID 4 | PAYOFF 77
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 3 | STRATEGY unit_return_3 | BID 9 | PAYOFF 104
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 3 | STRATEGY group_average_2 | BID 6 | PAYOFF 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 3 | STRATEGY group_average_1 | BID 5 | PAYOFF 80
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 3 | STRATEGY unit_return_2 | BID 6 | PAYOFF 86
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 3 | STRATEGY total_return_all_dec3 | BID 7 | PAYOFF 92
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 3 | STRATEGY total_return_all_dec3 | BID 7 | PAYOFF 88.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 3 | STRATEGY total_return_4 | BID 10 | PAYOFF 92.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 3 | STRATEGY group_average_1 | BID 5 | PAYOFF 77.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 3 | STRATEGY unit_return_3 | BID 9 | PAYOFF 95
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 3 | STRATEGY total_return_1 | BID 3 | PAYOFF 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 3 | STRATEGY group_average_2 | BID 6 | PAYOFF 84.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 3 | STRATEGY group_average_1 | BID 5 | PAYOFF 80
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 3
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: unit_return_4 BID: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: total_return_all_dec5 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: total_return_all_dec3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: unit_return_all_dec3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: unit_return_all_dec5 BID: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent7 -> Market 2: 6
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 STRATEGY: total_return_all_dec3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent4 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent2 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent1 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent3 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent8 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent6 -> Market 2: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 BY: agent5 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 | M2=68 | GROUP AVG = 8.5 | RENT=68 | % OPTIMUM=20.987654320987655
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 5 | M1 return: 25 | M2 return: 30 | TOTAL: 55
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 55 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_1 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 7 | M1 return: 15 | M2 return: 42 | TOTAL: 57
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_3 BID=10 PAYOFF=47.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 57 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_1 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_2 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION 1 -> -1 PAYOFF 92 -> 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_2 DIRECTION 1 -> -1 PAYOFF 90.5 -> 52
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 69.5 -> 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_all_dec3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 68 -> 57
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_2 BID=8 PAYOFF=52.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_1 BID=4 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_1 BID=4 PAYOFF=57.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_2 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_0 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_all_dec5 BID=5 PAYOFF=55.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_2 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION 1 -> -1 PAYOFF 88.5 -> 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 6 | M1 return: 20 | M2 return: 36 | TOTAL: 56
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_all_dec3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_1 BID=7 PAYOFF=57.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_3 BID=9 PAYOFF=61.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_1 BID=7 PAYOFF=53.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_4 DIRECTION -1 -> 1 PAYOFF 92.5 -> 57.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_2 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 4 PAYOFF: 56 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_2 DIRECTION 1 -> -1 PAYOFF 87.5 -> 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 70.25 -> 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 4 | STRATEGY group_average_1 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_4 BID=6 PAYOFF=57.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION -1 -> 1 PAYOFF 99.5 -> 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 4 | STRATEGY unit_return_3 | BID 10 | PAYOFF 47.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_1 BID=4 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 4 | STRATEGY group_average_1 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_2 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 4 | STRATEGY group_average_2 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_3 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 4 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_2 BID=8 PAYOFF=54.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 71 -> 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_1 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 4 | STRATEGY total_return_2 | BID 8 | PAYOFF 52
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_all_dec3 BID=7 PAYOFF=57.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 4 | STRATEGY total_return_1 | BID 4 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_1 BID=4 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 4 | STRATEGY total_return_1 | BID 4 | PAYOFF 57
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED group_average_0 BID=6 PAYOFF=56.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 4 | STRATEGY group_average_0 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec5 DIRECTION 1 -> -1 PAYOFF 82.5 -> 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 4 | STRATEGY unit_return_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION -1 -> 1 PAYOFF 97.25 -> 56
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 4 | STRATEGY group_average_2 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_all_dec5 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 4 | STRATEGY unit_return_all_dec5 | BID 5 | PAYOFF 55
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED total_return_3 BID=6 PAYOFF=56.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 4 | STRATEGY group_average_2 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 4 | STRATEGY group_average_3 | BID 9 | PAYOFF 61.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 4 EVALUATED unit_return_4 BID=6 PAYOFF=56.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 4 | STRATEGY group_average_1 | BID 7 | PAYOFF 57
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 4 | STRATEGY group_average_1 | BID 7 | PAYOFF 53.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 4 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 4 | STRATEGY unit_return_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 4 | STRATEGY unit_return_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 4 | STRATEGY group_average_2 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 4 | STRATEGY total_return_4 | BID 6 | PAYOFF 57.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 4 | STRATEGY total_return_1 | BID 4 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 4 | STRATEGY total_return_2 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 4 | STRATEGY unit_return_2 | BID 8 | PAYOFF 54
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 4 | STRATEGY total_return_3 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 4 | STRATEGY unit_return_all_dec3 | BID 7 | PAYOFF 57
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 4 | STRATEGY group_average_1 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 4 | STRATEGY total_return_1 | BID 4 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 4 | STRATEGY group_average_0 | BID 6 | PAYOFF 56
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 4 | STRATEGY total_return_all_dec5 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 4 | STRATEGY total_return_3 | BID 6 | PAYOFF 56
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 4 | STRATEGY unit_return_4 | BID 6 | PAYOFF 56
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: unit_return_4 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: unit_return_all_dec3 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: unit_return_all_dec5 BID: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent7 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: total_return_all_dec3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent3 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent6 -> Market 2: 10
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: total_return_all_dec3 BID: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent2 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 STRATEGY: total_return_all_dec5 BID: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent1 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent8 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent5 -> Market 2: 7
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 BY: agent4 -> Market 2: 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 | M2=63 | GROUP AVG = 7.875 | RENT=141.75 | % OPTIMUM=43.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 5 | M1 return: 25 | M2 return: 36.25 | TOTAL: 61.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 61.25 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 7 | M1 return: 15 | M2 return: 50.75 | TOTAL: 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 65.75 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 7 | M1 return: 15 | M2 return: 50.75 | TOTAL: 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 65.75 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 7 | M1 return: 15 | M2 return: 50.75 | TOTAL: 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 65.75 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_all_dec3 BID=7 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 7 | M1 return: 15 | M2 return: 50.75 | TOTAL: 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_all_dec5 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_3 BID=7 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 65.75 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 10 | M1 return: 0 | M2 return: 72.5 | TOTAL: 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_3 BID=7 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 60 -> 58.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 72.5 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_3 BID=9 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_1 BID=3 PAYOFF=58.25
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 10 | M1 return: 0 | M2 return: 72.5 | TOTAL: 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_2 BID=10 PAYOFF=65.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_1 BID=9 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 72.5 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 60 -> 59.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_1 BID=3 PAYOFF=59.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_1 BID=9 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_2 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_1 BID=9 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_2 BID=10 PAYOFF=65.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_all_dec3 BID=10 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 60 -> 59.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_1 BID=9 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_all_dec5 BID=10 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_1 BID=3 PAYOFF=59.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_2 BID=6 PAYOFF=69.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_3 BID=7 PAYOFF=71.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_2 BID=10 PAYOFF=65.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 10 | M1 return: 0 | M2 return: 72.5 | TOTAL: 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_4 BID=10 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ROUND 5 PAYOFF: 72.5 GROUP INVESTMENT: 63
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_0 BID=8 PAYOFF=66.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 5 | STRATEGY total_return_all_dec3 | BID 7 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_1 BID=9 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_4 BID=10 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 5 | STRATEGY total_return_all_dec5 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_all_dec3 BID=7 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 5 | STRATEGY unit_return_3 | BID 7 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_1 BID=3 PAYOFF=62.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED total_return_3 BID=9 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 5 | STRATEGY unit_return_3 | BID 7 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 5 | STRATEGY total_return_3 | BID 9 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 5 | STRATEGY group_average_2 | BID 10 | PAYOFF 65
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_3 BID=7 PAYOFF=65.75
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_0 BID=8 PAYOFF=72.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 5 | STRATEGY total_return_1 | BID 3 | PAYOFF 58.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 5 | STRATEGY group_average_2 | BID 10 | PAYOFF 65
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 5 | STRATEGY group_average_1 | BID 9 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED unit_return_2 BID=10 PAYOFF=72.50
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 5 | STRATEGY group_average_1 | BID 9 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 5 | STRATEGY total_return_2 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.printf execute
+INFO: ROUND 5 EVALUATED group_average_2 BID=10 PAYOFF=65.00
+
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 5 | STRATEGY group_average_2 | BID 10 | PAYOFF 65
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 5 | STRATEGY total_return_1 | BID 3 | PAYOFF 59.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 5 | STRATEGY unit_return_all_dec5 | BID 10 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 5 | STRATEGY unit_return_all_dec3 | BID 10 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 5 | STRATEGY group_average_1 | BID 9 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 5 | STRATEGY group_average_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 5 | STRATEGY group_average_1 | BID 9 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 5 | STRATEGY total_return_4 | BID 10 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 5 | STRATEGY total_return_1 | BID 3 | PAYOFF 59.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 5 | STRATEGY total_return_2 | BID 6 | PAYOFF 69.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 5 | STRATEGY unit_return_3 | BID 7 | PAYOFF 71
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 5 | STRATEGY group_average_0 | BID 8 | PAYOFF 66
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 5 | STRATEGY group_average_1 | BID 9 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 5 | STRATEGY unit_return_4 | BID 10 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 5 | STRATEGY total_return_all_dec3 | BID 7 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 5 | STRATEGY total_return_1 | BID 3 | PAYOFF 62
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 5 | STRATEGY total_return_3 | BID 9 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 5 | STRATEGY unit_return_3 | BID 7 | PAYOFF 65.75
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 5 | STRATEGY group_average_0 | BID 8 | PAYOFF 72
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 5 | STRATEGY group_average_2 | BID 10 | PAYOFF 65
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 5 | STRATEGY unit_return_2 | BID 10 | PAYOFF 72.5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED SOCIAL SIM ROUND 5
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_1 | ALL 8 TOTAL BID 18 | RENT 243
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_2 | ALL 8 TOTAL BID 20 | RENT 260
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_3 | ALL 8 TOTAL BID 38 | RENT 323
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_4 | ALL 8 TOTAL BID 38 | RENT 323
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_all_dec3 | ALL 8 TOTAL BID 68 | RENT 68
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_all_dec5 | ALL 8 TOTAL BID 70 | RENT 35
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_1 | ALL 8 TOTAL BID 8 | RENT 128
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_2 | ALL 8 TOTAL BID 22 | RENT 275
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_3 | ALL 8 TOTAL BID 52 | RENT 260
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_4 | ALL 8 TOTAL BID 34 | RENT 323
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_all_dec3 | ALL 8 TOTAL BID 77 | RENT -96.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_all_dec5 | ALL 8 TOTAL BID 75 | RENT -56.25
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_0 | ALL 8 TOTAL BID 56 | RENT 224
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_1 | ALL 8 TOTAL BID 64 | RENT 128
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_2 | ALL 8 TOTAL BID 72 | RENT 0
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_3 | ALL 8 TOTAL BID 80 | RENT -160
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: BEST SOCIAL STRATEGY ROUND 5: unit_return_4 | GROUP RENT = 323
+Oct 24, 2026 4:35:32 PM jason.stdlib.println execute
+INFO: ASKING STRIPS TO ENFORCE STRATEGY unit_return_4
+STRIPS QUERY: central_plan(unit_return_4, Plan).
+STRIPS SOLUTION: Yes(query=central_plan(unit_return_4, Plan_8), substitution={Plan_8=[enforce_strategy(unit_return_4)]})
+Oct 24, 2026 4:35:33 PM strips.plan execute
+INFO: STRIPS accepted enforcement of unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 5 -> STRATEGY unit_return_4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS ADOPTED SHARED STRATEGY FOR ROUND 5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent8 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent1 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent2 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent4 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent3 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent5 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 STRATEGY: unit_return_4 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent7 -> Market 2: 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 BY: agent6 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 | M2=34 | GROUP AVG = 4.25 | RENT=323 | % OPTIMUM=99.69135802469135
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 6 | M1 return: 20 | M2 return: 87 | TOTAL: 107
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 107 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_2 BID=8 PAYOFF=122.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_1 BID=8 PAYOFF=118.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_0 BID=7 PAYOFF=114.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_2 BID=9 PAYOFF=124.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_3 BID=10 PAYOFF=135.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_3 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_3 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_4 BID=6 PAYOFF=107.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_all_dec3 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_2 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent7 round 6 central strategy unit_return_4 -> total_return_3 bid 6 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_all_dec5 BID=5 PAYOFF=96.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent5 round 6 central strategy unit_return_4 -> unit_return_3 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_1 BID=8 PAYOFF=118.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_1 BID=2 PAYOFF=70.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent6 round 6 central strategy unit_return_4 -> unit_return_3 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_1 BID=8 PAYOFF=118.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 4 | M1 return: 30 | M2 return: 58 | TOTAL: 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_3 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_2 BID=9 PAYOFF=124.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_4 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 6 | STRATEGY unit_return_2 | BID 8 | PAYOFF 122
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_1 BID=8 PAYOFF=118.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 6 | STRATEGY unit_return_3 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_3 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 6 PAYOFF: 88 GROUP INVESTMENT: 34
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_1 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 6 | STRATEGY group_average_1 | BID 8 | PAYOFF 118
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_all_dec3 BID=7 PAYOFF=111.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_2 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 6 | STRATEGY group_average_0 | BID 7 | PAYOFF 114.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_2 BID=9 PAYOFF=124.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_all_dec3 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_1 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 6 | STRATEGY group_average_2 | BID 9 | PAYOFF 124.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED unit_return_3 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent3 round 6 central strategy unit_return_4 -> total_return_4 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 6 | STRATEGY total_return_3 | BID 10 | PAYOFF 135
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_1 BID=4 PAYOFF=88.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_0 BID=7 PAYOFF=111.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_1 BID=8 PAYOFF=118.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 6 | STRATEGY unit_return_3 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent8 round 6 central strategy unit_return_4 -> unit_return_3 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec5 DIRECTION -1 -> 1 PAYOFF 61.25 -> 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 6 | STRATEGY unit_return_4 | BID 6 | PAYOFF 107
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED group_average_2 BID=9 PAYOFF=124.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 6 | STRATEGY total_return_all_dec3 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent2 round 6 central strategy unit_return_4 -> unit_return_3 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 6 | STRATEGY total_return_2 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_all_dec5 BID=0 PAYOFF=50.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 6 | STRATEGY unit_return_all_dec5 | BID 5 | PAYOFF 96.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 6 EVALUATED total_return_3 BID=10 PAYOFF=130.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 6 | STRATEGY group_average_1 | BID 8 | PAYOFF 118
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent4 round 6 central strategy unit_return_4 -> group_average_3 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 6 | STRATEGY total_return_1 | BID 2 | PAYOFF 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 6 | STRATEGY group_average_1 | BID 8 | PAYOFF 118
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 6 | STRATEGY group_average_3 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 6 | STRATEGY group_average_2 | BID 9 | PAYOFF 124.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 6 | STRATEGY total_return_4 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 6 | STRATEGY group_average_1 | BID 8 | PAYOFF 118
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 6 | STRATEGY unit_return_3 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 6 | STRATEGY total_return_2 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 6 | STRATEGY unit_return_all_dec3 | BID 7 | PAYOFF 111.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 6 | STRATEGY total_return_1 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 6 | STRATEGY total_return_1 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CENTRAL DEFECTION: agent1 round 6 central strategy unit_return_4 -> total_return_3 bid 4 -> 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 6 | STRATEGY group_average_2 | BID 9 | PAYOFF 124.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 6 | STRATEGY total_return_all_dec3 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 6 | STRATEGY unit_return_3 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 6 | STRATEGY total_return_1 | BID 4 | PAYOFF 88
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 6 | STRATEGY group_average_1 | BID 8 | PAYOFF 118
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 6 | STRATEGY group_average_0 | BID 7 | PAYOFF 111.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 6 | STRATEGY group_average_2 | BID 9 | PAYOFF 124.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 6 | STRATEGY total_return_all_dec5 | BID 0 | PAYOFF 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 6 | STRATEGY total_return_3 | BID 10 | PAYOFF 130
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: group_average_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: total_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent4 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: total_return_4 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: total_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent7 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent6 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent3 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent1 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent5 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent8 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 BY: agent2 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 | M2=65 | GROUP AVG = 8.125 | RENT=113.75 | % OPTIMUM=35.108024691358025
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 7 | M1 return: 15 | M2 return: 47.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 62.25 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 7 | M1 return: 15 | M2 return: 47.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 62.25 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_3 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_2 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 88 -> 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 7 | M1 return: 15 | M2 return: 47.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 62.25 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION -1 -> 1 PAYOFF 88 -> 53.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 10 | M1 return: 0 | M2 return: 67.5 | TOTAL: 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 88 -> 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 67.5 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION 1 -> -1 PAYOFF 130 -> 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_all_dec3 BID=1 PAYOFF=53.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 10 | M1 return: 0 | M2 return: 67.5 | TOTAL: 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_3 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 7 | M1 return: 15 | M2 return: 47.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 62.25 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_3 BID=10 PAYOFF=67.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 67.5 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 10 | M1 return: 0 | M2 return: 67.5 | TOTAL: 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_2 BID=6 PAYOFF=66.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_2 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 7 | M1 return: 15 | M2 return: 47.25 | TOTAL: 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 62.25 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_0 BID=4 PAYOFF=63.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION -1 -> 1 PAYOFF 88 -> 54
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_all_dec5 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_3 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 88 -> 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_all_dec3 BID=10 PAYOFF=67.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_2 DIRECTION -1 -> 1 PAYOFF 88 -> 56
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 7 PAYOFF: 67.5 GROUP INVESTMENT: 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 7 | STRATEGY unit_return_3 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_all_dec5 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_all_dec3 BID=1 PAYOFF=54.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_4 BID=10 PAYOFF=67.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_2 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_4 DIRECTION 1 -> -1 PAYOFF 130 -> 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_2 DIRECTION -1 -> 1 PAYOFF 88 -> 56
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION 1 -> -1 PAYOFF 135 -> 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_2 BID=2 PAYOFF=56.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 7 | STRATEGY group_average_2 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_2 BID=2 PAYOFF=56.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_3 BID=10 PAYOFF=67.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_3 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_4 BID=10 PAYOFF=67.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_3 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 7 | STRATEGY total_return_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_0 BID=4 PAYOFF=63.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED group_average_1 BID=5 PAYOFF=65.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED unit_return_2 BID=10 PAYOFF=67.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 70 -> 54
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 7 | STRATEGY group_average_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 7 | STRATEGY group_average_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 7 | STRATEGY total_return_all_dec3 | BID 1 | PAYOFF 53.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 7 | STRATEGY total_return_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 7 EVALUATED total_return_1 BID=1 PAYOFF=54.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 7 | STRATEGY total_return_3 | BID 10 | PAYOFF 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 7 | STRATEGY unit_return_3 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 7 | STRATEGY group_average_2 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 7 | STRATEGY unit_return_3 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 7 | STRATEGY group_average_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 7 | STRATEGY group_average_2 | BID 6 | PAYOFF 66.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 7 | STRATEGY unit_return_all_dec3 | BID 10 | PAYOFF 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 7 | STRATEGY unit_return_all_dec5 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 7 | STRATEGY group_average_0 | BID 4 | PAYOFF 63
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 7 | STRATEGY group_average_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 7 | STRATEGY total_return_all_dec5 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 7 | STRATEGY total_return_all_dec3 | BID 1 | PAYOFF 54
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 7 | STRATEGY total_return_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 7 | STRATEGY total_return_2 | BID 2 | PAYOFF 56
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 7 | STRATEGY unit_return_4 | BID 10 | PAYOFF 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 7 | STRATEGY group_average_2 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 7 | STRATEGY total_return_2 | BID 2 | PAYOFF 56
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 7 | STRATEGY total_return_3 | BID 10 | PAYOFF 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 7 | STRATEGY group_average_3 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 7 | STRATEGY total_return_4 | BID 10 | PAYOFF 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 7 | STRATEGY unit_return_3 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 7 | STRATEGY group_average_0 | BID 4 | PAYOFF 63
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 7 | STRATEGY group_average_1 | BID 5 | PAYOFF 65
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 7 | STRATEGY unit_return_2 | BID 10 | PAYOFF 67.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 7 | STRATEGY total_return_1 | BID 1 | PAYOFF 54
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 8
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: group_average_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: total_return_4 BID: 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: total_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent4 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent2 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: total_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent7 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent1 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent3 -> Market 2: 6
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent6 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent5 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 BY: agent8 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 | M2=70 | GROUP AVG = 8.75 | RENT=35 | % OPTIMUM=10.802469135802468
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 10 | M1 return: 0 | M2 return: 55 | TOTAL: 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 55 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 10 | M1 return: 0 | M2 return: 55 | TOTAL: 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 55 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 10 | M1 return: 0 | M2 return: 55 | TOTAL: 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 55 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 6 | M1 return: 20 | M2 return: 33 | TOTAL: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_1 BID=9 PAYOFF=56.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_1 BID=9 PAYOFF=56.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 53 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 7 | M1 return: 15 | M2 return: 38.5 | TOTAL: 53.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 61.25 -> 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 53.5 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 54 -> 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_3 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_1 BID=4 PAYOFF=58.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION 1 -> -1 PAYOFF 54 -> 47.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 7 | M1 return: 15 | M2 return: 38.5 | TOTAL: 53.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_2 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_2 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_1 BID=2 PAYOFF=53.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 53.5 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_all_dec3 BID=10 PAYOFF=47.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_2 BID=4 PAYOFF=58.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_3 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_2 BID=8 PAYOFF=52.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_1 BID=9 PAYOFF=47.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_3 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_4 DIRECTION -1 -> 1 PAYOFF 67.5 -> 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 10 | M1 return: 0 | M2 return: 55 | TOTAL: 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_all_dec5 BID=5 PAYOFF=58.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 55 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_0 BID=8 PAYOFF=52.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_all_dec3 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 10 | M1 return: 0 | M2 return: 55 | TOTAL: 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION -1 -> 1 PAYOFF 67.5 -> 53.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 8 PAYOFF: 55 GROUP INVESTMENT: 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_0 BID=8 PAYOFF=52.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_4 BID=6 PAYOFF=53.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_2 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_1 BID=9 PAYOFF=56.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 8 | STRATEGY group_average_1 | BID 9 | PAYOFF 56.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_3 BID=7 PAYOFF=53.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_3 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_2 BID=10 PAYOFF=47.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_3 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_all_dec3 BID=7 PAYOFF=51.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 8 | STRATEGY group_average_1 | BID 9 | PAYOFF 56.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_2 BID=4 PAYOFF=58.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_3 DIRECTION -1 -> 1 PAYOFF 67.5 -> 53.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 61.25 -> 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 61.25 -> 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 8 | STRATEGY unit_return_3 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED unit_return_4 BID=6 PAYOFF=54.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_1 BID=4 PAYOFF=58.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_3 BID=7 PAYOFF=53.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_1 BID=4 PAYOFF=58.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 8 | STRATEGY group_average_2 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED group_average_1 BID=9 PAYOFF=56.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec5 DIRECTION 1 -> -1 PAYOFF 60 -> 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 8 EVALUATED total_return_all_dec5 BID=10 PAYOFF=55.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 8 | STRATEGY total_return_1 | BID 4 | PAYOFF 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 8 | STRATEGY total_return_1 | BID 2 | PAYOFF 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 8 | STRATEGY group_average_2 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 8 | STRATEGY total_return_2 | BID 4 | PAYOFF 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 8 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 47.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 8 | STRATEGY unit_return_3 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 8 | STRATEGY unit_return_3 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 8 | STRATEGY group_average_1 | BID 9 | PAYOFF 47.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 8 | STRATEGY unit_return_2 | BID 8 | PAYOFF 52
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 8 | STRATEGY unit_return_all_dec5 | BID 5 | PAYOFF 58.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 8 | STRATEGY group_average_0 | BID 8 | PAYOFF 52
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 8 | STRATEGY group_average_0 | BID 8 | PAYOFF 52
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 8 | STRATEGY total_return_4 | BID 6 | PAYOFF 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 8 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 8 | STRATEGY group_average_1 | BID 9 | PAYOFF 56.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 8 | STRATEGY group_average_2 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 8 | STRATEGY total_return_3 | BID 7 | PAYOFF 53.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 8 | STRATEGY group_average_3 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 8 | STRATEGY group_average_2 | BID 10 | PAYOFF 47.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 8 | STRATEGY unit_return_3 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 8 | STRATEGY unit_return_all_dec3 | BID 7 | PAYOFF 51.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 8 | STRATEGY total_return_2 | BID 4 | PAYOFF 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 8 | STRATEGY unit_return_4 | BID 6 | PAYOFF 54.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 8 | STRATEGY total_return_1 | BID 4 | PAYOFF 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 8 | STRATEGY total_return_3 | BID 7 | PAYOFF 53.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 8 | STRATEGY total_return_1 | BID 4 | PAYOFF 58
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 8 | STRATEGY group_average_1 | BID 9 | PAYOFF 56.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 8
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 8 | STRATEGY total_return_all_dec5 | BID 10 | PAYOFF 55
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 8
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 9
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: group_average_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: total_return_4 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent4 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: total_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: total_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent6 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 STRATEGY: unit_return_3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent3 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent1 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent2 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent8 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent7 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 BY: agent5 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 | M2=68 | GROUP AVG = 8.5 | RENT=68 | % OPTIMUM=20.987654320987655
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 7 | M1 return: 15 | M2 return: 42 | TOTAL: 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 57 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 7 | M1 return: 15 | M2 return: 42 | TOTAL: 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec3 DIRECTION 1 -> -1 PAYOFF 55 -> 52.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 7 | M1 return: 15 | M2 return: 42 | TOTAL: 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 57 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 57 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_4 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_all_dec3 BID=10 PAYOFF=52.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 7 | M1 return: 15 | M2 return: 42 | TOTAL: 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_1 BID=9 PAYOFF=54.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 57 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_3 BID=7 PAYOFF=57.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 58 -> 57.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_3 BID=7 PAYOFF=57.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_1 BID=9 PAYOFF=54.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_all_dec3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 10 | M1 return: 0 | M2 return: 60 | TOTAL: 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_0 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 9 PAYOFF: 60 GROUP INVESTMENT: 68
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_2 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_2 BID=10 PAYOFF=52.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_2 BID=10 PAYOFF=52.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 9 | STRATEGY unit_return_4 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION 1 -> -1 PAYOFF 58 -> 57.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_1 BID=5 PAYOFF=57.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_0 BID=8 PAYOFF=62.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_all_dec5 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 9 | STRATEGY total_return_all_dec3 | BID 10 | PAYOFF 52.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_4 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_1 BID=9 PAYOFF=54.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_2 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 9 | STRATEGY unit_return_3 | BID 7 | PAYOFF 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_all_dec5 BID=10 PAYOFF=52.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_1 BID=9 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_all_dec3 BID=7 PAYOFF=62.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_1 BID=5 PAYOFF=61.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 9 | STRATEGY group_average_1 | BID 9 | PAYOFF 54.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_1 BID=5 PAYOFF=57.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_1 BID=1 PAYOFF=53.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_2 BID=6 PAYOFF=62.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_all_dec3 AVG RETURN: 85.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_1 BID=9 PAYOFF=54.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_3 BID=7 PAYOFF=57.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_2 DIRECTION 1 -> -1 PAYOFF 58 -> 57.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_all_dec3 AVG RETURN: 81.44
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_3 AVG RETURN: 80.81
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_all_dec3 AVG RETURN: 86.61
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 9 | STRATEGY total_return_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_3 BID=10 PAYOFF=60.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_3 AVG RETURN: 78.69
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED total_return_2 BID=6 PAYOFF=57.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: total_return_all_dec5 AVG RETURN: 78.89
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 9 | STRATEGY unit_return_3 | BID 7 | PAYOFF 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED group_average_2 BID=10 PAYOFF=52.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 9 | STRATEGY group_average_0 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_3 AVG RETURN: 79.19
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 9 | STRATEGY total_return_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 9 EVALUATED unit_return_3 BID=7 PAYOFF=57.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 9 | STRATEGY unit_return_all_dec3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 9 | STRATEGY group_average_1 | BID 9 | PAYOFF 54.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: SELECTED STRATEGY: unit_return_all_dec5 AVG RETURN: 83.61
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 9 | STRATEGY total_return_1 | BID 5 | PAYOFF 57.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 9 | STRATEGY group_average_2 | BID 10 | PAYOFF 52.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 9 | STRATEGY group_average_2 | BID 10 | PAYOFF 52.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 9 | STRATEGY group_average_2 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 9 | STRATEGY unit_return_all_dec5 | BID 10 | PAYOFF 52.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 9 | STRATEGY total_return_4 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 9 | STRATEGY unit_return_2 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 9 | STRATEGY total_return_all_dec5 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 9 | STRATEGY group_average_0 | BID 8 | PAYOFF 62
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 9 | STRATEGY total_return_1 | BID 5 | PAYOFF 57.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 9 | STRATEGY group_average_1 | BID 9 | PAYOFF 54.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 9 | STRATEGY unit_return_3 | BID 7 | PAYOFF 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 9 | STRATEGY total_return_1 | BID 5 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 9 | STRATEGY total_return_all_dec3 | BID 7 | PAYOFF 62.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 9 | STRATEGY group_average_1 | BID 9 | PAYOFF 61.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 9 | STRATEGY total_return_1 | BID 1 | PAYOFF 53.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 9 | STRATEGY total_return_2 | BID 6 | PAYOFF 62
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 9 | STRATEGY group_average_1 | BID 9 | PAYOFF 54.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 9 | STRATEGY group_average_3 | BID 10 | PAYOFF 60
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 9 | STRATEGY group_average_2 | BID 10 | PAYOFF 52.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 9 | STRATEGY total_return_2 | BID 6 | PAYOFF 57.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 9
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 9 | STRATEGY unit_return_3 | BID 7 | PAYOFF 57
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 9
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: STARTING ROUND: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ===============
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: 
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: total_return_all_dec3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: unit_return_all_dec3 BID: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: total_return_all_dec3 BID: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: unit_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent5 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: unit_return_all_dec5 BID: 5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: total_return_all_dec5 BID: 0
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 STRATEGY: total_return_3 BID: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent3 -> Market 2: 7
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent1 -> Market 2: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent8 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent2 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent6 -> Market 2: 5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent4 -> Market 2: 0
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 BY: agent7 -> Market 2: 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 | M2=53 | GROUP AVG = 6.625 | RENT=251.75 | % OPTIMUM=77.70061728395062
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 | M2 bid: 10 | M1 return: 0 | M2 return: 97.5 | TOTAL: 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 97.5 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 | M2 bid: 0 | M1 return: 50 | M2 return: 0 | TOTAL: 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 50 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 | M2 bid: 5 | M1 return: 25 | M2 return: 48.75 | TOTAL: 73.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 73.75 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_2 BID=8 PAYOFF=92.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 | M2 bid: 10 | M1 return: 0 | M2 return: 97.5 | TOTAL: 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_3 BID=10 PAYOFF=72.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_3 BID=10 PAYOFF=85.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 | M2 bid: 10 | M1 return: 0 | M2 return: 97.5 | TOTAL: 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 97.5 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 97.5 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_0 BID=8 PAYOFF=92.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 | M2 bid: 4 | M1 return: 30 | M2 return: 39 | TOTAL: 69
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 69 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_2 BID=10 PAYOFF=97.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 | M2 bid: 7 | M1 return: 15 | M2 return: 68.25 | TOTAL: 83.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 83.25 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_1 DIRECTION -1 -> 1 PAYOFF 53.25 -> 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_3 BID=10 PAYOFF=97.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_2 BID=4 PAYOFF=70.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_all_dec3 BID=4 PAYOFF=69.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_1 BID=0 PAYOFF=50.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_all_dec5 BID=5 PAYOFF=73.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_4 BID=6 PAYOFF=84.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_2 BID=8 PAYOFF=72.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_1 BID=9 PAYOFF=83.75
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_0 BID=8 PAYOFF=80.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_1 BID=9 PAYOFF=88.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_3 BID=10 PAYOFF=97.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 | M2 bid: 7 | M1 return: 15 | M2 return: 68.25 | TOTAL: 83.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_1 BID=9 PAYOFF=95.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_2 BID=10 PAYOFF=82.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_4 BID=10 PAYOFF=90.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ROUND 10 PAYOFF: 83.25 GROUP INVESTMENT: 53
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_1 BID=6 PAYOFF=69.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_1 BID=4 PAYOFF=75.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: REVERSED total_return_all_dec5 DIRECTION -1 -> 1 PAYOFF 61.25 -> 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_1 BID=9 PAYOFF=88.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_3 BID=10 PAYOFF=82.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 10 | STRATEGY unit_return_2 | BID 8 | PAYOFF 92
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_1 BID=9 PAYOFF=95.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_all_dec3 BID=7 PAYOFF=83.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_1 BID=4 PAYOFF=75.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_2 BID=10 PAYOFF=90.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_all_dec5 BID=0 PAYOFF=50.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED group_average_2 BID=10 PAYOFF=97.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 10 | STRATEGY group_average_3 | BID 10 | PAYOFF 72.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_3 BID=10 PAYOFF=90.00
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED unit_return_3 BID=10 PAYOFF=97.50
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 10 | STRATEGY unit_return_3 | BID 10 | PAYOFF 85
+Oct 24, 2026 4:35:33 PM jason.stdlib.printf execute
+INFO: ROUND 10 EVALUATED total_return_all_dec3 BID=7 PAYOFF=83.25
+
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 10 | STRATEGY group_average_0 | BID 8 | PAYOFF 92
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 10 | STRATEGY total_return_2 | BID 8 | PAYOFF 72
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 10 | STRATEGY total_return_2 | BID 4 | PAYOFF 70
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 10 | STRATEGY group_average_2 | BID 10 | PAYOFF 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 10 | STRATEGY group_average_1 | BID 9 | PAYOFF 95
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 10 | STRATEGY total_return_3 | BID 10 | PAYOFF 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 10 | STRATEGY unit_return_3 | BID 10 | PAYOFF 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 10 | STRATEGY total_return_all_dec3 | BID 4 | PAYOFF 69
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 10 | STRATEGY total_return_1 | BID 0 | PAYOFF 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 10 | STRATEGY unit_return_all_dec5 | BID 5 | PAYOFF 73.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent7 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent7 | ROUND 10 | STRATEGY unit_return_4 | BID 6 | PAYOFF 84.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 10 | STRATEGY group_average_1 | BID 9 | PAYOFF 88.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 10 | STRATEGY group_average_0 | BID 8 | PAYOFF 80
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent6 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent6 | ROUND 10 | STRATEGY group_average_1 | BID 9 | PAYOFF 83.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 10 | STRATEGY total_return_1 | BID 6 | PAYOFF 69.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 10 | STRATEGY group_average_2 | BID 10 | PAYOFF 82.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 10 | STRATEGY total_return_4 | BID 10 | PAYOFF 90
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 10 | STRATEGY total_return_1 | BID 4 | PAYOFF 75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 10 | STRATEGY group_average_1 | BID 9 | PAYOFF 88.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 10 | STRATEGY total_return_1 | BID 4 | PAYOFF 75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent3 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent3 | ROUND 10 | STRATEGY unit_return_all_dec3 | BID 7 | PAYOFF 83.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent2 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent2 | ROUND 10 | STRATEGY group_average_1 | BID 9 | PAYOFF 95
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent1 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent1 | ROUND 10 | STRATEGY total_return_3 | BID 10 | PAYOFF 82.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent4 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent4 | ROUND 10 | STRATEGY total_return_all_dec5 | BID 0 | PAYOFF 50
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 10 | STRATEGY group_average_2 | BID 10 | PAYOFF 90
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 10 | STRATEGY group_average_2 | BID 10 | PAYOFF 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 10 | STRATEGY unit_return_3 | BID 10 | PAYOFF 90
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent8 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent8 | ROUND 10 | STRATEGY unit_return_3 | BID 10 | PAYOFF 97.5
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: agent5 FINISHED COUNTERFACTUALS: 4
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED COUNTERFACTUALS FOR ROUND 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: CF FROM agent5 | ROUND 10 | STRATEGY total_return_all_dec3 | BID 7 | PAYOFF 83.25
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED ROUND 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ALL AGENTS FINISHED SOCIAL SIM ROUND 10
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_1 | ALL 8 TOTAL BID 18 | RENT 243
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_2 | ALL 8 TOTAL BID 24 | RENT 288
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_3 | ALL 8 TOTAL BID 38 | RENT 323
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_4 | ALL 8 TOTAL BID 38 | RENT 323
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_all_dec3 | ALL 8 TOTAL BID 65 | RENT 113.75
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY total_return_all_dec5 | ALL 8 TOTAL BID 80 | RENT -160
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_1 | ALL 8 TOTAL BID 8 | RENT 128
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_2 | ALL 8 TOTAL BID 24 | RENT 288
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_3 | ALL 8 TOTAL BID 40 | RENT 320
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_4 | ALL 8 TOTAL BID 66 | RENT 99
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_all_dec3 | ALL 8 TOTAL BID 80 | RENT -160
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY unit_return_all_dec5 | ALL 8 TOTAL BID 80 | RENT -160
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_0 | ALL 8 TOTAL BID 48 | RENT 288
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_1 | ALL 8 TOTAL BID 56 | RENT 224
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_2 | ALL 8 TOTAL BID 64 | RENT 128
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: SOCIAL STRATEGY group_average_3 | ALL 8 TOTAL BID 72 | RENT 0
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: BEST SOCIAL STRATEGY ROUND 10: total_return_4 | GROUP RENT = 323
+Oct 24, 2026 4:35:33 PM jason.stdlib.println execute
+INFO: ASKING STRIPS TO ENFORCE STRATEGY total_return_4
+STRIPS QUERY: central_plan(total_return_4, Plan).
+STRIPS SOLUTION: Yes(query=central_plan(total_return_4, Plan_22), substitution={Plan_22=[enforce_strategy(total_return_4)]})
+Oct 24, 2026 4:35:34 PM strips.plan execute
+INFO: STRIPS accepted enforcement of total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: CENTRAL AUTHORITY ROUND 10 -> STRATEGY total_return_4
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: ALL AGENTS ADOPTED SHARED STRATEGY FOR ROUND 10
+Oct 24, 2026 4:35:34 PM jason.stdlib.println execute
+INFO: SIMULATION FINISHED AFTER 10 ROUNDS
+
+BUILD SUCCESSFUL in 4s
+3 actionable tasks: 2 executed, 1 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.0/userguide/configuration_cache_enabling.html

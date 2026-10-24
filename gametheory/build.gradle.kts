@@ -98,7 +98,7 @@ tasks.register<JavaExec>("runCentralizedCommunication") {
 
     workingDir = projectDir
     args(file("CentralCommunication.mas2j").absolutePath)
-
+    args("--log-conf", file("console-logging.properties").absolutePath)
     standardInput = System.`in`
 }
 
@@ -131,6 +131,29 @@ tasks.register<JavaExec>("runCoalitionCommunication") {
 
     standardInput = System.`in`
 }
+tasks.register<JavaExec>("runCoalitionStrategyCommunication") {
+    group = "application"
+    description = "Runs the resource-management coalition strategy communication Jason scenario"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+    args(file("Coalition.mas2j").absolutePath)
+
+    standardInput = System.`in`
+}
+tasks.register<JavaExec>("runDecentralizedStrategyCommunication") {
+    group = "application"
+    dependsOn("classes")
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+    workingDir = projectDir
+    args(file("DecentralizedStrategyCommunication.mas2j").absolutePath)
+    standardInput = System.`in`
+}
 tasks.register<Delete>("cleanSimulationResults") {
     delete(
         file("results/no_comm/rounds.csv"),
@@ -160,7 +183,6 @@ tasks.register<Delete>("cleanCentralizedResults") {
         }
     )
 }
-
 tasks.register<Delete>("cleanDecentralizedResults") {
     group = "verification"
     description = "Cleans decentralized simulation CSV files"

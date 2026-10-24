@@ -11,7 +11,9 @@ parser.add_argument(
         "no_comm",
         "centralized",
         "decentralized",
-        "coalition"
+        "coalition",
+        "decentralized_strat",
+        "coalition_strat"
     ]
 )
 

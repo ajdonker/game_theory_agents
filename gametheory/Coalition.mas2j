@@ -1,14 +1,14 @@
 MAS coalition_communication {
     agents: 
-    agent1 coalition_agent.asl;
-    agent2 coalition_agent.asl;
-    agent3 coalition_agent.asl;
-    agent4 coalition_agent.asl;
-    agent5 coalition_agent.asl;
-    agent6 coalition_agent.asl;
-    agent7 coalition_agent.asl;
-    agent8 coalition_agent.asl;
-    coalition_planner;
+    agent1 coalition_strat_agent.asl;
+    agent2 coalition_strat_agent.asl;
+    agent3 coalition_strat_agent.asl;
+    agent4 coalition_strat_agent.asl;
+    agent5 coalition_strat_agent.asl;
+    agent6 coalition_strat_agent.asl;
+    agent7 coalition_strat_agent.asl;
+    agent8 coalition_strat_agent.asl;
+    coalition_strat_planner;
 
     aslSourcePath:
     "src/main/asl";
