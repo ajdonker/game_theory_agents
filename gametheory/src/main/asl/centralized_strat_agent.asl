@@ -32,6 +32,8 @@ strategy_rule(group_average_1, group_average, 1).
 strategy_rule(group_average_2, group_average, 2).
 strategy_rule(group_average_3, group_average, 3).
 
+strategy_score_window(10).
+
 // Available strategy definitions (the private pool is sampled once per agent).
 all_strategies([total_return_1, total_return_2, total_return_3, total_return_4,
     total_return_all_dec3, total_return_all_dec5,
@@ -386,13 +388,20 @@ agent_index(agent8, 8).
     // Used for individual deviation decisions after central coordination.
     +counterfactual_return(Round, Strategy, CounterPayoff);
 
-    NewSum = Sum + CounterPayoff;
-    NewN = N + 1;
-
     !update_total_return_direction(Strategy, CounterPayoff);
 
-    -strategy_score(Strategy, Sum, N);
+    ?strategy_score_window(Window);
+    ExpiredRound = Round - Window;
+    !expire_oldest_payoff(Strategy, ExpiredRound);
+
+    ?strategy_score(Strategy, CurrentSum, CurrentN);
+
+    NewSum = CurrentSum + CounterPayoff;
+    NewN = CurrentN + 1;
+
+    -strategy_score(Strategy, CurrentSum, CurrentN);
     +strategy_score(Strategy, NewSum, NewN);
+    +strategy_payoff_history(Strategy, Round, CounterPayoff);
 
     !update_strategy_last_bid(Strategy, AlternativeBid);
 
@@ -414,6 +423,22 @@ agent_index(agent8, 8).
         AlternativeBid,
         CounterPayoff
     ).
+
++!expire_oldest_payoff(Strategy, ExpiredRound)
+    : strategy_payoff_history(Strategy, ExpiredRound, OldPayoff)
+    & strategy_score(Strategy, Sum, N)
+<-
+    NewSum = Sum - OldPayoff;
+    NewN = N - 1;
+     
+    -strategy_payoff_history(Strategy, ExpiredRound, OldPayoff);
+    -strategy_score(Strategy, Sum, N);
+    +strategy_score(Strategy, NewSum, NewN).
+
++!expire_oldest_payoff(Strategy, ExpiredRound)
+    : not strategy_payoff_history(Strategy, ExpiredRound, _)
+<-
+    true.
 
 +!update_strategy_last_bid(Strategy, Bid)
     : strategy_rule(Strategy, total_return, _, _)

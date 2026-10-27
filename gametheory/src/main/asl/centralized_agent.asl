@@ -276,6 +276,11 @@ agent_index(agent8, 8).
     -candidate_bid(Strategy, _);
     +candidate_bid(Strategy, Bid).
 
++!generate_strategy_bid(comm(Bid))
+<-
+    -candidate_bid(comm(Bid), _);
+    +candidate_bid(comm(Bid), Bid).
+
 +!play_current_strategy(Round)
     : current_strategy(Strategy)
     & candidate_bid(Strategy, Bid)
@@ -396,9 +401,20 @@ agent_index(agent8, 8).
 
     !update_strategy_returns(Strategy, CounterMarket1, CounterMarket2);
 
-    .length(Pool, PoolSize);
-    // send to planner bid with alternative strategy 
-    .send(Planner, achieve, counterfactual_bid(Round, Strategy, AlternativeBid, CounterPayoff, PoolSize));
+    // Only report the original four private strategies.
+    // Learned comm(Bid) strategies are evaluated locally.
+    if (.member(Strategy, Pool)) {
+        .length(Pool, PoolSize);
+
+        .send(
+            Planner,
+            achieve,
+            counterfactual_bid(
+                Round, Strategy, AlternativeBid,
+                CounterPayoff, PoolSize
+            )
+        );
+    };
     // results.append(
     // "results/strategies.csv", Seed, Round, Me, Strategy, AlternativeBid, CounterPayoff, NewSum, NewN);
     results.append(
@@ -434,6 +450,11 @@ agent_index(agent8, 8).
 <-
     true.
 
++!update_strategy_last_bid(comm(_), _)
+<-
+    true.
+
+
 +!update_strategy_returns(Strategy, Market1, Market2) // market returns relevant only for unit return strats
     : strategy_rule(Strategy, unit_return, _, _)
 <-
@@ -453,6 +474,10 @@ agent_index(agent8, 8).
 <-
     true.
 
++!update_strategy_returns(comm(_), _, _)
+<-
+    true.
+    
 // Regular agents reevaluate their strategy every three rounds.
 +!maybe_select_strategy(Round)
     : Round mod 3 == 0
@@ -641,6 +666,12 @@ agent_index(agent8, 8).
 
 +!adopt_central_bid(Round, Bid)[source(Planner)]
 <-
+    // Remember the imposed bid as a strategy.
+    // Keep its history if it has been recommended before.
+    if (not strategy_score(comm(Bid), _, _)) {
+        +strategy_score(comm(Bid), 0, 0);
+    };
+
     -current_strategy(_);
 
     +current_strategy(central_bid(Bid));

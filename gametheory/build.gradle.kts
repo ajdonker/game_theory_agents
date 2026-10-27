@@ -83,6 +83,7 @@ tasks.register<JavaExec>("runInterventions") {
 
     workingDir = projectDir
     args(file("Intervention.mas2j").absolutePath)
+    args("--log-conf", file("console-logging.properties").absolutePath)
 
     standardInput = System.`in`
 }
@@ -131,6 +132,20 @@ tasks.register<JavaExec>("runCoalitionCommunication") {
 
     standardInput = System.`in`
 }
+tasks.register<JavaExec>("runHybridCentralizedCommunication") {
+    group = "application"
+    description = "Runs the hybrid strategy bid centralized communication Jason scenario"
+
+    dependsOn("classes")
+
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("jason.infra.local.RunLocalMAS")
+
+    workingDir = projectDir
+    args(file("Hybrid.mas2j").absolutePath)
+
+    standardInput = System.`in`   
+}
 tasks.register<JavaExec>("runCoalitionStrategyCommunication") {
     group = "application"
     description = "Runs the resource-management coalition strategy communication Jason scenario"
@@ -141,7 +156,7 @@ tasks.register<JavaExec>("runCoalitionStrategyCommunication") {
     mainClass.set("jason.infra.local.RunLocalMAS")
 
     workingDir = projectDir
-    args(file("Coalition.mas2j").absolutePath)
+    args(file("DecentralizedStrategy.mas2j").absolutePath)
 
     standardInput = System.`in`
 }
@@ -198,7 +213,7 @@ tasks.register<Delete>("cleanInterventionResults") {
     description = "Cleans intervention simulation CSV files"
 
     delete (
-        fileTree("results/centralized") {
+        fileTree("results/adaptive") {
             include("*.csv")
         }
     )

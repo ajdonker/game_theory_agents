@@ -20,6 +20,8 @@ rm -f "$RESULTS/rounds.csv"
 rm -f "$RESULTS/agents.csv"
 rm -f "$RESULTS/strategies.csv"
 rm -f "$RESULTS/coalitions.csv"
+rm -f "$RESULTS/modes.csv"
+rm -f "$RESULTS/decisions.csv"
 
 cp "$PLANNER" "$PLANNER.batch_backup"
 
@@ -42,7 +44,7 @@ do
         "s/^seed\([0-9]+\)\./seed($SEED)./" \
         "$PLANNER"
 
-    "$ROOT_DIR/gradlew" -p "$ROOT_DIR" :gametheory:runIntervention
+    "$ROOT_DIR/gradlew" -p "$ROOT_DIR" :gametheory:runInterventions
 done
 
 echo ""

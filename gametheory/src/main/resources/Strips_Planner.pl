@@ -1,17 +1,25 @@
- action(
-    enforce_strategy(S),
-    'if'([evaluations_collected, best_strategy(S)]),
-    '+'([strategy_enforced(S)]),
-   '-'([]),
+% =========================================
+% CENTRALIZED BID ENFORCEMENT
+% =========================================
+
+action(
+    enforce_bid(Bid),
+    'if'([evaluations_collected, best_bid(Bid)]),
+    '+'([bid_enforced(Bid)]),
+    '-'([]),
     where(true)
 ).
 
- central_plan(BestStrategy, Plan) :-
+central_plan(Bid, Plan) :-
+    number(Bid),
     strips(
-        [evaluations_collected, best_strategy(BestStrategy)],
-        [strategy_enforced(BestStrategy)],
+        [evaluations_collected, best_bid(Bid)],
+        [bid_enforced(Bid)],
         Plan
     ).
+
+
+
 % =========================================
 % HIGH INVESTMENT -> CENTRALIZED
 % =========================================
@@ -47,6 +55,31 @@ action(
 % LOW INVESTMENT, LOW DISPERSION
 % -> DECENTRALIZED
 % =========================================
+% Centralized has achieved sustained high performance.
+% Give decentralized communication a trial.
+action(
+    trial_decentralized_after_stability,
+    'if'([
+        mode_centralized,
+        centralized_stable
+    ]),
+    '+'([mode_decentralized]),
+    '-'([mode_centralized]),
+    where(true)
+).
+
+% Decentralized performance has deteriorated.
+% Restore centralized coordination.
+action(
+    recover_centralized,
+    'if'([
+        mode_decentralized,
+        decentralized_crater
+    ]),
+    '+'([mode_centralized]),
+    '-'([mode_decentralized]),
+    where(true)
+).
 action(
     enable_decentralized,
     'if'([mode_none, investment_low, dispersion_low]),
@@ -70,9 +103,9 @@ action(
 ).
 action(
 maintain_decentralized,
-    'if'([mode_decentralized, investment_low, dispersion_low]),
-    '+'([investment_optimal]),
-    '-'([investment_low]),
+    'if'([mode_decentralized]),
+    '+'([investment_held]),
+    '-'([]),
     where(true)
 ).
 % =========================================
@@ -136,21 +169,105 @@ action(
     '-'([mode_coalition]),
     where(true)
 ).
+% =========================================
+% STAGNANT INTERVENTION PERFORMANCE
+% -> CHANGE INTERVENTION
+% =========================================
+% First run centralized and detect ineffective.
+action(
+    trial_decentralized,
+    'if'([mode_centralized,
+          centralized_ineffective,
+          dispersion_low]),
+    '+'([mode_decentralized]),
+    '-'([mode_centralized]),
+    where(true)
+).
 
-% Investment already optimal: disable intervention
-intervention_plan(InitState, Plan) :-
-    member(investment_optimal, InitState),
+action(
+    trial_coalition,
+    'if'([mode_centralized,
+          centralized_ineffective,
+          dispersion_high]),
+    '+'([mode_coalition]),
+    '-'([mode_centralized]),
+    where(true)
+).
+
+
+% 1. Decentralized performance collapsed.
+% Return to centralized.
+intervention_plan(State, Plan) :-
+    member(mode_decentralized, State),
+    member(decentralized_crater, State),
     !,
-    strips(
-        InitState,
-        [investment_optimal, mode_none],
-        Plan
-    ).
+    strips(State, [mode_centralized], Plan).
 
-% Investment not optimal: achieve optimal investment
-intervention_plan(InitState, Plan) :-
-    strips(
-        InitState,
-        [investment_optimal],
-        Plan
-    ).
+
+% 2. Decentralized is overinvesting again.
+% Return to centralized.
+intervention_plan(State, Plan) :-
+    member(mode_decentralized, State),
+    member(investment_high, State),
+    !,
+    strips(State, [mode_centralized], Plan).
+
+
+% 3. Investment is optimal.
+% Allow decentralized to finish.
+intervention_plan(State, Plan) :-
+    member(mode_decentralized, State),
+    member(investment_optimal, State),
+    !,
+    strips(State, [mode_none], Plan).
+
+
+% 4. Otherwise, keep decentralized.
+intervention_plan(State, Plan) :-
+    member(mode_decentralized, State),
+    !,
+    strips(State, [investment_held], Plan).
+
+% Centralized failed, agents have similar bids.
+intervention_plan(State, Plan) :-
+    member(mode_centralized, State),
+    member(investment_high, State),
+    member(centralized_ineffective, State),
+    member(dispersion_low, State),
+    !,
+    strips(State, [mode_decentralized], Plan).
+
+% Centralized failed, agents have dispersed bids.
+intervention_plan(State, Plan) :-
+    member(mode_centralized, State),
+    member(investment_high, State),
+    member(centralized_ineffective, State),
+    member(dispersion_high, State),
+    !,
+    strips(State, [mode_coalition], Plan).
+% Investment optimal: back to no intervention.
+intervention_plan(State, Plan) :-
+    member(investment_optimal, State),
+    !,
+    strips(State, [mode_none], Plan).
+
+% Overinvestment: centralized coordination.
+intervention_plan(State, Plan) :-
+    member(investment_high, State),
+    !,
+    strips(State, [mode_centralized], Plan).
+
+% Underinvestment with high dispersion: coalitions.
+intervention_plan(State, Plan) :-
+    member(investment_low, State),
+    member(dispersion_high, State),
+    !,
+    strips(State, [mode_coalition], Plan).
+
+% Underinvestment with low dispersion: decentralized communication.
+intervention_plan(State, Plan) :-
+    member(investment_low, State),
+    member(dispersion_low, State),
+    !,
+    strips(State, [mode_decentralized], Plan).
+

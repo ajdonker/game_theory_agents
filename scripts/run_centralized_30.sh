@@ -10,7 +10,7 @@ ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 # .../game_theory_agents/gametheory
 GAMETHEORY_DIR="$ROOT_DIR/gametheory"
 
-PLANNER="$GAMETHEORY_DIR/src/main/asl/centralized_strat_planner.asl"
+PLANNER="$GAMETHEORY_DIR/src/main/asl/centralized_planner.asl"
 RESULTS="$GAMETHEORY_DIR/results/centralized"
 
 mkdir -p "$RESULTS"

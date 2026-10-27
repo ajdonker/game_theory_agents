@@ -16,7 +16,7 @@ active_agent(agent8).
 candidate_strategy(total_return_1).
 candidate_strategy(total_return_2).
 candidate_strategy(total_return_3).
-candidate_strategy(total_return_4).
+candidate_strategycounterfactual_return(total_return_4).
 candidate_strategy(total_return_all_dec3).
 candidate_strategy(total_return_all_dec5).
 

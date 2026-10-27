@@ -9,8 +9,9 @@ import jason.asSyntax.Term
 import kotlin.math.sqrt
 
 class decide : DefaultInternalAction() {
-    override fun getMinArgs() = 13
-    override fun getMaxArgs() = 13
+    
+    override fun getMinArgs() = 16
+    override fun getMaxArgs() = 16
 
     override fun execute(
         ts: TransitionSystem,
@@ -33,6 +34,9 @@ class decide : DefaultInternalAction() {
                 return false
             }
         }
+        val centralizedIneffective = number(12) == 1.0
+        val centralizedStable = number(13) == 1.0
+        val decentralizedCrater = number(14) == 1.0
 
         val relativeErr = when {
             optimalGroupInvestment == 0.0 -> when {
@@ -53,8 +57,26 @@ class decide : DefaultInternalAction() {
         val variance = bids.map { (it - avg) * (it - avg) }.average()
         val dispersion = if (sqrt(variance) > 2.0) "dispersion_high" else "dispersion_low"
 
-        val state = listOf(investment, dispersion, currentMode)
+        val state = mutableListOf(investment, dispersion, currentMode)
 
+        if (centralizedIneffective &&
+            currentMode == "mode_centralized" &&
+            investment == "investment_high"
+        ) {
+            state.add("centralized_ineffective")
+        }
+
+        if (centralizedStable && currentMode == "mode_centralized") {
+            state.add("centralized_stable")
+        }
+
+        if (decentralizedCrater && currentMode == "mode_decentralized") {
+            state.add("decentralized_crater")
+        }
+        if (investment == "investment_optimal" && currentMode == "mode_none") {
+            println("STRIPS: Already optimal, no intervention needed")
+            return un.unifies(args[15], Atom("keep"))
+        }
 //        println("========== STRIPS DEBUG ==========")
 //        println("Group total: $groupTotal")
 //        println("Optimal investment: $optimalGroupInvestment")
@@ -69,14 +91,7 @@ class decide : DefaultInternalAction() {
             e.printStackTrace()
             return false
         }
-
-//        println("STRIPS RETURNED ACTION: $action")
-//        println("==================================")
-        if (investment == "investment_optimal" && currentMode == "mode_none") {
-            println("STRIPS: Already optimal, no intervention needed")
-            return un.unifies(args[12], Atom("keep"))
-        }
-        //val action = plan.solveInterventionPlan(listOf(investment, dispersion, currentMode))
+       
         if (action == null) {
             ts.ag.logger.warning("STRIPS could not find an applicable action for $investment, $dispersion, $currentMode")
             return false
@@ -89,6 +104,7 @@ class decide : DefaultInternalAction() {
             "coalition",
             "keep" -> action
 
+            "hold_decentralized",
             "maintain_centralized",
             "maintain_decentralized",
             "maintain_coalitions" -> "keep"
@@ -98,16 +114,20 @@ class decide : DefaultInternalAction() {
             "disable_coalition_for_optimal_investment",
             "disable_decentralized" -> "none"
 
+            "recover_centralized",
             "enable_centralized",
             "switch_decentralized_to_centralized",
             "switch_coalition_to_centralized" -> "centralized"
 
+            "trial_decentralized_after_stability",
+            "trial_decentralized",
             "enable_decentralized",
             "switch_centralized_to_decentralized",
             "switch_coalition_to_decentralized",
             "prepare_coalitions_from_none",
             "prepare_coalitions_from_centralized" -> "decentralized"
 
+            "trial_coalition",
             "enable_coalitions" -> "coalition"
 
             else -> {
@@ -119,6 +139,6 @@ class decide : DefaultInternalAction() {
         println("STRIPS ACTION: $action")
         println("NEXT INTERVENTION: $intervention")
 
-        return un.unifies(args[12], Atom(intervention))
+        return un.unifies(args[15], Atom(intervention))
     }
 }

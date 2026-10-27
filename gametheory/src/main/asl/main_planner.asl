@@ -3,7 +3,7 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(100).
+max_rounds(300).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -24,6 +24,22 @@ intervention_min_duration(5).
 min_rounds_optimal(3).
 optimality_window(5).
 
+// at least threshold rounds out of the window need to be acceptable. 
+cent_stab_round_threshold(8).
+centralized_window(10).
+decentralized_window(5).
+
+// expressed in rent pct. min rent pct for good perf, max rent pct for bad perf.
+good_perf_lim(centralized, 85).
+bad_perf_lim(centralized, 75).
+
+
+good_perf_lim(decentralized, 70).
+
+stab_round_threshold(centralized, 8).
+ineffective_round_threshold(centralized, 7).
+
+ineffective_round_threshold(decentralized, 7).
 // Duration counts rounds in which a mode was active at round START.
 // New modes chosen at the end of round R begin in round R+1.
 intervention_since(1).
@@ -165,19 +181,73 @@ intervention_since(1).
     ?intervention_since(Since);
     ModeAge = Round - Since + 1;
 
-    // STRIPS proposes a mode; stability constraints may veto the change.
-    strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Proposed);
+    +rent_observed(Round, CurrentIntervention, RentPct);
+
+    !detect_mode_performance(Round, CurrentIntervention, ModeAge);
+
+    .count(centralized_ineffective(Round), Ineffective);
+    .count(centralized_stable(Round), Stable);
+    .count(decentralized_crater(Round), Crater);
+
+    // STRIPS proposes a mode; stability constraints may veto the change. ignore ineffective flag with 0 for now.
+    strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Ineffective,Stable, Crater, Proposed);
     !gate_intervention(CurrentIntervention, Proposed, ModeAge, OptimalCount, Intervention);
 
     results.append(
         "results/adaptive/decisions.csv",
-        RunId, Seed, Round, CurrentIntervention, Proposed, Intervention, ModeAge, Streak
+        RunId, Seed, Round, CurrentIntervention, Proposed, Intervention, ModeAge, OptimalCount
     );
 
     !apply_intervention(Intervention);
     !record_intervention_change(Round, CurrentIntervention, Intervention);
     !calculate_returns(Round, Total, Average).
 
+// can refactor next 2 plans to be generic in regard to mode, with appropriate beliefs on limits of perf
+// stab_round_threshold(centralized, 8).
+// ineffective_round_threshold(centralized, 7).
+
+// ineffective_round_threshold(decentralized, 7).
+
++!detect_mode_performance(Round, centralized, Age)
+    : centralized_window(Window)
+    & Age >= Window
+    & good_perf_lim(centralized, Min)
+    & bad_perf_lim(centralized, Max)
+    & stab_round_threshold(centralized, GoodRoundMin)
+    & ineffective_round_threshold(centralized, BadRoundMin)
+<-
+    First = Round - Window + 1;
+
+    .count(rent_observed(R, centralized, P) & R >= First & R <= Round & P >= Min, GoodCount);
+
+    .count(rent_observed(R, centralized, P) & R >= First & R <= Round & P < Max, BadCount);
+
+    if(GoodCount >= GoodRoundMin) {
+        +centralized_stable(Round);
+    };
+
+    if(BadCount >= BadRoundMin) {
+        +centralized_ineffective(Round);
+    }.
+
++!detect_mode_performance(Round, decentralized, Age) 
+    : decentralized_window(Window)
+    & Age >= Window
+    & good_perf_lim(decentralized, Max)
+    & ineffective_round_threshold(decentralized, BadRoundMin)
+<-
+    First = Round - Window + 1;
+
+    .count(rent_observed(R, decentralized, P) & R >= First & R <= Round & P < Max, BadCount);
+    
+    if(BadCount >= BadRoundMin) {
+        +decentralized_crater(Round);
+    }.
+
++!detect_mode_performance(_, _, _)
+<-
+    true.
+    
 +!calculate_returns(Round, Total, Average)
 <-
     for (
@@ -561,7 +631,7 @@ intervention_since(1).
     & min_rounds_optimal(Required)
     & OptimalCount < Required
 <-
-    .println("INTERVENTION HOLD: optimal streak (", Streak, "/", Required, ")").
+    .println("INTERVENTION HOLD: optimal streak (", OptimalCount, "/", Required, ")").
 
 // Otherwise accept STRIPS's proposed intervention.
 +!gate_intervention(_, Proposed, _, _, Proposed)

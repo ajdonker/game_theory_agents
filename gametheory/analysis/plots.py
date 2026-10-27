@@ -13,7 +13,9 @@ parser.add_argument(
         "decentralized",
         "coalition",
         "decentralized_strat",
-        "coalition_strat"
+        "coalition_strat",
+        "adaptive",
+        "centralized_hybrid"
     ]
 )
 
