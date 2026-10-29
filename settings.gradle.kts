@@ -1,5 +1,6 @@
 plugins {
     id("com.gradle.develocity") version "3.19.2"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 dependencyResolutionManagement {
@@ -8,6 +9,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "game_theory_agents"
 include("gametheory")
+include("gui")
 
 develocity {
     buildScan {

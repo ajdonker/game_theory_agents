@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.2.21" apply false
+    kotlin("jvm") version "2.3.10"
 }
 
 allprojects {
@@ -8,4 +8,13 @@ allprojects {
     repositories {
         mavenCentral()
     }
+}
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(8)
 }
