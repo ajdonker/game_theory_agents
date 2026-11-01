@@ -36,26 +36,6 @@ sourceSets {
 application {
     mainClass.set("strips.Main")
 }
-//
-//val testJason by tasks.registering(JavaExec::class) {
-//    group = "verification"
-//    description = "Runs Jason AgentSpeak unit tests"
-//
-//    dependsOn("classes")
-//
-//    classpath = sourceSets["main"].runtimeClasspath
-//    mainClass.set("jason.infra.local.RunLocalMAS")
-//
-//    workingDir = projectDir
-//
-//    args(
-//        file("src/test/jason/unit_tests.mas2j").absolutePath
-//    )
-//}
-//tasks.test {
-//    useJUnit()
-//    dependsOn(testJason)
-//}
 
 tasks.register<JavaExec>("runNoCommunication") {
     group = "application"
@@ -68,6 +48,7 @@ tasks.register<JavaExec>("runNoCommunication") {
 
     workingDir = projectDir
     args(file("NoCommunication.mas2j").absolutePath)
+    args("--log-conf", file("console-logging.properties").absolutePath)
 
     standardInput = System.`in`
 }
@@ -218,3 +199,24 @@ tasks.register<Delete>("cleanInterventionResults") {
         }
     )
 }
+
+
+tasks.withType<JavaExec>().configureEach {
+
+    providers.gradleProperty("cprRunId").orNull?.let {
+        systemProperty("cpr.runId", it)
+    }
+
+    providers.gradleProperty("cprSeed").orNull?.let {
+        systemProperty("cpr.seed", it)
+    }
+
+    providers.gradleProperty("cprRounds").orNull?.let {
+        systemProperty("cpr.rounds", it)
+    }
+
+    providers.gradleProperty("cprScenario").orNull?.let {
+        systemProperty("cpr.scenario", it)
+    }
+}
+

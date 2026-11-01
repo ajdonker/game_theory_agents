@@ -1,4 +1,4 @@
-
+package gui
 import javax.swing.SwingUtilities
 
 fun main() {
@@ -12,10 +12,12 @@ fun main() {
                 runner.start(config)
             }
 
-            runner = JasonSimulationRunner { status ->
+            runner = JasonSimulationRunner( { status ->
                 frame.setStatus(status)
-            }
-
+            },
+            { log ->
+                frame.appendLog(log)
+            })
             frame.isVisible = true
 
         } catch (e: Throwable) {

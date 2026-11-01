@@ -1,3 +1,4 @@
+package gui
 enum class Scenario {
     NO_COMM,
     DECENTRALIZED,

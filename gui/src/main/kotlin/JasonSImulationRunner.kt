@@ -1,10 +1,12 @@
+package gui
 
 import java.io.File
 import javax.swing.SwingUtilities
 import kotlin.concurrent.thread
 
 class JasonSimulationRunner(
-    private val onStatus: (String) -> Unit
+    private val onStatus: (String) -> Unit,
+    private val onLog: (String) -> Unit
 ) {
     @Volatile
     private var running = false
@@ -52,6 +54,11 @@ class JasonSimulationRunner(
                 val builder = ProcessBuilder(
                     "./gradlew",
                     "--console=plain",
+
+                    "-PcprRunId=${config.runId}",
+                    "-PcprSeed=${config.seed}",
+                    "-PcprRounds=${config.rounds}",
+
                     task
                 )
 
@@ -68,7 +75,8 @@ class JasonSimulationRunner(
                     .bufferedReader()
                     .useLines { lines ->
                         lines.forEach { line ->
-                            println("[Jason] $line")
+                            //println("[Jason] $line")
+                            updateLog(line)
                         }
                     }
 
@@ -89,7 +97,11 @@ class JasonSimulationRunner(
             }
         }
     }
-
+    private fun updateLog(message: String) {
+        SwingUtilities.invokeLater {
+            onLog(message)
+        }
+    }
     fun stop() {
         process?.destroy()
     }

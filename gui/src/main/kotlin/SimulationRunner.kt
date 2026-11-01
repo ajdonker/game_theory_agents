@@ -1,3 +1,5 @@
+package gui
+
 interface SimulationRunner {
     fun start(config: ExperimentConfig)
     fun stop()

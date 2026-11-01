@@ -1,4 +1,4 @@
-
+package gui
 import java.awt.BorderLayout
 import java.awt.GridLayout
 import javax.swing.*
@@ -26,10 +26,14 @@ class SimulationFrame(
 
     private val startButton = JButton("Start Simulation")
     private val statusLabel = JLabel("Ready")
-
+    private val logArea = JTextArea(12, 55).apply {
+        isEditable = false
+        lineWrap = false
+        font = java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12)
+    }
     init {
         defaultCloseOperation = EXIT_ON_CLOSE
-        setSize(480, 320)
+        setSize(750, 600)
         setLocationRelativeTo(null)
 
         scenarioBox.selectedItem = Scenario.ADAPTIVE
@@ -63,7 +67,14 @@ class SimulationFrame(
             BorderLayout.NORTH
         )
 
-        content.add(form, BorderLayout.CENTER)
+        //content.add(form, BorderLayout.CENTER)
+        val consolePanel = JPanel(BorderLayout(5, 5))
+        consolePanel.add(JLabel("Live Sim Output:"), BorderLayout.NORTH)
+        consolePanel.add(JScrollPane(logArea), BorderLayout.CENTER)
+        val centerPanel = JPanel(BorderLayout(10, 10))
+        centerPanel.add(form, BorderLayout.NORTH)
+        centerPanel.add(consolePanel, BorderLayout.CENTER)
+        content.add(centerPanel, BorderLayout.CENTER)
         content.add(bottom, BorderLayout.SOUTH)
 
         add(content)
@@ -100,5 +111,12 @@ class SimulationFrame(
                 JOptionPane.ERROR_MESSAGE
             )
         }
+    }
+    fun appendLog(line: String) {
+        logArea.append(line + "\n")
+        if(logArea.document.length > 100000) {
+            logArea.replaceRange("",0, 20_000)
+        }
+        logArea.caretPosition = logArea.document.length
     }
 }

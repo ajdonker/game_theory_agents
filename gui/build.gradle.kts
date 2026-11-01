@@ -6,7 +6,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 }
 application {
-    mainClass.set("MainKt")
+    mainClass.set("gui.MainKt")
 }
 allprojects {
     group = "it.unibo.ise"
