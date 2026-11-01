@@ -24,6 +24,11 @@ class SimulationFrame(
         Scenario.entries.toTypedArray()
     )
 
+    private val progressBar = JProgressBar(0, 100).apply {
+        isStringPainted = true
+        string = "Round 0 / 100"
+    }
+
     private val startButton = JButton("Start Simulation")
     private val statusLabel = JLabel("Ready")
     private val logArea = JTextArea(12, 55).apply {
@@ -57,6 +62,7 @@ class SimulationFrame(
         val bottom = JPanel(BorderLayout(10, 10))
         bottom.add(startButton, BorderLayout.NORTH)
         bottom.add(statusLabel, BorderLayout.SOUTH)
+        bottom.add(progressBar, BorderLayout.CENTER)
 
         // Main layout
         val content = JPanel(BorderLayout(15, 15))
@@ -100,6 +106,7 @@ class SimulationFrame(
                 scenario = scenarioBox.selectedItem as Scenario
             )
 
+            resetProgress(config.rounds)
             onStart(config)
             setStatus("Configuration submitted: Run ${config.runId}")
 
@@ -118,5 +125,14 @@ class SimulationFrame(
             logArea.replaceRange("",0, 20_000)
         }
         logArea.caretPosition = logArea.document.length
+    }
+    fun resetProgress(rounds: Int) {
+        progressBar.maximum = rounds
+        progressBar.value = 0
+        progressBar.string = "Round 0 / $rounds"
+    }
+    fun updateProgress(round: Int) {
+        progressBar.value = round.coerceIn(0, progressBar.maximum)
+        progressBar.string = "Round ${progressBar.value} / ${progressBar.maximum}"
     }
 }

@@ -6,7 +6,8 @@ import kotlin.concurrent.thread
 
 class JasonSimulationRunner(
     private val onStatus: (String) -> Unit,
-    private val onLog: (String) -> Unit
+    private val onLog: (String) -> Unit,
+    private val onEvent: (SimulationEvent) -> Unit
 ) {
     @Volatile
     private var running = false
@@ -77,6 +78,13 @@ class JasonSimulationRunner(
                         lines.forEach { line ->
                             //println("[Jason] $line")
                             updateLog(line)
+
+                            val event = SimulationEventParser.parse(line)
+                            if (event != null) {
+                                SwingUtilities.invokeLater {
+                                    onEvent(event)
+                                }
+                            }
                         }
                     }
 

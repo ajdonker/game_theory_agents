@@ -224,6 +224,7 @@ cpr_b(0.25).
     -round(Round);
     +round(NextRound);
 
+    .println("CPR_EVENT|ROUND|", Round);
     !start_round.
 
 +!advance_round
@@ -231,5 +232,6 @@ cpr_b(0.25).
     & max_rounds(Max)
     & Round >= Max
 <-
+    .println("CPR_EVENT|ROUND|", Round);
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).

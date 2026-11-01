@@ -17,6 +17,7 @@ dependencies {
     implementation("io.github.jason-lang:jason-interpreter:3.2.1")
     implementation("it.unibo.tuprolog:solve-classic-jvm:1.1.5")
     implementation("it.unibo.tuprolog:parser-theory-jvm:1.1.5")
+    implementation("com.google.code.gson:gson:2.15.0")
 
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")

@@ -58,7 +58,6 @@ class JasonSimulationRunner(
                     "-PcprRunId=${config.runId}",
                     "-PcprSeed=${config.seed}",
                     "-PcprRounds=${config.rounds}",
-                    "-PcprScenario=${config.scenario.name}",
 
                     task
                 )

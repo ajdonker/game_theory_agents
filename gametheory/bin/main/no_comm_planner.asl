@@ -22,8 +22,29 @@ cpr_b(0.25).
 // plans
 +!start <- 
     .println("STARTING SIM");
+
+    !apply_gui_config;
     !start_round.
 
++!apply_gui_config
+<-
+    if(strips.load_config(RunId, Seed, Rounds)) {
+        -max_rounds(_);
+        +max_rounds(Rounds);
+
+        -seed(_);
+        +seed(Seed);
+
+        -run_id(_);
+        +run_id(RunId);
+
+        .println(
+                    "GUI CONFIG APPLIED: ",
+                    RunId, " ", Seed, " ", Rounds
+        );
+    } else {
+        .println("NO GUI CONFIG FOUND, USING DEFAULTS");
+    }.
 
 +!start_round
     : round(Round)

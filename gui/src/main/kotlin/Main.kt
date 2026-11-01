@@ -17,6 +17,23 @@ fun main() {
             },
             { log ->
                 frame.appendLog(log)
+            },
+            { event ->
+                when (event) {
+                    is SimulationEvent.RoundFinished ->
+                        frame.updateProgress(event.round)
+
+                    is SimulationEvent.InterventionApplied ->
+                        frame.setStatus("Round ${event.round}: " +
+                                "${event.mode} applied " +
+                                "(success=${event.success})")
+
+                    else -> {
+                        // Handle other events for now do nothing.
+                        Unit
+
+                    }
+                }
             })
             frame.isVisible = true
 
