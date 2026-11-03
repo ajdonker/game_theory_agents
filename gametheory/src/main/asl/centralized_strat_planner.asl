@@ -44,10 +44,29 @@ comm_interval(5).
 //starting goals
 !start.
 // plans
-+!start <- 
++!start <-
     .println("STARTING SIM");
+    !apply_gui_config;
     !start_round.
 
++!apply_gui_config
+<-
+    if(strips.load_config(RunId, Seed, Rounds)) {
+        -max_rounds(_);
+        +max_rounds(Rounds);
+
+        -seed(_);
+        +seed(Seed);
+
+        -run_id(_);
+        +run_id(RunId);
+        .println(
+                    "GUI CONFIG APPLIED: ",
+                    RunId, " ", Seed, " ", Rounds
+        );
+    } else {
+        .println("NO GUI CONFIG FOUND, USING DEFAULTS");
+    }.
 
 +!start_round
     : round(Round)
@@ -141,12 +160,15 @@ comm_interval(5).
     RentPct =
         100 * GroupRent / OptimalRent;
 
+    Distance = math.abs(Total - OptimalBid);
+
     .println(
     "ROUND ", Round,
     " | M2=", Total,
     " | GROUP AVG = ", Average,
     " | RENT=", GroupRent,
-    " | % OPTIMUM=", RentPct
+    " | % OPTIMUM=", RentPct,
+    " | DISTANCE=", Distance
     );
     results.append(
         "results/centralized/rounds.csv",
@@ -178,6 +200,7 @@ comm_interval(5).
             Market1, Market2, Payoff
         );
 
+        strips.emit_event(agent_result(Round, A, Bid, Payoff, Strategy));
         .println(
             A,
             " | M2 bid: ", Bid,
@@ -449,9 +472,11 @@ comm_interval(5).
 
 
 +!check_finished_count(Round, 8)
+    : round_metrics(Round, Total, RentPct, Distance)
 <-
     .println("ALL AGENTS FINISHED ROUND ", Round);
-    +normal_round_finished(Round);
+    strips.emit_event(round_finished(Round, Total, RentPct, Distance));
+    -round_metrics(Round, _, _, _);
     !maybe_start_communication(Round).
     //!maybe_advance_round(Round).
 
@@ -506,6 +531,7 @@ comm_interval(5).
     & max_rounds(Max)
     & Round >= Max
 <-
+    strips.emit_event(simulation_finished(Round));
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).
     
@@ -513,7 +539,20 @@ comm_interval(5).
 +!apply_strips_decision(Round, BestStrategy)
 <-
     .println("ASKING STRIPS TO ENFORCE STRATEGY ", BestStrategy);
-    strips.plan(BestStrategy);
+    if(strips.plan(BestStrategy)) {
+        strips.emit_event(
+            planner_decision(
+                Round,
+                [],
+                [adopt_strategy(BestStrategy)],
+                centralized
+            )
+        );
+    } else {
+        strips.emit_event(
+            planner_failed(Round, "STRIPS could not find a plan for the selected strategy")
+        );
+    };
 
     for(active_agent(A)) {
         .send(A, achieve, adopt_central_strategy(Round, BestStrategy));

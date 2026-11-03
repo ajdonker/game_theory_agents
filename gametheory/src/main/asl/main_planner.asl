@@ -48,8 +48,27 @@ intervention_since(1).
 // plans
 +!start <-
     .println("STARTING SIM");
+    !apply_gui_config;
     !start_round.
 
++!apply_gui_config
+<-
+    if(strips.load_config(RunId, Seed, Rounds)) {
+        -max_rounds(_);
+        +max_rounds(Rounds);
+
+        -seed(_);
+        +seed(Seed);
+
+        -run_id(_);
+        +run_id(RunId);
+        .println(
+                    "GUI CONFIG APPLIED: ",
+                    RunId, " ", Seed, " ", Rounds
+        );
+    } else {
+        .println("NO GUI CONFIG FOUND, USING DEFAULTS");
+    }.
 
 +!start_round
     : round(Round)
@@ -154,6 +173,8 @@ intervention_since(1).
     RentPct =
         100 * GroupRent / OptimalRent;
 
+    Distance = math.abs(Total - OptimalGroupInvestment);
+
     .println(
     "ROUND ", Round,
     " | M2=", Total,
@@ -161,6 +182,9 @@ intervention_since(1).
     " | RENT=", GroupRent,
     " | % OPTIMUM=", RentPct
     );
+
+    +round_metrics(Round, Total, RentPct, Distance);
+
     //results.append("results/rounds.csv", Seed, RunId, Round, Total, Average, GroupRent, RentPct);
     results.append(
         "results/adaptive/rounds.csv",
@@ -190,15 +214,33 @@ intervention_since(1).
     .count(decentralized_crater(Round), Crater);
 
     // STRIPS proposes a mode; stability constraints may veto the change. ignore ineffective flag with 0 for now.
-    strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Ineffective,Stable, Crater, Proposed);
+    if(strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Ineffective,Stable, Crater, Proposed)) {
+        DecisionStatus = succeeded;
+    } else {
+        strips.emit_event(
+            planner_failed(Round, "STRIPS could not find an applicable intervention")
+        );
+        Proposed = CurrentIntervention;
+        DecisionStatus = failed;
+    };
     !gate_intervention(CurrentIntervention, Proposed, ModeAge, OptimalCount, Intervention);
+
+    if(DecisionStatus == succeeded) {
+        strips.emit_event(
+            planner_decision(
+                Round,
+                [CurrentIntervention],
+                [Proposed],
+                Intervention
+            )
+        );
+    };
 
     results.append(
         "results/adaptive/decisions.csv",
         RunId, Seed, Round, CurrentIntervention, Proposed, Intervention, ModeAge, OptimalCount
     );
-
-    !apply_intervention(Intervention);
+    !apply_intervention(Round, Intervention);
     !record_intervention_change(Round, CurrentIntervention, Intervention);
     !calculate_returns(Round, Total, Average).
 
@@ -271,7 +313,7 @@ intervention_since(1).
             A, Strategy, Bid,
             Market1, Market2, Payoff
         );
-
+        strips.emit_event(agent_result(Round, A, Bid, Payoff, Strategy));
         .println(
             A,
             " | M2 bid: ", Bid,
@@ -521,8 +563,11 @@ intervention_since(1).
     !check_finished_count(Round, Count).
 
 +!check_finished_count(Round, 8)
+    : round_metrics(Round, Total, RentPct, Distance)
 <-
     .println("ALL AGENTS FINISHED ROUND ", Round);
+    strips.emit_event(round_finished(Round, Total, RentPct, Distance));
+    -round_metrics(Round, _, _, _);
     !advance_round.
 
 +!check_finished_count(_, Count)
@@ -568,34 +613,39 @@ intervention_since(1).
     & max_rounds(Max)
     & Round >= Max
 <-
+    strips.emit_event(simulation_finished(Round));
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).
 
-+!apply_intervention(none)
++!apply_intervention(Round, none)
 <-
     -intervention(_);
-    +intervention(none).
+    +intervention(none);
+    strips.emit_event(intervention_applied(Round, none, true)).
 
-+!apply_intervention(coalition)
++!apply_intervention(Round, coalition)
 <-
    .println("APPLYING COALITION INTERVENTION");
    -intervention(_);
-   +intervention(coalition).
+   +intervention(coalition);
+   strips.emit_event(intervention_applied(Round, coalition, true)).
 
 
-+!apply_intervention(centralized)
++!apply_intervention(Round, centralized)
 <-
   .println("APPLYING CENTRALIZED INTERVENTION");
   -intervention(_);
-  +intervention(centralized).
+  +intervention(centralized);
+  strips.emit_event(intervention_applied(Round, centralized, true)).
 
-+!apply_intervention(decentralized)
++!apply_intervention(Round, decentralized)
 <-
     .println("APPLYING DECENTRALIZED INTERVENTION");
     -intervention(_);
-    +intervention(decentralized).
+    +intervention(decentralized);
+    strips.emit_event(intervention_applied(Round, decentralized, true)).
 
-+!apply_intervention(keep)
++!apply_intervention(_, keep)
 <-
     true.
 

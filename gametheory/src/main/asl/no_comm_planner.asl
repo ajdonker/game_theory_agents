@@ -140,6 +140,9 @@ cpr_b(0.25).
     RentPct =
         100 * GroupRent / OptimalRent;
 
+    Distance = math.abs(Total - OptimalBid);
+
+    +round_metrics(Round, Total, RentPct, Distance);
     .println(
     "ROUND ", Round,
     " | M2=", Total,
@@ -178,7 +181,9 @@ cpr_b(0.25).
             A, Strategy, Bid,
             Market1, Market2, Payoff
         );
-
+        strips.emit_event(
+            agent_result(Round, A, Bid, Payoff, Strategy)
+        );
         .println(
             A,
             " | M2 bid: ", Bid,
@@ -205,8 +210,11 @@ cpr_b(0.25).
 
 
 +!check_finished_count(Round, 8)
+    : round_metrics(Round, Total, RentPct, Distance)
 <-
     .println("ALL AGENTS FINISHED ROUND ", Round);
+    strips.emit_event(round_finished(Round, Total, RentPct, Distance));
+    -round_metrics(Round, _, _, _);
     !advance_round.
 
 +!check_finished_count(_, Count)
@@ -224,7 +232,6 @@ cpr_b(0.25).
     -round(Round);
     +round(NextRound);
 
-    .println("CPR_EVENT|ROUND|", Round);
     !start_round.
 
 +!advance_round
@@ -232,6 +239,8 @@ cpr_b(0.25).
     & max_rounds(Max)
     & Round >= Max
 <-
-    .println("CPR_EVENT|ROUND|", Round);
+    strips.emit_event(
+        simulation_finished(Round)
+    );
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).

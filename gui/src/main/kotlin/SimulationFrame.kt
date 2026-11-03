@@ -3,6 +3,7 @@ import java.awt.BorderLayout
 import java.awt.GridLayout
 import javax.swing.*
 import javax.swing.border.EmptyBorder
+import javax.swing.table.DefaultTableModel
 
 class SimulationFrame(
     private val onStart: (ExperimentConfig) -> Unit
@@ -36,6 +37,40 @@ class SimulationFrame(
         lineWrap = false
         font = java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12)
     }
+    private val metricsLabel =
+        JLabel("Investment: - | Rent: - | Distance: -")
+
+    private val agentTableModel = object : DefaultTableModel(
+        arrayOf("Agent", "Bid", "Payoff", "Strategy"), 0
+    ) {
+        override fun isCellEditable(
+            row: Int, column: Int
+        ) = false
+    }
+
+    private val agentTable = JTable(agentTableModel)
+
+    private val plannerArea = JTextArea().apply {
+        isEditable = false
+    }
+
+    private val interventionArea = JTextArea().apply {
+        isEditable = false
+    }
+
+    private val coalitionArea = JTextArea().apply {
+        isEditable = false
+    }
+
+    private val summaryArea = JTextArea().apply {
+        isEditable = false
+    }
+
+    private var displayedAgentRound = -1
+
+    private var sumRentPct = 0.0
+    private var sumDistance = 0.0
+    private var metricRoundCount = 0
     init {
         defaultCloseOperation = EXIT_ON_CLOSE
         setSize(750, 600)
@@ -77,9 +112,23 @@ class SimulationFrame(
         val consolePanel = JPanel(BorderLayout(5, 5))
         consolePanel.add(JLabel("Live Sim Output:"), BorderLayout.NORTH)
         consolePanel.add(JScrollPane(logArea), BorderLayout.CENTER)
+        val tabs = JTabbedPane().apply {
+            addTab("Console", consolePanel)
+            addTab("Agents", JScrollPane(agentTable))
+            addTab("Planner", JScrollPane(plannerArea))
+            addTab("Interventions", JScrollPane(interventionArea))
+            addTab("Coalitions", JScrollPane(coalitionArea))
+            addTab("Summary", JScrollPane(summaryArea))
+        }
+
+        val configurationPanel = JPanel(BorderLayout(8, 8))
+        configurationPanel.add(form, BorderLayout.NORTH)
+        configurationPanel.add(metricsLabel, BorderLayout.SOUTH)
+
         val centerPanel = JPanel(BorderLayout(10, 10))
-        centerPanel.add(form, BorderLayout.NORTH)
-        centerPanel.add(consolePanel, BorderLayout.CENTER)
+        centerPanel.add(configurationPanel, BorderLayout.NORTH)
+        centerPanel.add(tabs, BorderLayout.CENTER)
+
         content.add(centerPanel, BorderLayout.CENTER)
         content.add(bottom, BorderLayout.SOUTH)
 
@@ -106,7 +155,7 @@ class SimulationFrame(
                 scenario = scenarioBox.selectedItem as Scenario
             )
 
-            resetProgress(config.rounds)
+            resetForNewRun(config)
             onStart(config)
             setStatus("Configuration submitted: Run ${config.runId}")
 
@@ -134,5 +183,154 @@ class SimulationFrame(
     fun updateProgress(round: Int) {
         progressBar.value = round.coerceIn(0, progressBar.maximum)
         progressBar.string = "Round ${progressBar.value} / ${progressBar.maximum}"
+    }
+
+
+    fun handleEvent(event: SimulationEvent) {
+        when (event) {
+
+            // 1. Group-level results
+            is SimulationEvent.RoundFinished -> {
+                updateProgress(event.round)
+
+                metricsLabel.text =
+                    "Investment: ${event.totalInvestment} | " +
+                            "Rent: ${event.rentPct}% | " +
+                            "Distance: ${event.distanceToOptimum}"
+
+                if (event.rentPct != null &&
+                    event.distanceToOptimum != null
+                ) {
+                    sumRentPct += event.rentPct
+                    sumDistance += event.distanceToOptimum
+                    metricRoundCount++
+                }
+            }
+
+            // 2. Individual agent results
+            is SimulationEvent.AgentResult -> {
+
+                if (displayedAgentRound != event.round) {
+                    displayedAgentRound = event.round
+                    agentTableModel.rowCount = 0
+                }
+
+                agentTableModel.addRow(
+                    arrayOf<Any?>(
+                        event.agent,
+                        event.bid,
+                        event.payoff,
+                        event.strategy
+                    )
+                )
+            }
+
+            // 3. STRIPS symbolic planning
+            is SimulationEvent.PlannerDecision -> {
+                plannerArea.append(
+                    "ROUND ${event.round}\n" +
+                            "Selected mode: ${event.selectedMode}\n" +
+                            "Symbolic state: ${event.symbolicState}\n" +
+                            "Plan: ${event.plan}\n" +
+                            "----------------------------\n"
+                )
+            }
+
+            // 4. Proposed vs gated intervention
+            is SimulationEvent.InterventionDecision -> {
+                interventionArea.append(
+                    "ROUND ${event.round}\n" +
+                            "Current: ${event.currentMode}\n" +
+                            "Proposed: ${event.proposedMode}\n" +
+                            "Selected: ${event.selectedMode}\n" +
+                            "Mode age: ${event.modeAge}\n" +
+                            "Optimal count: ${event.optimalCount}\n" +
+                            "----------------------------\n"
+                )
+            }
+
+            // 5. Actual intervention execution
+            is SimulationEvent.InterventionApplied -> {
+                interventionArea.append(
+                    "ROUND ${event.round}\n" +
+                            "APPLIED: ${event.mode}\n" +
+                            "SUCCESS: ${event.success}\n" +
+                            "----------------------------\n"
+                )
+            }
+
+            // 6. Coalition membership changes
+            is SimulationEvent.CoalitionChanged -> {
+                coalitionArea.append(
+                    "ROUND ${event.round}\n" +
+                            "Coalition: ${event.coalitionId}\n" +
+                            "Change: ${event.change}\n" +
+                            "Members: ${event.members}\n" +
+                            "----------------------------\n"
+                )
+            }
+
+            // 7. Planner failures
+            is SimulationEvent.PlannerFailed -> {
+                plannerArea.append(
+                    "ROUND ${event.round}: PLANNER FAILED\n" +
+                            "Reason: ${event.reason}\n" +
+                            "----------------------------\n"
+                )
+            }
+
+            // 8. Experiment completion
+            is SimulationEvent.SimulationFinished -> {
+
+                val meanRent = if (metricRoundCount > 0)
+                    sumRentPct / metricRoundCount
+                else null
+
+                val meanDistance = if (metricRoundCount > 0)
+                    sumDistance / metricRoundCount
+                else null
+
+                summaryArea.text = """
+                SIMULATION FINISHED
+
+                Final round: ${event.round}
+                Observed rounds: $metricRoundCount
+
+                Mean rent: ${meanRent ?: "N/A"}%
+                Mean distance: ${meanDistance ?: "N/A"}
+
+                Check the generated CSV files
+                for detailed experimental results.
+            """.trimIndent()
+
+                setStatus(
+                    "Simulation finished after ${event.round} rounds"
+                )
+            }
+        }
+    }
+
+    private fun resetForNewRun(config: ExperimentConfig) {
+
+        resetProgress(config.rounds)
+
+        logArea.text = ""
+        plannerArea.text = ""
+        interventionArea.text = ""
+        coalitionArea.text = ""
+        summaryArea.text = ""
+
+        agentTableModel.rowCount = 0
+        displayedAgentRound = -1
+
+        sumRentPct = 0.0
+        sumDistance = 0.0
+        metricRoundCount = 0
+
+        metricsLabel.text =
+            "Investment: - | Rent: - | Distance: -"
+
+        statusLabel.text =
+            "Launching ${config.scenario} | Run ${config.runId}"
     }
 }

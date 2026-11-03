@@ -101,6 +101,12 @@ coalitioning_rate(5).
 
 +!clear_round_state
 <- 
+    .findall(Peer, coalition_peer(_, Peer), PreviousPeers);
+    .sort(PreviousPeers, SortedPreviousPeers);
+    for(previous_coalition_peers(OldPeers)) {
+        -previous_coalition_peers(OldPeers);
+    };
+    +previous_coalition_peers(SortedPreviousPeers);
     for (round_finished_reported(R)) { -round_finished_reported(R); };
     for (coalition_built(R)) { -coalition_built(R); };
     for (coalition_preferences_started(R)) { -coalition_preferences_started(R); };
@@ -743,6 +749,25 @@ coalitioning_rate(5).
     };
 
     .count(coalition_peer(Round, _), PeerCount);
+    .findall(Peer, coalition_peer(Round, Peer), CurrentPeers);
+    .sort(CurrentPeers, SortedCurrentPeers);
+    ?previous_coalition_peers(PreviousPeers);
+    if(SortedCurrentPeers \== PreviousPeers) {
+        Members = [Me | SortedCurrentPeers];
+        .length(PreviousPeers, PreviousPeerCount);
+        if(PeerCount == 0) {
+            Change = dissolved;
+        } else {
+            if(PreviousPeerCount == 0) {
+                Change = formed;
+            } else {
+                Change = updated;
+            };
+        };
+        strips.emit_event(
+            coalition_changed(Round, Me, Members, Change)
+        );
+    };
 
     .println(
         "ROUND ",

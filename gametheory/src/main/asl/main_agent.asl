@@ -629,6 +629,27 @@ coalition_bid_threshold(2).
         );
     };
     .count(coalition_peer(Round, _), PeerCount);
+    PreviousRound = Round - 1;
+    .findall(Peer, coalition_peer(PreviousRound, Peer), PreviousPeers);
+    .sort(PreviousPeers, SortedPreviousPeers);
+    .findall(Peer, coalition_peer(Round, Peer), CurrentPeers);
+    .sort(CurrentPeers, SortedCurrentPeers);
+    if(SortedCurrentPeers \== SortedPreviousPeers) {
+        Members = [Me | SortedCurrentPeers];
+        .length(SortedPreviousPeers, PreviousPeerCount);
+        if(PeerCount == 0) {
+            Change = dissolved;
+        } else {
+            if(PreviousPeerCount == 0) {
+                Change = formed;
+            } else {
+                Change = updated;
+            };
+        };
+        strips.emit_event(
+            coalition_changed(Round, Me, Members, Change)
+        );
+    };
     !start_coalition_exchange(Round).
 
 +!check_coalition_preference_count(_, Count, Expected)

@@ -43,11 +43,30 @@ comm_interval(5).
 //starting goals
 !start.
 // plans
-+!start <- 
++!start <-
     .println("STARTING SIM");
+    !apply_gui_config;
     !start_round.
 
++!apply_gui_config
+<-
+    if(strips.load_config(RunId, Seed, Rounds)) {
+        -max_rounds(_);
+        +max_rounds(Rounds);
 
+        -seed(_);
+        +seed(Seed);
+
+        -run_id(_);
+        +run_id(RunId);
+        .println(
+                    "GUI CONFIG APPLIED: ",
+                    RunId, " ", Seed, " ", Rounds
+        );
+    } else {
+        .println("NO GUI CONFIG FOUND, USING DEFAULTS");
+    }.
+    
 +!start_round
     : round(Round)
     & seed(Seed)
@@ -142,12 +161,15 @@ comm_interval(5).
     RentPct =
         100 * GroupRent / OptimalRent;
 
+    Distance = math.abs(Total - OptimalBid);
+    +round_metrics(Round, Total, RentPct, Distance);
     .println(
     "ROUND ", Round,
     " | M2=", Total,
     " | GROUP AVG = ", Average,
     " | RENT=", GroupRent,
-    " | % OPTIMUM=", RentPct
+    " | % OPTIMUM=", RentPct,
+    " | DISTANCE=", Distance
     );
     //results.append("results/rounds.csv", Seed, RunId, Round, Total, Average, GroupRent, RentPct);
     results.append(
@@ -181,6 +203,7 @@ comm_interval(5).
             Market1, Market2, Payoff
         );
 
+        strips.emit_event(agent_result(Round, A, Bid, Payoff, Strategy));
         .println(
             A,
             " | M2 bid: ", Bid,
@@ -465,8 +488,11 @@ comm_interval(5).
 
 
 +!check_finished_count(Round, 8)
+    : round_metrics(Round, Total, RentPct, Distance)
 <-
+    strips.emit_event(round_finished(Round, Total, RentPct, Distance));
     .println("ALL AGENTS FINISHED ROUND ", Round);
+    -round_metrics(Round, _, _, _);
     +normal_round_finished(Round);
     !maybe_advance_round(Round).
 
@@ -518,6 +544,7 @@ comm_interval(5).
     & max_rounds(Max)
     & Round >= Max
 <-
+    strips.emit_event(simulation_finished(Round));
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).
     
@@ -531,7 +558,20 @@ comm_interval(5).
         BestBid
     );
 
-    strips.plan(BestBid);
+    if(strips.plan(BestBid)) {
+        strips.emit_event(
+            planner_decision(
+                Round,
+                [],
+                [enforce_bid(BestBid)],
+                centralized
+            )
+        );
+    } else {
+        strips.emit_event(
+            planner_failed(Round, "STRIPS could not find a plan for the selected bid")
+        );
+    };
 
     .println(
         "STRIPS PLAN FOUND: enforce_bid(",

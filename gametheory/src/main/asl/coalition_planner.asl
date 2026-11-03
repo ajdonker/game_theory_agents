@@ -20,10 +20,29 @@ cpr_b(0.25).
 //starting goals
 !start.
 // plans
-+!start <- 
++!start <-
     .println("STARTING SIM");
+    !apply_gui_config;
     !start_round.
 
++!apply_gui_config
+<-
+    if(strips.load_config(RunId, Seed, Rounds)) {
+        -max_rounds(_);
+        +max_rounds(Rounds);
+
+        -seed(_);
+        +seed(Seed);
+
+        -run_id(_);
+        +run_id(RunId);
+        .println(
+                    "GUI CONFIG APPLIED: ",
+                    RunId, " ", Seed, " ", Rounds
+        );
+    } else {
+        .println("NO GUI CONFIG FOUND, USING DEFAULTS");
+    }.
 
 +!start_round
     : round(Round)
@@ -119,6 +138,9 @@ cpr_b(0.25).
     RentPct =
         100 * GroupRent / OptimalRent;
 
+    Distance = math.abs(Total - OptimalBid);
+
+    +round_metrics(Round, Total, RentPct, Distance);
     .println(
     "ROUND ", Round,
     " | M2=", Total,
@@ -157,7 +179,7 @@ cpr_b(0.25).
             A, Strategy, Bid,
             Market1, Market2, Payoff
         );
-
+        strips.emit_event(agent_result(Round, A, Bid, Payoff, Strategy));
         .println(
             A,
             " | M2 bid: ", Bid,
@@ -184,8 +206,11 @@ cpr_b(0.25).
 
 
 +!check_finished_count(Round, 8)
+    : round_metrics(Round, Total, RentPct, Distance)
 <-
+    strips.emit_event(round_finished(Round, Total, RentPct, Distance));
     .println("ALL AGENTS FINISHED ROUND ", Round);
+    -round_metrics(Round, _, _, _);
     !advance_round.
 
 +!check_finished_count(_, Count)
@@ -210,5 +235,6 @@ cpr_b(0.25).
     & max_rounds(Max)
     & Round >= Max
 <-
+    strips.emit_event(simulation_finished(Round));
     .println("SIMULATION FINISHED AFTER ", Round, " ROUNDS");
     .stopMAS(500).

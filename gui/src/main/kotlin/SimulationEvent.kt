@@ -26,6 +26,15 @@ sealed interface SimulationEvent {
         val selectedMode: String
     ) : SimulationEvent
 
+    data class InterventionDecision(
+        override val round: Int,
+        val currentMode: String,
+        val proposedMode: String,
+        val selectedMode: String,
+        val modeAge: Int,
+        val optimalCount: Int
+    ) : SimulationEvent
+
     data class InterventionApplied(
         override val round: Int,
         val mode: String,
@@ -46,7 +55,7 @@ sealed interface SimulationEvent {
 
     data class SimulationFinished(
         override val round: Int,
-        val meanRentPct: Double,
-        val meanDistance: Double
+        val meanRentPct: Double? = null,
+        val meanDistance: Double? = null
     ) : SimulationEvent
 }
