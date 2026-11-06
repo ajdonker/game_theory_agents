@@ -69,6 +69,21 @@ class emit_event : DefaultInternalAction() {
 
         if (event.arity != fields.size) return false
 
+        val json = encode(event)
+            ?: return false
+
+        println(json)
+        return true 
+    }
+
+
+    internal fun encode(event: Structure): String? {
+
+        val fields = schemas[event.functor]
+            ?: return null
+
+        if (event.arity != fields.size) return null
+
         val json = JsonObject()
         json.addProperty("type", event.functor)
 
@@ -79,10 +94,8 @@ class emit_event : DefaultInternalAction() {
             )
         }
 
-        println("CPR_EVENT|$json")
-        return true
+        return "CPR_EVENT|$json"
     }
-
     private fun toJson(term: Term): JsonElement =
         when (term) {
 

@@ -9,6 +9,18 @@ class SimulationFrame(
     private val onStart: (ExperimentConfig) -> Unit
 ) : JFrame("CPR Multi-Agent Simulation") {
 
+    internal val progressValueForTest: Int
+        get() = progressBar.value
+
+    internal val metricsTextForTest: String
+        get() = metricsLabel.text
+
+    internal val agentRowCountForTest: Int
+        get() = agentTableModel.rowCount
+
+    internal val interventionTextForTest: String
+        get() = interventionArea.text
+
     private val runIdSpinner = JSpinner(
         SpinnerNumberModel(1, 1, 1000000, 1)
     )
@@ -41,14 +53,16 @@ class SimulationFrame(
         JLabel("Investment: - | Rent: - | Distance: -")
 
     private val agentTableModel = object : DefaultTableModel(
-        arrayOf("Agent", "Bid", "Payoff", "Strategy"), 0
+        arrayOf("Round","Agent", "Bid", "Payoff", "Strategy"), 0
     ) {
         override fun isCellEditable(
             row: Int, column: Int
         ) = false
     }
 
-    private val agentTable = JTable(agentTableModel)
+    private val agentTable = JTable(agentTableModel).apply {
+        autoCreateRowSorter = true
+    }
 
     private val plannerArea = JTextArea().apply {
         isEditable = false
@@ -66,12 +80,22 @@ class SimulationFrame(
         isEditable = false
     }
 
-    private var displayedAgentRound = -1
 
     private var sumRentPct = 0.0
     private var sumDistance = 0.0
     private var metricRoundCount = 0
     init {
+        
+        progressBar.name = "progressBar"
+        metricsLabel.name = "metricsLabel"
+        agentTable.name = "agentTable"
+        plannerArea.name = "plannerArea"
+        interventionArea.name = "interventionArea"
+        coalitionArea.name = "coalitionArea"
+        summaryArea.name = "summaryArea"
+        startButton.name = "startButton"
+        roundsSpinner.name = "roundsSpinner"
+
         defaultCloseOperation = EXIT_ON_CLOSE
         setSize(750, 600)
         setLocationRelativeTo(null)
@@ -210,13 +234,9 @@ class SimulationFrame(
             // 2. Individual agent results
             is SimulationEvent.AgentResult -> {
 
-                if (displayedAgentRound != event.round) {
-                    displayedAgentRound = event.round
-                    agentTableModel.rowCount = 0
-                }
-
                 agentTableModel.addRow(
                     arrayOf<Any?>(
+                        event.round,
                         event.agent,
                         event.bid,
                         event.payoff,
@@ -321,7 +341,6 @@ class SimulationFrame(
         summaryArea.text = ""
 
         agentTableModel.rowCount = 0
-        displayedAgentRound = -1
 
         sumRentPct = 0.0
         sumDistance = 0.0

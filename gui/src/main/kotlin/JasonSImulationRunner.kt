@@ -1,122 +1,121 @@
 package gui
 
 import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.SwingUtilities
 import kotlin.concurrent.thread
 
 class JasonSimulationRunner(
     private val onStatus: (String) -> Unit,
     private val onLog: (String) -> Unit,
-    private val onEvent: (SimulationEvent) -> Unit
+    private val onEvent: (SimulationEvent) -> Unit,
+    private val commandFactory: (ExperimentConfig) -> List<String> = ::defaultCommand,
+    private val workingDirectory: File = findGradleRoot()
 ) {
-    @Volatile
-    private var running = false
-
-    @Volatile
+    private val running = AtomicBoolean(false)
+    private val stopping = AtomicBoolean(false)
+    private val lock = Any()
     private var process: Process? = null
 
-    fun start(config: ExperimentConfig) {
-        if (running) {
-            updateStatus("Simulation already running")
-            return
+    fun isRunning(): Boolean = running.get()
+
+    fun start(config: ExperimentConfig): Boolean {
+        val invalid = runCatching { validate(config) }.exceptionOrNull()
+        if (invalid != null) {
+            postStatus("Invalid configuration: ${invalid.message}")
+            return false
         }
+        if (!running.compareAndSet(false, true)) {
+            postStatus("Already running")
+            return false
+        }
+        stopping.set(false)
 
-        running = true
-
-        thread(name = "jason-runner", isDaemon = true) {
+        thread(name = "jason-simulation", isDaemon = true) {
+            var terminal = "Failed: unknown error"
             try {
-                // Find the project root containing gradlew
-                val projectRoot = generateSequence(
-                    File(System.getProperty("user.dir")).absoluteFile
-                ) { it.parentFile }
-                    .firstOrNull { File(it, "gradlew").isFile }
-                    ?: error("Cannot find Gradle project root")
+                val command = commandFactory(config)
+                val p = ProcessBuilder(command)
+                    .directory(workingDirectory)
+                    .redirectErrorStream(true)
+                    .start()
 
-                // Select the Gradle task
-                val task = when (config.scenario) {
-                    Scenario.NO_COMM ->
-                        ":gametheory:runNoCommunication"
-
-                    Scenario.CENTRALIZED ->
-                        ":gametheory:runCentralizedCommunication"
-
-                    Scenario.DECENTRALIZED ->
-                        ":gametheory:runDecentralizedCommunication"
-
-                    Scenario.COALITION ->
-                        ":gametheory:runCoalitionCommunication"
-
-                    Scenario.ADAPTIVE ->
-                        ":gametheory:runInterventions"
+                synchronized(lock) {
+                    process = p
+                    if (stopping.get()) terminate(p)
                 }
+                if (!stopping.get()) postStatus("Running ${config.scenario}")
 
-                updateStatus("Launching ${config.scenario}...")
-
-                val builder = ProcessBuilder(
-                    "./gradlew",
-                    "--console=plain",
-
-                    "-PcprRunId=${config.runId}",
-                    "-PcprSeed=${config.seed}",
-                    "-PcprRounds=${config.rounds}",
-
-                    task
-                )
-
-                builder.directory(projectRoot)
-                builder.redirectErrorStream(true)
-
-                val currentProcess = builder.start()
-                process = currentProcess
-
-                updateStatus("Running ${config.scenario}")
-
-                // Read output without blocking Swing
-                currentProcess.inputStream
-                    .bufferedReader()
-                    .useLines { lines ->
-                        lines.forEach { line ->
-                            //println("[Jason] $line")
-                            updateLog(line)
-
-                            val event = SimulationEventParser.parse(line)
-                            if (event != null) {
-                                SwingUtilities.invokeLater {
-                                    onEvent(event)
-                                }
-                            }
+                var completedEvent = false
+                p.inputStream.bufferedReader().useLines { lines ->
+                    lines.forEach { line ->
+                        SwingUtilities.invokeLater { onLog(line) }
+                        SimulationEventParser.parse(line)?.let { event ->
+                            if (event is SimulationEvent.SimulationFinished) completedEvent = true
+                            SwingUtilities.invokeLater { onEvent(event) }
                         }
                     }
-
-                val exitCode = currentProcess.waitFor()
-
-                if (exitCode == 0) {
-                    updateStatus("Simulation completed")
-                } else {
-                    updateStatus("Simulation failed: $exitCode")
                 }
-
+                val exitCode = p.waitFor()
+                terminal = when {
+                    stopping.get() -> "Stopped"
+                    exitCode != 0 -> "Failed: process exit $exitCode"
+                    !completedEvent -> "Failed: missing simulation_finished event"
+                    else -> "Completed"
+                }
             } catch (e: Exception) {
-                e.printStackTrace()
-                updateStatus("Error: ${e.message}")
+                terminal = if (stopping.get()) "Stopped" else "Failed: ${e.message}"
             } finally {
-                process = null
-                running = false
+                synchronized(lock) { process = null }
+                running.set(false)
+                postStatus(terminal)
             }
         }
-    }
-    private fun updateLog(message: String) {
-        SwingUtilities.invokeLater {
-            onLog(message)
-        }
-    }
-    fun stop() {
-        process?.destroy()
+        return true
     }
 
-    private fun updateStatus(message: String) {
-        SwingUtilities.invokeLater {
-            onStatus(message)
-        }
+    fun stop() {
+        if (!running.get()) return
+        stopping.set(true)
+        synchronized(lock) { process?.let(::terminate) }
     }
+
+    private fun postStatus(message: String) {
+        SwingUtilities.invokeLater { onStatus(message) }
+    }
+
+    private fun terminate(p: Process) {
+        p.toHandle().descendants().toList().asReversed().forEach { child ->
+            if (child.isAlive) child.destroyForcibly()
+        }
+        p.destroyForcibly()
+    }
+}
+
+private fun validate(config: ExperimentConfig) {
+    require(config.runId in 1..1_000_000) { "Run ID must be between 1 and 1000000" }
+    require(config.seed >= 0) { "Seed must be nonnegative" }
+    require(config.rounds in 1..1_000_000) { "Rounds must be between 1 and 1000000" }
+}
+
+private fun findGradleRoot(): File =
+    generateSequence(File(System.getProperty("user.dir")).absoluteFile) { it.parentFile }
+        .firstOrNull { File(it, "gradlew").isFile }
+        ?: error("Cannot find root containing gradlew")
+
+private fun defaultCommand(config: ExperimentConfig): List<String> {
+    val task = when (config.scenario) {
+        Scenario.NO_COMM -> ":gametheory:runNoCommunication"
+        Scenario.CENTRALIZED -> ":gametheory:runCentralizedCommunication"
+        Scenario.DECENTRALIZED -> ":gametheory:runDecentralizedCommunication"
+        Scenario.COALITION -> ":gametheory:runCoalitionCommunication"
+        Scenario.ADAPTIVE -> ":gametheory:runInterventions"
+    }
+    return listOf(
+        "./gradlew", "--console=plain",
+        "-PcprRunId=${config.runId}",
+        "-PcprSeed=${config.seed}",
+        "-PcprRounds=${config.rounds}",
+        task
+    )
 }
