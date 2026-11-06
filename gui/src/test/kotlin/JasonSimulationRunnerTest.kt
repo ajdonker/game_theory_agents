@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 
 // Fake child processes use the runner without starting Jason/Gradle.
 class JasonSimulationRunnerTest {
+    /* Test whether JasonSimulationRunner correctly starts and stops a subprocess, forwards events, and reports status. */
     private fun config(rounds: Int = 1) =
         ExperimentConfig(1, 42L, rounds, Scenario.NO_COMM)
 

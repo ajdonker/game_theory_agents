@@ -50,7 +50,8 @@ class emit_event : DefaultInternalAction() {
             "selectedMode",
             "modeAge",
             "optimalCount"
-        )
+        ),
+        "mode_active" to listOf("round", "mode")
     )
 
     override fun execute(

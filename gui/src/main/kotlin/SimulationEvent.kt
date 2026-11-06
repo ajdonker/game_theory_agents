@@ -58,4 +58,9 @@ sealed interface SimulationEvent {
         val meanRentPct: Double? = null,
         val meanDistance: Double? = null
     ) : SimulationEvent
+
+    data class ModeActive(
+        override val round: Int,
+        val mode: String
+    ) : SimulationEvent
 }

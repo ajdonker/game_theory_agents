@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Assumptions.assumeFalse
 import org.junit.jupiter.api.Test
 
 class SimulationFrameTest {
-
+    /* Test whether SimulationFrame correctly updates its GUI components in response to SimulationEventParser events, and resets state on new run. */
     private fun find(root: Component, name: String): Component? {
         if (root.name == name) return root
         if (root is Container) for (child in root.components) {

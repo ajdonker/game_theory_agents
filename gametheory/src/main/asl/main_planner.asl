@@ -82,6 +82,10 @@ intervention_since(1).
     .println("===============");
 
     +round_mode(Round, CurrentIntervention);
+    
+    strips.emit_event(
+        mode_active(Round, CurrentIntervention)
+    );
 
     results.append(
         "results/adaptive/modes.csv",
@@ -214,27 +218,33 @@ intervention_since(1).
     .count(decentralized_crater(Round), Crater);
 
     // STRIPS proposes a mode; stability constraints may veto the change. ignore ineffective flag with 0 for now.
-    if(strips.decide(Total, OptimalGroupInvestment, RentPct, B1, B2, B3, B4, B5, B6, B7, B8, CurrentIntervention, Ineffective,Stable, Crater, Proposed)) {
-        DecisionStatus = succeeded;
+    if (strips.decide(
+        Total, OptimalGroupInvestment, RentPct,
+        B1, B2, B3, B4, B5, B6, B7, B8,
+        CurrentIntervention, Ineffective, Stable, Crater,
+        Proposed, SymbolicState, Plan
+    )) {
+        strips.emit_event(
+            planner_decision(Round, SymbolicState, Plan, Proposed)
+        );
     } else {
-        strips.emit_event(
-            planner_failed(Round, "STRIPS could not find an applicable intervention")
-        );
         Proposed = CurrentIntervention;
-        DecisionStatus = failed;
-    };
-    !gate_intervention(CurrentIntervention, Proposed, ModeAge, OptimalCount, Intervention);
-
-    if(DecisionStatus == succeeded) {
         strips.emit_event(
-            planner_decision(
-                Round,
-                [CurrentIntervention],
-                [Proposed],
-                Intervention
-            )
+            planner_failed(Round, "No applicable STRIPS plan")
         );
     };
+
+    !gate_intervention(
+        CurrentIntervention, Proposed,
+        ModeAge, OptimalCount, Intervention
+    );
+
+    strips.emit_event(
+        intervention_decision(
+            Round, CurrentIntervention, Proposed,
+            Intervention, ModeAge, OptimalCount
+        )
+    );
 
     results.append(
         "results/adaptive/decisions.csv",

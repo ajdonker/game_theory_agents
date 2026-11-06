@@ -96,6 +96,12 @@ object SimulationEventParser {
                     round = round
                 )
 
+            "mode_active" ->
+                SimulationEvent.ModeActive(
+                    round = round,
+                    mode = json.get("mode").asString
+                )
+            
             else -> null
         }
     }

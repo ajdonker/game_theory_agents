@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class EmitEventTest {
+    /*test validity of event emission from Jason to JSON, with testable guarantees on every type that can be serialized.*/
     private val emitter = emit_event()
 
     private fun encoded(source: String) =

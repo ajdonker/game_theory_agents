@@ -3,15 +3,17 @@ package strips
 import jason.asSemantics.DefaultInternalAction
 import jason.asSemantics.TransitionSystem
 import jason.asSemantics.Unifier
+import jason.asSyntax.ASSyntax
 import jason.asSyntax.Atom
+import jason.asSyntax.ListTerm
 import jason.asSyntax.NumberTerm
 import jason.asSyntax.Term
 import kotlin.math.sqrt
 
 class decide : DefaultInternalAction() {
     
-    override fun getMinArgs() = 16
-    override fun getMaxArgs() = 16
+    override fun getMinArgs() = 18
+    override fun getMaxArgs() = 18
 
     override fun execute(
         ts: TransitionSystem,
@@ -19,6 +21,14 @@ class decide : DefaultInternalAction() {
         args: Array<Term>
     ): Any? {
         fun number(i: Int): Double = (args[i] as NumberTerm).solve()
+
+        fun toJasonList(values: List<String>): ListTerm {
+            val terms: List<Term> = values.map {
+                ASSyntax.createString(it)
+            }
+
+            return ASSyntax.createList(terms)
+        }
 
         val groupTotal = number(0)
         val optimalGroupInvestment = number(1)
@@ -59,6 +69,22 @@ class decide : DefaultInternalAction() {
 
         val state = mutableListOf(investment, dispersion, currentMode)
 
+        fun returnDecision(
+            proposed: String,
+            actions: List<String>
+        ): Boolean {
+            // just to add the last three args nicely to the unifier
+            return un.unifies(
+                args[15],
+                Atom(proposed)
+            ) && un.unifies(
+                args[16],
+                toJasonList(state.toList())
+            ) && un.unifies(
+                args[17],
+                toJasonList(actions)
+            )
+        }
         if (centralizedIneffective &&
             currentMode == "mode_centralized" &&
             investment == "investment_high"
@@ -75,7 +101,10 @@ class decide : DefaultInternalAction() {
         }
         if (investment == "investment_optimal" && currentMode == "mode_none") {
             println("STRIPS: Already optimal, no intervention needed")
-            return un.unifies(args[15], Atom("keep"))
+            return returnDecision(
+                "keep",
+                emptyList()
+            )
         }
 //        println("========== STRIPS DEBUG ==========")
 //        println("Group total: $groupTotal")
@@ -139,6 +168,6 @@ class decide : DefaultInternalAction() {
         println("STRIPS ACTION: $action")
         println("NEXT INTERVENTION: $intervention")
 
-        return un.unifies(args[15], Atom(intervention))
+        return returnDecision(intervention, listOf(action))
     }
 }

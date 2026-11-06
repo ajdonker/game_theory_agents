@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class SimulationEventParserTest {
-
+    /* Test whether each possible emitted event in SimulationEvent is passed correctly from SimulationEventParser,
+    esp events that can propagate some collection of data. */
     @Test
     fun `round event parses correctly`() {
         val line = """

@@ -51,7 +51,8 @@ class SimulationFrame(
     }
     private val metricsLabel =
         JLabel("Investment: - | Rent: - | Distance: -")
-
+    private val activeModeLabel =
+        JLabel("Active intervention: -")
     private val agentTableModel = object : DefaultTableModel(
         arrayOf("Round","Agent", "Bid", "Payoff", "Strategy"), 0
     ) {
@@ -79,7 +80,10 @@ class SimulationFrame(
     private val summaryArea = JTextArea().apply {
         isEditable = false
     }
+    private val liveChartsPanel = LiveChartsPanel()
 
+    private val interventionPanel =
+        InterventionDecisionPanel(interventionArea)
 
     private var sumRentPct = 0.0
     private var sumDistance = 0.0
@@ -137,17 +141,22 @@ class SimulationFrame(
         consolePanel.add(JLabel("Live Sim Output:"), BorderLayout.NORTH)
         consolePanel.add(JScrollPane(logArea), BorderLayout.CENTER)
         val tabs = JTabbedPane().apply {
-            addTab("Console", consolePanel)
+            addTab("Charts", liveChartsPanel)
             addTab("Agents", JScrollPane(agentTable))
             addTab("Planner", JScrollPane(plannerArea))
-            addTab("Interventions", JScrollPane(interventionArea))
+            addTab("Interventions", interventionPanel)
             addTab("Coalitions", JScrollPane(coalitionArea))
             addTab("Summary", JScrollPane(summaryArea))
+            addTab("Console", consolePanel)
         }
+
+        val metricsPanel = JPanel(GridLayout(2,1))
+        metricsPanel.add(metricsLabel)
+        metricsPanel.add(activeModeLabel)
 
         val configurationPanel = JPanel(BorderLayout(8, 8))
         configurationPanel.add(form, BorderLayout.NORTH)
-        configurationPanel.add(metricsLabel, BorderLayout.SOUTH)
+        configurationPanel.add(metricsPanel, BorderLayout.SOUTH)
 
         val centerPanel = JPanel(BorderLayout(10, 10))
         centerPanel.add(configurationPanel, BorderLayout.NORTH)
@@ -216,6 +225,7 @@ class SimulationFrame(
             // 1. Group-level results
             is SimulationEvent.RoundFinished -> {
                 updateProgress(event.round)
+                liveChartsPanel.addRound(event)
 
                 metricsLabel.text =
                     "Investment: ${event.totalInvestment} | " +
@@ -247,36 +257,24 @@ class SimulationFrame(
 
             // 3. STRIPS symbolic planning
             is SimulationEvent.PlannerDecision -> {
+                interventionPanel.recordPlan(event)
                 plannerArea.append(
-                    "ROUND ${event.round}\n" +
-                            "Selected mode: ${event.selectedMode}\n" +
-                            "Symbolic state: ${event.symbolicState}\n" +
-                            "Plan: ${event.plan}\n" +
-                            "----------------------------\n"
+                    "Round ${event.round}\n" +
+                            "Reported mode: ${event.selectedMode}\n" +
+                            "State: ${event.symbolicState}\n" +
+                            "Plan: ${event.plan}\n\n"
                 )
             }
 
             // 4. Proposed vs gated intervention
             is SimulationEvent.InterventionDecision -> {
-                interventionArea.append(
-                    "ROUND ${event.round}\n" +
-                            "Current: ${event.currentMode}\n" +
-                            "Proposed: ${event.proposedMode}\n" +
-                            "Selected: ${event.selectedMode}\n" +
-                            "Mode age: ${event.modeAge}\n" +
-                            "Optimal count: ${event.optimalCount}\n" +
-                            "----------------------------\n"
-                )
+                println("GUI RECEIVED INTERVENTION: $event")
+                interventionPanel.recordDecision(event)
             }
 
             // 5. Actual intervention execution
             is SimulationEvent.InterventionApplied -> {
-                interventionArea.append(
-                    "ROUND ${event.round}\n" +
-                            "APPLIED: ${event.mode}\n" +
-                            "SUCCESS: ${event.success}\n" +
-                            "----------------------------\n"
-                )
+                interventionPanel.recordApplied(event)
             }
 
             // 6. Coalition membership changes
@@ -292,14 +290,24 @@ class SimulationFrame(
 
             // 7. Planner failures
             is SimulationEvent.PlannerFailed -> {
+                interventionPanel.recordFailure(event)
                 plannerArea.append(
                     "ROUND ${event.round}: PLANNER FAILED\n" +
                             "Reason: ${event.reason}\n" +
                             "----------------------------\n"
                 )
             }
+            // 8. Active mode updates
+            is SimulationEvent.ModeActive -> {
+                activeModeLabel.text =
+                    "Round ${event.round} | Active: ${event.mode}"
 
-            // 8. Experiment completion
+                liveChartsPanel.addMode(
+                    event.round, event.mode
+                )
+            }
+
+            // 9. Experiment completion
             is SimulationEvent.SimulationFinished -> {
 
                 val meanRent = if (metricRoundCount > 0)
@@ -333,13 +341,15 @@ class SimulationFrame(
     private fun resetForNewRun(config: ExperimentConfig) {
 
         resetProgress(config.rounds)
+        liveChartsPanel.reset()
+        interventionPanel.reset()
 
         logArea.text = ""
         plannerArea.text = ""
         interventionArea.text = ""
         coalitionArea.text = ""
         summaryArea.text = ""
-
+        activeModeLabel.text = "Active intervention: -"
         agentTableModel.rowCount = 0
 
         sumRentPct = 0.0
