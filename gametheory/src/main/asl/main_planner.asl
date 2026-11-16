@@ -3,7 +3,8 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(300).
+max_rounds(100).
+exploration_rounds(20).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -217,42 +218,63 @@ intervention_since(1).
     .count(centralized_stable(Round), Stable);
     .count(decentralized_crater(Round), Crater);
 
-    // STRIPS proposes a mode; stability constraints may veto the change. ignore ineffective flag with 0 for now.
-    if (strips.decide(
-        Total, OptimalGroupInvestment, RentPct,
-        B1, B2, B3, B4, B5, B6, B7, B8,
-        CurrentIntervention, Ineffective, Stable, Crater,
-        Proposed, SymbolicState, Plan
-    )) {
-        strips.emit_event(
-            planner_decision(Round, SymbolicState, Plan, Proposed)
-        );
-    } else {
-        Proposed = CurrentIntervention;
-        strips.emit_event(
-            planner_failed(Round, "No applicable STRIPS plan")
-        );
-    };
+    ?exploration_rounds(Grace);
 
-    !gate_intervention(
-        CurrentIntervention, Proposed,
-        ModeAge, OptimalCount, Intervention
-    );
+    if (Round >= Grace) {
 
-    strips.emit_event(
-        intervention_decision(
-            Round, CurrentIntervention, Proposed,
+        // After exploration, STRIPS can propose an intervention.
+        if (strips.decide(
+            Total, OptimalGroupInvestment, RentPct,
+            B1, B2, B3, B4, B5, B6, B7, B8,
+            CurrentIntervention, Ineffective, Stable, Crater,
+            Proposed, SymbolicState, Plan
+        )) {
+            strips.emit_event(
+                planner_decision(Round, SymbolicState, Plan, Proposed)
+            );
+        } else {
+            Proposed = CurrentIntervention;
+            strips.emit_event(
+                planner_failed(Round, "No applicable STRIPS plan")
+            );
+        };
+
+        !gate_intervention(
+            CurrentIntervention, Proposed,
+            ModeAge, OptimalCount, Intervention
+        );
+
+        strips.emit_event(
+            intervention_decision(
+                Round, CurrentIntervention, Proposed,
+                Intervention, ModeAge, OptimalCount
+            )
+        );
+
+        results.append(
+            "results/adaptive/decisions.csv",
+            RunId, Seed, Round,
+            CurrentIntervention, Proposed,
             Intervention, ModeAge, OptimalCount
-        )
-    );
+        );
 
-    results.append(
-        "results/adaptive/decisions.csv",
-        RunId, Seed, Round, CurrentIntervention, Proposed, Intervention, ModeAge, OptimalCount
-    );
-    !apply_intervention(Round, Intervention);
-    !record_intervention_change(Round, CurrentIntervention, Intervention);
+        !apply_intervention(Round, Intervention);
+        !record_intervention_change(
+            Round, CurrentIntervention, Intervention
+        );
+
+    } else {
+
+        .println(
+            "EXPLORATION ROUND ", Round,
+            " / ", Grace,
+            " | No institutional intervention"
+        );
+
+    };
+    // Always calculate returns, including during exploration.
     !calculate_returns(Round, Total, Average).
+
 
 // can refactor next 2 plans to be generic in regard to mode, with appropriate beliefs on limits of perf
 // stab_round_threshold(centralized, 8).

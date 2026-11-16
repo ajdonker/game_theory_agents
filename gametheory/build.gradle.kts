@@ -96,6 +96,7 @@ tasks.register<JavaExec>("runDecentralizedCommunication") {
 
     workingDir = projectDir
     args(file("DecentralizedCommunication.mas2j").absolutePath)
+    args("--log-conf", file("console-logging.properties").absolutePath)
 
     standardInput = System.`in`
 }
@@ -111,7 +112,7 @@ tasks.register<JavaExec>("runCoalitionCommunication") {
 
     workingDir = projectDir
     args(file("Coalition.mas2j").absolutePath)
-
+    args("--log-conf", file("console-logging.properties").absolutePath)
     standardInput = System.`in`
 }
 tasks.register<JavaExec>("runHybridCentralizedCommunication") {
@@ -125,7 +126,7 @@ tasks.register<JavaExec>("runHybridCentralizedCommunication") {
 
     workingDir = projectDir
     args(file("Hybrid.mas2j").absolutePath)
-
+    args("--log-conf", file("console-logging.properties").absolutePath)
     standardInput = System.`in`   
 }
 tasks.register<JavaExec>("runCoalitionStrategyCommunication") {

@@ -237,14 +237,6 @@ intervention_plan(State, Plan) :-
     !,
     strips(State, [mode_decentralized], Plan).
 
-% Centralized failed, agents have dispersed bids.
-intervention_plan(State, Plan) :-
-    member(mode_centralized, State),
-    member(investment_high, State),
-    member(centralized_ineffective, State),
-    member(dispersion_high, State),
-    !,
-    strips(State, [mode_coalition], Plan).
 % Investment optimal: back to no intervention.
 intervention_plan(State, Plan) :-
     member(investment_optimal, State),

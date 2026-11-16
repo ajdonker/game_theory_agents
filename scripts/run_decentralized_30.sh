@@ -16,6 +16,7 @@ RESULTS="$GAMETHEORY_DIR/results/decentralized"
 
 mkdir -p "$RESULTS"
 
+rm -f "$RESULTS"/*.csv
 rm -f "$RESULTS/rounds.csv"
 rm -f "$RESULTS/agents.csv"
 rm -f "$RESULTS/strategies.csv"

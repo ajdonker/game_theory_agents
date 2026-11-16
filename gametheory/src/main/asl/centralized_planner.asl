@@ -3,6 +3,7 @@ seed(42).
 
 round(1).
 max_rounds(100).
+exploration_rounds(20).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -423,19 +424,35 @@ comm_interval(5).
     : Count < 8
 <-
     true.   
-   
+
+
+// Exploration: no central coordination in rounds 1–19.
++!maybe_central_communication(Round)
+    : exploration_rounds(Min)
+    & Round < Min
+<-
+    +social_choice_finished(Round);
+    !maybe_advance_round(Round).
+
+// First central selection at round 20,
+// then every fifth round.
 +!maybe_central_communication(Round)
     : comm_interval(Interval)
-    & Round mod Interval == 0 
+    & exploration_rounds(Min)
+    & Round >= Min
+    & Round mod Interval == 0
 <-
     !request_best_bid_suggestions(Round).
 
+// Normal rounds between central selections.
 +!maybe_central_communication(Round)
     : comm_interval(Interval)
+    & exploration_rounds(Min)
+    & Round >= Min
     & Round mod Interval \== 0
 <-
     +social_choice_finished(Round);
-    !maybe_advance_round(Round).            
+    !maybe_advance_round(Round).
 
 @receive_comm_bid[atomic]
 +!best_bid_suggestion(Round, Bid, Strategy, Avg)[source(A)]

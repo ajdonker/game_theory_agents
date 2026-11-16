@@ -9,6 +9,7 @@ class JasonSimulationRunner(
     private val onStatus: (String) -> Unit,
     private val onLog: (String) -> Unit,
     private val onEvent: (SimulationEvent) -> Unit,
+    private val onFinished: (Int) -> Unit = {},
     private val commandFactory: (ExperimentConfig) -> List<String> = ::defaultCommand,
     private val workingDirectory: File = findGradleRoot()
 ) {
@@ -31,8 +32,11 @@ class JasonSimulationRunner(
         }
         stopping.set(false)
 
+
         thread(name = "jason-simulation", isDaemon = true) {
             var terminal = "Failed: unknown error"
+            var completionCode = -1
+
             try {
                 val command = commandFactory(config)
                 val p = ProcessBuilder(command)
@@ -44,33 +48,70 @@ class JasonSimulationRunner(
                     process = p
                     if (stopping.get()) terminate(p)
                 }
-                if (!stopping.get()) postStatus("Running ${config.scenario}")
+
+                if (!stopping.get()) {
+                    postStatus("Running ${config.scenario}")
+                }
 
                 var completedEvent = false
+
                 p.inputStream.bufferedReader().useLines { lines ->
                     lines.forEach { line ->
                         SwingUtilities.invokeLater { onLog(line) }
+
                         SimulationEventParser.parse(line)?.let { event ->
-                            if (event is SimulationEvent.SimulationFinished) completedEvent = true
-                            SwingUtilities.invokeLater { onEvent(event) }
+                            if (event is SimulationEvent.SimulationFinished) {
+                                completedEvent = true
+                            }
+
+                            SwingUtilities.invokeLater {
+                                onEvent(event)
+                            }
                         }
                     }
                 }
+
                 val exitCode = p.waitFor()
+
                 terminal = when {
                     stopping.get() -> "Stopped"
                     exitCode != 0 -> "Failed: process exit $exitCode"
                     !completedEvent -> "Failed: missing simulation_finished event"
                     else -> "Completed"
                 }
+
+                // Only a successfully completed simulation returns 0.
+                completionCode = when {
+                    terminal == "Completed" -> 0
+                    stopping.get() -> -1
+                    exitCode != 0 -> exitCode
+                    else -> -1
+                }
+
             } catch (e: Exception) {
-                terminal = if (stopping.get()) "Stopped" else "Failed: ${e.message}"
+                terminal = if (stopping.get()) {
+                    "Stopped"
+                } else {
+                    "Failed: ${e.message}"
+                }
+                completionCode = -1
+
             } finally {
-                synchronized(lock) { process = null }
+                synchronized(lock) {
+                    process = null
+                }
+
                 running.set(false)
-                postStatus(terminal)
+
+                // Notify Main.kt only after the process has finished
+                // and the runner is ready to start another simulation.
+                SwingUtilities.invokeLater {
+                    onStatus(terminal)
+                    onFinished(completionCode)
+                }
             }
         }
+
         return true
     }
 
