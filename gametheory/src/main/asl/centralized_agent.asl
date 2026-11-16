@@ -5,8 +5,6 @@ endowment(10).
 last_bid(0).
 last_total_return(0).
 
-
-
 last_market1_return(0).
 last_market2_return(0).
 
@@ -638,25 +636,6 @@ agent_index(agent8, 8).
     : not strategy_rule(Strategy, total_return, _, _)
 <-
     true.   
-
-+!simulate_all_strategy_bids(Round)[source(Planner)]
-    : all_strategies(All)
-<-
-    !collect_social_bids(All, [], Results);
-
-    .send(Planner, achieve, simulated_social_bids(Round, Results)).
-
-+!collect_social_bids([], Acc, Acc)
-<-
-    true.
-
-+!collect_social_bids([Strategy | Rest], Acc, Results)
-<- 
-    !generate_strategy_bid(Strategy);
-
-    ?candidate_bid(Strategy, Bid);
-
-    !collect_social_bids(Rest, [[Strategy, Bid] | Acc], Results).
 
 // +!adopt_central_strategy(Round, Strategy)[source(Planner)]
 // <-
