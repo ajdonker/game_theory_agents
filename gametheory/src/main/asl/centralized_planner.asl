@@ -2,7 +2,7 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(300).
+max_rounds(100).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -559,15 +559,18 @@ comm_interval(5).
     );
 
     if(strips.plan(BestBid)) {
-        strips.emit_event(
-            planner_decision(
-                Round,
-                [],
-                [enforce_bid(BestBid)],
-                centralized
-            )
-        );
+        // strips.emit_event(
+        //     planner_decision(
+        //         Round,
+        //         [],
+        //         [enforce_bid(BestBid)],
+        //         centralized
+        //     )
+
+        //);
+        .println("STRIPS SUCCESS: ", BestBid);
     } else {
+        .println("STRIPS FAILURE: ", BestBid);
         strips.emit_event(
             planner_failed(Round, "STRIPS could not find a plan for the selected bid")
         );
@@ -681,17 +684,25 @@ comm_interval(5).
     !compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB).
 
 
-+!compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB)
-    : Rent > BestRent
-<-
-    !scan_uniform_bids(Round, Rest, Bid, Strategy, Rent, W, CprA, CprB).
-
 
 +!compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB)
-    : Rent <= BestRent
+    : (Rent > BestRent) |
+      ((Rent == BestRent) & (Bid < BestBid))
 <-
-    !scan_uniform_bids(Round, Rest, BestBid, BestStrategy, BestRent, W, CprA, CprB).
+    !scan_uniform_bids(
+        Round, Rest, Bid, Strategy, Rent,
+        W, CprA, CprB
+    ).
 
+
++!compare_uniform_bid(Round, Rest, Bid, Strategy, Rent, BestBid, BestStrategy, BestRent, W, CprA, CprB)
+    : (Rent < BestRent) |
+      ((Rent == BestRent) & (Bid >= BestBid))
+<-
+    !scan_uniform_bids(
+        Round, Rest, BestBid, BestStrategy, BestRent,
+        W, CprA, CprB
+    ).
 +!scan_uniform_bids(Round, [], BestBid, SourceStrategy, BestRent, _, _, _)
 <-
     .println(

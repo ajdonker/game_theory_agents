@@ -13,9 +13,11 @@ class load_config: DefaultInternalAction() {
         }
         val config = RunParameters.fromJvm()
 
-        val runId = config.runId ?: 1
-        val seed = config.seed ?: 42L
-        val rounds = config.rounds ?: 100
+        val runId = config.runId ?: return false
+        val seed = config.seed ?: return false
+        val rounds = config.rounds ?: return false
+
+        if(runId < 1 || rounds < 1) return false
 
         println(
             "GUI CONFIG: run=$runId, seed=$seed, " +

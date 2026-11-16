@@ -111,7 +111,8 @@ agent_index(agent8, 8).
 
     .set_random_seed(AgentSeed);
 
-    .shuffle(All, Shuffled);
+    //strips.seeded_shuffle(All, AgentSeed, Shuffled);
+    strips.seeded_shuffle(All, AgentSeed, Shuffled);
 
     .nth(0, Shuffled, S1);
     .nth(1, Shuffled, S2);

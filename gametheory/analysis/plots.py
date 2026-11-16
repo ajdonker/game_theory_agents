@@ -250,7 +250,20 @@ print(
         subset=["run_id", "seed", "agent", "round"]
     ).sum()
 )
-print(agents.groupby(["run_id", "seed"]).size())
+print("\n=== ALL EXPERIMENTAL RUNS ===")
+
+print("Number of independent runs:",
+      rounds_all[["run_id", "seed"]].drop_duplicates().shape[0])
+
+print("Total round observations:", len(rounds_all))
+print("Total agent observations:", len(agents_all))
+
+print("\nRounds per run:")
+print(rounds_all.groupby(["run_id", "seed"]).size())
+
+print("\nAgent observations per run:")
+print(agents_all.groupby(["run_id", "seed"]).size())
+
 heatmap_agents = agents[agents["run_id"] == 1].copy()
 
 heatmap = (
