@@ -6,3 +6,10 @@ build/
 
 
 
+
+# Generated GUI files
+/gui/bin/
+
+# Generated build directories
+/gametheory/bin/
+/gui/bin/
