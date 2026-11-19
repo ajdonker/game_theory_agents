@@ -373,7 +373,6 @@ class SimulationFrame(
 
             // 4. Proposed vs gated intervention
             is SimulationEvent.InterventionDecision -> {
-                println("GUI RECEIVED INTERVENTION: $event")
                 interventionPanel.recordDecision(event)
             }
 

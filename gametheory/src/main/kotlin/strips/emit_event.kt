@@ -14,35 +14,28 @@ class emit_event : DefaultInternalAction() {
             "round", "totalInvestment",
             "rentPct", "distanceToOptimum"
         ),
-       //strips.emit_event(round_finished(Round, Total, RentPct, Distance));
 
         "agent_result" to listOf(
                 "round", "agent", "bid",
                 "payoff", "strategy"
         ),
-        //strips.emit_event(agent_result(Round, Agent, Bid, Payoff, Strategy));
         "planner_decision" to listOf(
             "round", "symbolicState",
             "plan", "selectedMode"
         ),
-        //strips.emit_event(planner_decision(Round, SymbolicState, Plan, SelectedMode));
         "intervention_applied" to listOf(
             "round", "mode", "success"
         ),
-        //strips.emit_event(intervention_applied(Round, Mode, Success));
         "coalition_changed" to listOf(
             "round", "coalitionId",
             "members", "change"
         ),
-        //strips.emit_event(coalition_changed(Round, CoalitionId, Members, Change));
         "planner_failed" to listOf(
             "round", "reason"
         ),
-        //strips.emit_event(planner_failed(Round, Reason));
         "simulation_finished" to listOf(
             "round"
         ),
-        //strips.emit_event(simulation_finished(Round));
         "intervention_decision" to listOf(
             "round",
             "currentMode",
