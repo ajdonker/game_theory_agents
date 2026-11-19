@@ -5,6 +5,7 @@ import java.awt.BorderLayout
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
 
+/** Displays intervention decisions, applied outcomes, planner plans, and failures in a table and detail view. */
 class InterventionDecisionPanel(
     private val detailArea: JTextArea
 ) : JPanel(BorderLayout(8, 8)) {

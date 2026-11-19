@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.SwingUtilities
 import kotlin.concurrent.thread
 
+/** Launches and monitors Jason simulations, forwarding process logs and parsed events to the GUI. */
 class JasonSimulationRunner(
     private val onStatus: (String) -> Unit,
     private val onLog: (String) -> Unit,

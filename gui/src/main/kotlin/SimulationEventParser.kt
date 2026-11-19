@@ -3,6 +3,7 @@ package gui
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
+/** Parses CPR_EVENT JSON lines from simulation output into typed GUI events. */
 object SimulationEventParser {
 
     private const val PREFIX = "CPR_EVENT|"

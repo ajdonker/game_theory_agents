@@ -6,6 +6,7 @@ import jason.asSemantics.Unifier
 import jason.asSyntax.NumberTermImpl
 import jason.asSyntax.Term
 
+/** Jason internal action that loads run ID, seed, and round parameters from JVM properties. */
 class load_config: DefaultInternalAction() {
     override fun execute(ts: TransitionSystem, un: Unifier, args: Array<Term>): Any {
         if (args.size != 3) {

@@ -7,6 +7,7 @@ import jason.asSemantics.TransitionSystem
 import jason.asSemantics.Unifier
 import jason.asSyntax.*
 
+/** Jason internal action that validates and emits simulation events as JSON-prefixed console output. */
 class emit_event : DefaultInternalAction() {
 
     private val schemas = mapOf(

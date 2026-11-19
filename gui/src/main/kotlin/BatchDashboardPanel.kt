@@ -14,6 +14,7 @@ import java.util.Locale
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
 
+/** Stores the available round-level measurements collected for a batch run. */
 data class BatchRound(
     val round: Int,
     val investment: Double?,
@@ -21,11 +22,13 @@ data class BatchRound(
     val distance: Double?
 )
 
+/** Associates a batch experiment configuration with all of its recorded rounds. */
 data class BatchRunData(
     val config: ExperimentConfig,
     val rounds: List<BatchRound>
 )
 
+/** Displays batch progress, run summaries, chart trends, and oscillation damping data. */
 class BatchDashboardPanel : JPanel(BorderLayout(8, 8)) {
     private val progress = JProgressBar().apply {
         isStringPainted = true

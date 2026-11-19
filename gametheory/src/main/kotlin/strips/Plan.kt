@@ -10,6 +10,7 @@ import jason.asSemantics.TransitionSystem
 import jason.asSemantics.Unifier
 import jason.asSyntax.Term
 
+/** Jason internal action that queries STRIPS for centralized and intervention plans. */
 class plan : DefaultInternalAction() {
 
     companion object {

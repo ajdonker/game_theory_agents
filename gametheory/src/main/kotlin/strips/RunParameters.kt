@@ -1,5 +1,6 @@
 package strips
 
+/** Holds JVM-supplied parameters that configure a simulation run. */
 data class RunParameters(
     val runId: Int?,
     val seed: Long?,

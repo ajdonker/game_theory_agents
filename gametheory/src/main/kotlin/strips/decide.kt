@@ -10,6 +10,7 @@ import jason.asSyntax.NumberTerm
 import jason.asSyntax.Term
 import kotlin.math.sqrt
 
+/** Jason internal action that converts simulation metrics into a symbolic STRIPS state and intervention decision. */
 class decide : DefaultInternalAction() {
     
     override fun getMinArgs() = 18
@@ -106,13 +107,8 @@ class decide : DefaultInternalAction() {
                 emptyList()
             )
         }
-//        println("========== STRIPS DEBUG ==========")
-//        println("Group total: $groupTotal")
-//        println("Optimal investment: $optimalGroupInvestment")
-//        println("Rent percentage: $rentPct")
-//        println("Relative error: $relativeErr")
-//        println("State: $state")
-
+        // calls plan.solveInterventionPlan according to the state and returns the
+        // resulting intervention as a result of the action
         val action = try {
             plan.solveInterventionPlan(state)
         } catch (e: Exception) {

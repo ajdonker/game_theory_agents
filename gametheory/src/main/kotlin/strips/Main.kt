@@ -12,6 +12,7 @@ import it.unibo.tuprolog.theory.Theory
 import it.unibo.tuprolog.theory.parsing.ClausesReader
 import java.net.URL
 
+/** Runs the STRIPS command-line solver and creates configured TuProlog engines. */
 object Main {
     private var verbose = false
 

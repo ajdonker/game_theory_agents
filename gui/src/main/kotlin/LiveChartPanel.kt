@@ -15,6 +15,7 @@ import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTextArea
 
+/** Shows live investment, rent, distance, and active-intervention charts for a simulation. */
 class LiveChartsPanel : JPanel(BorderLayout()) {
 
     private val investment = TreeMap<Int, Double>()

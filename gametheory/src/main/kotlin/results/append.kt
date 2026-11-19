@@ -8,6 +8,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 
+/** Jason internal action that appends CSV-escaped values to a result file. */
 class append : DefaultInternalAction() {
 
     override fun getMinArgs(): Int = 2

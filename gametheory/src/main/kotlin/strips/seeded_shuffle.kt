@@ -8,9 +8,9 @@ import jason.asSyntax.ListTerm
 import jason.asSyntax.ListTermImpl
 import jason.asSyntax.NumberTerm
 import jason.asSyntax.Term
-import java.util.Collections
 import java.util.Random
 
+/** Jason internal action that deterministically shuffles a Jason list using a supplied seed. */
 class seeded_shuffle : DefaultInternalAction() {
 
     override fun execute(
@@ -26,7 +26,7 @@ class seeded_shuffle : DefaultInternalAction() {
             .solve()
             .toLong()
 
-        Collections.shuffle(strategies, Random(seed))
+        strategies.shuffle(Random(seed))
 
         val result = ListTermImpl()
         result.addAll(strategies)

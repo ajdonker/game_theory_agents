@@ -2,6 +2,7 @@ package gui
 import javax.swing.JOptionPane
 import javax.swing.SwingUtilities
 
+/** Starts the Swing application and coordinates single-run and batch simulation execution. */
 fun main() {
     SwingUtilities.invokeLater {
         try {

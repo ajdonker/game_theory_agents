@@ -1,4 +1,5 @@
 package gui
+/** Available communication and intervention modes for an experiment. */
 enum class Scenario {
     NO_COMM,
     DECENTRALIZED,
@@ -6,12 +7,14 @@ enum class Scenario {
     COALITION,
     ADAPTIVE
 }
+/** Configuration for one simulation run, including its scenario, seed, and round count. */
 data class ExperimentConfig (
     val runId: Int = 3,
     val seed: Long = 42L,
     val rounds: Int= 300,
     val scenario: Scenario = Scenario.NO_COMM
 )
+/** Configuration for generating a sequence of parameterized experiment runs. */
 data class BatchConfig(
     val count: Int = 30,
     val firstRunId: Int = 1,

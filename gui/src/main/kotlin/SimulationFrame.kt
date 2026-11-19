@@ -5,6 +5,7 @@ import javax.swing.*
 import javax.swing.border.EmptyBorder
 import javax.swing.table.DefaultTableModel
 
+/** Main Swing window for configuring runs and displaying live, agent, planner, and summary data. */
 class SimulationFrame(
     private val onStart: (ExperimentConfig) -> Unit
 ) : JFrame("CPR Multi-Agent Simulation") {
