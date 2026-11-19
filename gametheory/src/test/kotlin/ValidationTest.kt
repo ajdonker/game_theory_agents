@@ -7,13 +7,29 @@ import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.math.abs
 
-class InvestingSimulationValidationTest {
+/**
+ * Post-run validation of the NO_COMM CPR simulation.
+ *
+ * Run a fresh no_comm simulation first, writing these CSVs to results/no_comm/:
+ *   rounds.csv, agents.csv, strategies.csv.
+ *
+ * Defaults: run ID = 3, seed = 42, rounds = 100.
+ * Override any of these using the same environment variables as
+ * InterventionValidationTest:
+ *   ISE_VALIDATION_RUN_ID, ISE_VALIDATION_SEED, ISE_VALIDATION_ROUNDS.
+ *
+ * Example (from the repository root):
+ *   ISE_VALIDATION_RUN_ID=7 ISE_VALIDATION_SEED=51 ISE_VALIDATION_ROUNDS=300 \
+ *     ./gradlew :gametheory:test --tests 'simulation.ValidationTest' --rerun-tasks
+ *
+ * The test filters each CSV by BOTH run ID and seed, and requires precisely the
+ * configured number of completed rounds (it does not infer it from the CSV).
+ */
+class ValidationTest {
 
     companion object {
-        private const val SEED = 42
         private const val EXPECTED_AGENTS = 8
         private const val EXPECTED_STRATEGIES_PER_AGENT = 4
-        private const val EXPECTED_ROUNDS = 100
 
         private const val ENDOWMENT = 10.0
         private const val MARKET1_RETURN = 5.0
@@ -23,39 +39,51 @@ class InvestingSimulationValidationTest {
         private const val EPS = 0.000001
     }
 
+    private fun envInt(name: String, default: Int): Int =
+        System.getenv(name)?.let { raw ->
+            raw.toIntOrNull()
+                ?: error("$name must be an integer, but was '$raw'")
+        } ?: default
+
+    private val runId = envInt("ISE_VALIDATION_RUN_ID", 3)
+    private val seed = envInt("ISE_VALIDATION_SEED", 42)
+    private val expectedRounds = envInt("ISE_VALIDATION_ROUNDS", 100).also {
+        require(it > 0) { "ISE_VALIDATION_ROUNDS must be positive (got $it)" }
+    }
+
     data class RoundRow(
-    val runId: Int,
-    val seed: Int,
-    val round: Int,
-    val totalBid: Double,
-    val averageBid: Double,
-    val groupRent: Double,
-    val rentPct: Double
-)
+        val runId: Int,
+        val seed: Int,
+        val round: Int,
+        val totalBid: Double,
+        val averageBid: Double,
+        val groupRent: Double,
+        val rentPct: Double
+    )
 
-data class AgentRow(
-    val runId: Int,
-    val seed: Int,
-    val round: Int,
-    val agent: String,
-    val strategy: String,
-    val bid: Double,
-    val market1: Double,
-    val market2: Double,
-    val payoff: Double
-)
+    data class AgentRow(
+        val runId: Int,
+        val seed: Int,
+        val round: Int,
+        val agent: String,
+        val strategy: String,
+        val bid: Double,
+        val market1: Double,
+        val market2: Double,
+        val payoff: Double
+    )
 
-data class StrategyRow(
-    val runId: Int,
-    val seed: Int,
-    val round: Int,
-    val agent: String,
-    val strategy: String,
-    val candidateBid: Double,
-    val counterfactualPayoff: Double,
-    val sum: Double,
-    val evaluations: Int
-)
+    data class StrategyRow(
+        val runId: Int,
+        val seed: Int,
+        val round: Int,
+        val agent: String,
+        val strategy: String,
+        val candidateBid: Double,
+        val counterfactualPayoff: Double,
+        val sum: Double,
+        val evaluations: Int
+    )
 
     private fun readLines(file: String): List<String> =
         Files.readAllLines(Path.of("results", "no_comm", file))
@@ -71,25 +99,25 @@ data class StrategyRow(
 
             require(columns.size == expectedColumns) {
                 "$file line ${index + 1}: expected $expectedColumns columns " +
-                "but got ${columns.size}. Row: $line"
+                        "but got ${columns.size}. Row: $line"
             }
 
             columns.map { it.trim() }
-    }        
-    private fun rounds(): List<RoundRow> =
-    csvRows("rounds.csv", 7)
-        .map { c ->
-            RoundRow(
-                runId = c[0].toInt(),
-                seed = c[1].toInt(),
-                round = c[2].toInt(),
-                totalBid = c[3].toDouble(),
-                averageBid = c[4].toDouble(),
-                groupRent = c[5].toDouble(),
-                rentPct = c[6].toDouble()
-            )
         }
-        .filter { it.seed == SEED }
+    private fun rounds(): List<RoundRow> =
+        csvRows("rounds.csv", 7)
+            .map { c ->
+                RoundRow(
+                    runId = c[0].toInt(),
+                    seed = c[1].toInt(),
+                    round = c[2].toInt(),
+                    totalBid = c[3].toDouble(),
+                    averageBid = c[4].toDouble(),
+                    groupRent = c[5].toDouble(),
+                    rentPct = c[6].toDouble()
+                )
+            }
+            .filter { it.runId == runId && it.seed == seed }
 
     private fun agents(): List<AgentRow> =
         csvRows("agents.csv", 9)
@@ -106,29 +134,35 @@ data class StrategyRow(
                     payoff = c[8].toDouble()
                 )
             }
-            .filter { it.seed == SEED }
+            .filter { it.runId == runId && it.seed == seed }
 
     private fun strategies(): List<StrategyRow> =
-    csvRows("strategies.csv", 9)
-        .map { c ->
-            StrategyRow(
-                runId = c[0].toInt(),
-                seed = c[1].toInt(),
-                round = c[2].toInt(),
-                agent = c[3],
-                strategy = c[4],
-                candidateBid = c[5].toDouble(),
-                counterfactualPayoff = c[6].toDouble(),
-                sum = c[7].toDouble(),
-                evaluations = c[8].toInt()
-            )
-        }
-        .filter { it.seed == SEED }
+        csvRows("strategies.csv", 9)
+            .map { c ->
+                StrategyRow(
+                    runId = c[0].toInt(),
+                    seed = c[1].toInt(),
+                    round = c[2].toInt(),
+                    agent = c[3],
+                    strategy = c[4],
+                    candidateBid = c[5].toDouble(),
+                    counterfactualPayoff = c[6].toDouble(),
+                    sum = c[7].toDouble(),
+                    evaluations = c[8].toInt()
+                )
+            }
+            .filter { it.runId == runId && it.seed == seed }
 
     @Test
     fun `simulation has eight agents and all expected rounds`() {
         val agentRows = agents()
         val roundRows = rounds()
+
+        assertEquals(
+            expectedRounds * EXPECTED_AGENTS,
+            agentRows.size,
+            "Expected eight agent observations for every configured round"
+        )
 
         val names = agentRows.map { it.agent }.toSet()
 
@@ -141,9 +175,9 @@ data class StrategyRow(
         val actualRounds = roundRows.map { it.round }.sorted()
 
         assertEquals(
-            (1..EXPECTED_ROUNDS).toList(),
+            (1..expectedRounds).toList(),
             actualRounds,
-            "Rounds should run consecutively from 1 to $EXPECTED_ROUNDS"
+            "Rounds should run consecutively from 1 to $expectedRounds"
         )
     }
 
@@ -246,7 +280,7 @@ data class StrategyRow(
             assertTrue(
                 it.candidateBid in 0.0..ENDOWMENT,
                 "${it.agent}/${it.strategy} generated illegal bid " +
-                    "${it.candidateBid} in round ${it.round}"
+                        "${it.candidateBid} in round ${it.round}"
             )
         }
     }
@@ -328,25 +362,25 @@ data class StrategyRow(
     fun `rent calculations are correct`() {
         val optimalBid =
             (CPR_A - MARKET1_RETURN) /
-                (2.0 * CPR_B)
+                    (2.0 * CPR_B)
 
         val optimalRent =
             optimalBid *
-                (CPR_A - CPR_B * optimalBid) -
-                MARKET1_RETURN * optimalBid
+                    (CPR_A - CPR_B * optimalBid) -
+                    MARKET1_RETURN * optimalBid
 
         assertEquals(
             36.0,
             optimalBid,
             EPS
         )
-        
+
         rounds().forEach { row ->
 
             val expectedRent =
                 row.totalBid *
-                    (CPR_A - CPR_B * row.totalBid) -
-                    MARKET1_RETURN * row.totalBid
+                        (CPR_A - CPR_B * row.totalBid) -
+                        MARKET1_RETURN * row.totalBid
 
             val expectedPct =
                 100.0 * expectedRent / optimalRent
@@ -390,7 +424,7 @@ data class StrategyRow(
             assertTrue(
                 row.strategy in pools.getValue(row.agent),
                 "${row.agent} played ${row.strategy}, " +
-                    "which is not in its assigned pool"
+                        "which is not in its assigned pool"
             )
         }
     }
@@ -414,10 +448,10 @@ data class StrategyRow(
                                 0,
                                 previous.round % 3,
                                 "$agent switched from " +
-                                    "${previous.strategy} to ${current.strategy} " +
-                                    "between rounds ${previous.round} and " +
-                                    "${current.round}, but round ${previous.round} " +
-                                    "was not an evaluation round"
+                                        "${previous.strategy} to ${current.strategy} " +
+                                        "between rounds ${previous.round} and " +
+                                        "${current.round}, but round ${previous.round} " +
+                                        "was not an evaluation round"
                             )
                         }
                     }
@@ -441,7 +475,7 @@ data class StrategyRow(
                         index + 1,
                         row.evaluations,
                         "${key.first}/${key.second}: " +
-                            "unexpected evaluation count in round ${row.round}"
+                                "unexpected evaluation count in round ${row.round}"
                     )
                 }
             }
@@ -486,7 +520,7 @@ data class StrategyRow(
 
         println(
             "Unique agent bid trajectories: " +
-                "${uniqueTrajectories.size}/${trajectories.size}"
+                    "${uniqueTrajectories.size}/${trajectories.size}"
         )
 
         assertTrue(

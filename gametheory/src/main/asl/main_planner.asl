@@ -3,7 +3,7 @@ run_id(3).
 seed(42).
 
 round(1).
-max_rounds(100).
+max_rounds(300).
 exploration_rounds(20).
 
 active_agent(agent1).
@@ -25,20 +25,18 @@ intervention_min_duration(5).
 min_rounds_optimal(3).
 optimality_window(5).
 
+stab_round_threshold(centralized, 8).
+ineffective_round_threshold(centralized, 7).
 // at least threshold rounds out of the window need to be acceptable. 
 cent_stab_round_threshold(8).
 centralized_window(10).
-decentralized_window(5).
+decentralized_window(10).
 
 // expressed in rent pct. min rent pct for good perf, max rent pct for bad perf.
 good_perf_lim(centralized, 85).
 bad_perf_lim(centralized, 75).
-
-
 good_perf_lim(decentralized, 70).
 
-stab_round_threshold(centralized, 8).
-ineffective_round_threshold(centralized, 7).
 
 ineffective_round_threshold(decentralized, 7).
 // Duration counts rounds in which a mode was active at round START.
