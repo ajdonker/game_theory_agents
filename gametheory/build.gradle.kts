@@ -152,6 +152,16 @@ tasks.register<JavaExec>("runDecentralizedStrategyCommunication") {
     args(file("DecentralizedStrategyCommunication.mas2j").absolutePath)
     standardInput = System.`in`
 }
+tasks.register<Delete>("cleanCoalitionResults") {
+    group = "verification"
+    description = "Cleans coalition simulation CSV files"
+
+    delete(
+        fileTree("results/coalition") {
+            include("*.csv")
+        }
+    )
+}
 tasks.register<Delete>("cleanBaselineResults") {
     group = "verification"
     description = "Cleans centralized simulation CSV files"
