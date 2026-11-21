@@ -13,10 +13,13 @@ from pathlib import Path
 import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
+from config import load_config, economic_values
 
+CONFIG = load_config()
+ECON = economic_values(CONFIG)
 RESULTS = Path(__file__).resolve().parent.parent / "results"
 SCENARIOS = ["adaptive", "centralized", "decentralized", "coalition", "no_comm"]
-OPTIMUM = 36.0
+OPTIMUM = ECON["optimum"]
 
 
 def read_rounds(scenario):
@@ -231,9 +234,9 @@ def plot_adaptive_mode_share(decisions, out_dir):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", type=int, default=1,
+    parser.add_argument("--run-id", type=int, default=int(CONFIG["run.id"]),
                         help="Adaptive run_id to use for the timeline plot")
-    parser.add_argument("--seed", type=int, default=42,
+    parser.add_argument("--seed", type=int, default=int(CONFIG["run.seed"]),
                         help="Adaptive seed to use for the timeline plot")
     parser.add_argument("--max-round", type=int, default=None,
                         help="Optional maximum round for the adaptive timeline")

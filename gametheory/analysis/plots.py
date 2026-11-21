@@ -3,7 +3,14 @@ from pathlib import Path
 import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
+from config import load_config, economic_values
 
+CONFIG = load_config()
+ECON = economic_values(CONFIG)
+OPTIMUM = ECON["optimum"]
+NASH = ECON["nash"]
+ENDOWMENT = ECON["endowment"]
+COMM_INTERVAL = int(CONFIG["agent.communicationInterval"])
 parser = argparse.ArgumentParser()
 parser.add_argument(
     "scenario",
@@ -183,16 +190,16 @@ plt.plot(
 
 # Social optimum
 plt.axhline(
-    36,
+    OPTIMUM,
     linestyle="--",
-    label="Social optimum (36)"
+    label=f"Social optimum ({OPTIMUM:g})"
 )
 
 # Nash equilibrium
 plt.axhline(
-    64,
+    NASH,
     linestyle=":",
-    label="Nash equilibrium (64)"
+    label=f"Nash equilibrium ({NASH:g})"
 )
 
 plt.xlabel("Round")
@@ -227,7 +234,7 @@ for agent, data in agents.groupby("agent"):
 plt.xlabel("Round")
 plt.ylabel("Market 2 bid")
 plt.title("Individual Market 2 bids")
-plt.ylim(0, 10)
+plt.ylim(0, ENDOWMENT)
 plt.legend()
 plt.tight_layout()
 
@@ -537,15 +544,15 @@ ax1.plot(
 )
 
 ax1.axhline(
-    36,
+    OPTIMUM,
     linestyle="--",
-    label="Social optimum (36)"
+    label=f"Social optimum ({OPTIMUM:g})"
 )
 
 ax1.axhline(
-    64,
+    NASH,
     linestyle=":",
-    label="Nash equilibrium (64)"
+    label=f"Nash equilibrium ({NASH:g})"
 )
 
 ax1.set_ylabel("Total Market 2 investment")
@@ -631,7 +638,7 @@ plt.savefig(
 plt.close()
 
 over = analysis[
-    analysis["total_bid"] > 36
+    analysis["total_bid"] > OPTIMUM
 ].copy()
 
 print("Above optimum rows:", len(over))
@@ -743,7 +750,7 @@ else:
     performance_to_investment = float("nan")
 
     over = analysis[
-        analysis["total_bid"] > 36
+        analysis["total_bid"] > OPTIMUM
     ]
 
     if len(over) > 1:
@@ -783,7 +790,7 @@ else:
             late["rent_pct"].std(),
 
         "fraction_above_optimum":
-            (data["total_bid"] > 36).mean(),
+            (data["total_bid"] > OPTIMUM).mean(),
 
         "performance_to_next_investment_corr":
             performance_to_investment,
@@ -895,15 +902,15 @@ plt.plot(
 )
 
 plt.axhline(
-    36,
+    OPTIMUM,
     linestyle="--",
-    label="Social optimum (36)"
+    label=f"Social optimum ({OPTIMUM:g})"
 )
 
 plt.axhline(
-    64,
+    NASH,
     linestyle=":",
-    label="Nash equilibrium (64)"
+    label=f"Nash equilibrium ({NASH:g})"
 )
 
 plt.xlabel("Round")
@@ -965,9 +972,9 @@ plt.savefig(
 plt.close()
 
 check = rounds[
-    (rounds["round"] % 5 == 0) |
-    (rounds["round"] % 5 == 1) |
-    (rounds["round"] % 5 == 2)
+    (rounds["round"] % COMM_INTERVAL == 0) |
+    (rounds["round"] % COMM_INTERVAL == 1) |
+    (rounds["round"] % COMM_INTERVAL == 2)
 ]
 
 print(
@@ -1009,12 +1016,12 @@ link_counts = (
     .reset_index(name="coalition_links")
 )
 
-# Coalition formation happens every 5 rounds
+# Coalition formation follows the configured communication interval.
 runs = coalitions["run_id"].unique()
 rounds = range(
-    5,
+    COMM_INTERVAL,
     int(coalitions["round"].max()) + 1,
-    5
+    COMM_INTERVAL
 )
 
 full_index = pd.MultiIndex.from_product(

@@ -1,6 +1,5 @@
 //beliefs
 round(1).   
-endowment(10).
 
 last_bid(0).
 last_total_return(0).
@@ -10,11 +9,7 @@ last_market2_return(0).
 last_group_total(0). 
 last_group_average(0).
 
-market1_return(5).
-cpr_a(23).
-cpr_b(0.25).
 
-comm_interval(5).
 
 //total_return_direction(1). // replaced with strategy_direction belief that is modified if incr/decr return
 // avg scores for each strategy even not played
@@ -58,8 +53,44 @@ agent_index(agent6, 6).
 agent_index(agent7, 7).
 agent_index(agent8, 8).
 
++!load_econ_env
+<-
+    strips.param(endowment, Endowment);
+    +endowment(Endowment);
+
+    strips.param(market1_return, Market1Return);
+    +market1_return(Market1Return);
+
+    strips.param(cpr_a, CprA);
+    +cpr_a(CprA);
+
+    strips.param(cpr_b, CprB);
+    +cpr_b(CprB).
+
++!load_agent_parameters
+<-
+    strips.param(comm_interval, CommInterval);
+    +comm_interval(CommInterval);
+
+    strips.param(strat_reeval_interval, StratInterval);
+    +strat_reeval_interval(StratInterval).
+
++!ensure_configured
+    : not config_loaded
+<-
+    !load_econ_env;
+    !load_agent_parameters;
+    +config_loaded.
+
++!ensure_configured
+    : config_loaded
+<-
+    true.
+
 +start_round(RunId, Round, Seed)[source(Planner)]
 <- 
+    !ensure_configured;
+
     -run_id(_);
     +run_id(RunId);
     
@@ -600,12 +631,14 @@ agent_index(agent8, 8).
     true.
 
 +! maybe_select_strategy(Round) 
-    : Round mod 3 == 0
+    : strat_reeval_interval(Interval)
+    & Round mod Interval == 0
 <-
     !select_best_strategy.
 
 +! maybe_select_strategy(Round)
-    : Round mod 3 \== 0
+    : strat_reeval_interval(Interval)
+    & Round mod Interval \== 0
 <- 
     true.
 

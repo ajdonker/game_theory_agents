@@ -15,6 +15,13 @@ import warnings
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from config import load_config, economic_values
+
+CONFIG = load_config()
+ECON = economic_values(CONFIG)
+OPTIMUM = ECON["optimum"]
+BAND = ECON["optimal_band"]
+AGENT_COUNT = ECON["agent_count"]
 
 BASE = Path(__file__).resolve().parent.parent / "results" / "adaptive"
 COLUMNS = {
@@ -32,8 +39,6 @@ MODE_COLORS = {
     "coalition": "#b392cf",
     "centralized": "#e6a15c",
 }
-OPTIMUM = 36.0
-BAND = 0.15 * OPTIMUM
 
 
 def load(name, required=True):
@@ -101,8 +106,8 @@ def summarize_one(rounds, modes, agents):
         "final_rent_pct": merged.sort_values("round").rent_pct.iloc[-1],
         "mean_total_bid": merged.total_bid.mean(),
         "final_total_bid": merged.sort_values("round").total_bid.iloc[-1],
-        "mean_abs_distance_from_36": (merged.total_bid - OPTIMUM).abs().mean(),
-        "fraction_within_15pct_band": ((merged.total_bid - OPTIMUM).abs() <= BAND).mean(),
+        "mean_abs_distance_from_optimum": (merged.total_bid - OPTIMUM).abs().mean(),
+        "fraction_within_optimal_band": ((merged.total_bid - OPTIMUM).abs() <= BAND).mean(),
         "fraction_above_optimum": (merged.total_bid > OPTIMUM).mean(),
         "mode_switches": max(0, len(eps) - 1),
     }
@@ -162,7 +167,7 @@ def main():
         shares.to_csv(aggregate_dir / "mode_share_by_round.csv")
     for name, field, target, baseline in [
         ("rent", "rent_pct", 100.0, "Social optimum = 100%"),
-        ("investment", "total_bid", OPTIMUM, "Social optimum = 36"),
+        ("investment", "total_bid", OPTIMUM, f"Social optimum = {OPTIMUM:g}"),
     ]:
         traces = all_rounds.groupby("round")[field].agg(["mean", "std"]).sort_index()
         fig, ax = plt.subplots(figsize=(12, 5))
@@ -196,8 +201,8 @@ def main():
     links = select(links_all, run_id, seed)
     if len(r) != len(m) or set(r["round"]) != set(m["round"]):
         raise ValueError("Round and mode logs do not match; clean and rerun the simulation.")
-    if a.groupby("round").agent.nunique().reindex(r["round"]).ne(8).any():
-        warnings.warn("Not every recorded round has eight distinct agents. Check simulation completion.")
+    if a.groupby("round").agent.nunique().reindex(r["round"]).ne(AGENT_COUNT).any():
+        warnings.warn(f"Not every recorded round has {AGENT_COUNT} distinct agents. Check simulation completion.")
 
     out = BASE / "plots" / f"run_{run_id}_seed_{seed}"
     out.mkdir(parents=True, exist_ok=True)
@@ -227,7 +232,7 @@ def main():
     plt.close(fig)
 
     plot_series(r, ep, "total_bid", "Group Market 2 investment", "Investment by active intervention",
-                out / "investment_by_mode.png", (OPTIMUM, "Social optimum = 36"))
+                out / "investment_by_mode.png", (OPTIMUM, f"Social optimum = {OPTIMUM:g}"))
     plot_series(r, ep, "rent_pct", "Group rent (% of optimum)", "Performance by active intervention",
                 out / "rent_by_mode.png", (100, "Maximum group rent = 100%"))
 
@@ -236,7 +241,7 @@ def main():
                .agg(rounds=("round", "count"), mean_rent_pct=("rent_pct", "mean"),
                     mean_total_bid=("total_bid", "mean"),
                     rent_sd=("rent_pct", "std")))
-    grouped["mean_abs_distance_from_36"] = grouped["mode"].map(
+    grouped["mean_abs_distance_from_optimum"] = grouped["mode"].map(
         merged.assign(error=(merged.total_bid - OPTIMUM).abs()).groupby("mode").error.mean()
     )
     grouped.to_csv(out / "performance_by_mode.csv", index=False)
@@ -252,7 +257,7 @@ def main():
 
     bid_sd = a.groupby("round").bid.std(ddof=0).reset_index(name="bid_sd")
     mode_sd = m.merge(bid_sd, on="round", how="left")
-    plot_series(mode_sd, ep, "bid_sd", "SD of 8 agent bids",
+    plot_series(mode_sd, ep, "bid_sd", f"SD of {AGENT_COUNT} agent bids",
                 "Bid coordination by active intervention", out / "bid_dispersion_by_mode.png")
 
     # Proposed vs applied intervention; each decision at round R governs R+1.
@@ -279,13 +284,13 @@ def main():
         for row in c.itertuples(index=False):
             nxt = next_agent[next_agent["round"] == row.round + 1]
             next_mode = m.loc[m["round"] == row.round + 1, "mode"]
-            if len(nxt) == 8 and len(next_mode) and next_mode.iloc[0] == "centralized":
+            if len(nxt) == AGENT_COUNT and len(next_mode) and next_mode.iloc[0] == "centralized":
                 checks.append({"decision_round": row.round, "chosen_bid": row.bid,
                                "agents_match": int((abs(nxt.bid - row.bid) < 1e-8).sum())})
         if checks:
             audit = pd.DataFrame(checks)
             audit.to_csv(out / "centralized_adoption.csv", index=False)
-            print(f"\nCentralized adoption: {(audit.agents_match == 8).sum()}/{len(audit)} checked rounds with all 8 matching")
+            print(f"\nCentralized adoption: {(audit.agents_match == AGENT_COUNT).sum()}/{len(audit)} checked rounds with all {AGENT_COUNT} matching")
         else:
             print("\nNo eligible subsequent centralized rounds for central-adoption audit.")
 

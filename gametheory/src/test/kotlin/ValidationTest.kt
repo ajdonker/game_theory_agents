@@ -1,5 +1,6 @@
 package simulation
 
+import strips.SimulationConfig
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -28,13 +29,15 @@ import kotlin.math.abs
 class ValidationTest {
 
     companion object {
-        private const val EXPECTED_AGENTS = 8
+        private val EXPECTED_AGENTS get() = SimulationConfig.agentCount
         private const val EXPECTED_STRATEGIES_PER_AGENT = 4
 
-        private const val ENDOWMENT = 10.0
-        private const val MARKET1_RETURN = 5.0
-        private const val CPR_A = 23.0
-        private const val CPR_B = 0.25
+        private val ENDOWMENT get() = SimulationConfig.endowment
+        private val MARKET1_RETURN get() = SimulationConfig.market1Return
+        private val CPR_A get() = SimulationConfig.cprA
+        private val CPR_B get() = SimulationConfig.cprB
+        private val OPTIMUM get() = SimulationConfig.optimum
+        private val OPTIMAL_RENT get() = SimulationConfig.optimalRent
 
         private const val EPS = 0.000001
     }
@@ -154,14 +157,14 @@ class ValidationTest {
             .filter { it.runId == runId && it.seed == seed }
 
     @Test
-    fun `simulation has eight agents and all expected rounds`() {
+    fun `simulation has configured agents and all expected rounds`() {
         val agentRows = agents()
         val roundRows = rounds()
 
         assertEquals(
             expectedRounds * EXPECTED_AGENTS,
             agentRows.size,
-            "Expected eight agent observations for every configured round"
+            "Expected $EXPECTED_AGENTS agent observations for every configured round"
         )
 
         val names = agentRows.map { it.agent }.toSet()
@@ -169,7 +172,7 @@ class ValidationTest {
         assertEquals(
             EXPECTED_AGENTS,
             names.size,
-            "Simulation should contain exactly 8 agents"
+            "Simulation should contain exactly $EXPECTED_AGENTS agents"
         )
 
         val actualRounds = roundRows.map { it.round }.sorted()
@@ -182,14 +185,14 @@ class ValidationTest {
     }
 
     @Test
-    fun `every round contains exactly eight agent observations`() {
+    fun `every round contains exactly the configured agent observations`() {
         agents()
             .groupBy { it.round }
             .forEach { (round, rows) ->
                 assertEquals(
                     EXPECTED_AGENTS,
                     rows.size,
-                    "Round $round does not contain exactly 8 agent rows"
+                    "Round $round does not contain exactly $EXPECTED_AGENTS agent rows"
                 )
 
                 assertEquals(
@@ -364,13 +367,8 @@ class ValidationTest {
             (CPR_A - MARKET1_RETURN) /
                     (2.0 * CPR_B)
 
-        val optimalRent =
-            optimalBid *
-                    (CPR_A - CPR_B * optimalBid) -
-                    MARKET1_RETURN * optimalBid
-
         assertEquals(
-            36.0,
+            OPTIMUM,
             optimalBid,
             EPS
         )
@@ -383,7 +381,7 @@ class ValidationTest {
                         MARKET1_RETURN * row.totalBid
 
             val expectedPct =
-                100.0 * expectedRent / optimalRent
+                100.0 * expectedRent / OPTIMAL_RENT
 
             assertEquals(
                 expectedRent,
@@ -399,12 +397,12 @@ class ValidationTest {
                 "Wrong rent percentage in round ${row.round}"
             )
 
-            if (abs(row.totalBid - 36.0) < EPS) {
+            if (abs(row.totalBid - OPTIMUM) < EPS) {
                 assertEquals(
                     100.0,
                     row.rentPct,
                     EPS,
-                    "Total bid 36 should produce 100% optimum rent"
+                    "Total bid $OPTIMUM should produce 100% optimum rent"
                 )
             }
         }

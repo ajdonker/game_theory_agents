@@ -13,15 +13,26 @@ active_agent(agent6).
 active_agent(agent7).
 active_agent(agent8).
 
-endowment(10).
-market1_return(5).
-cpr_a(23).
-cpr_b(0.25).
++!load_econ_env
+<-
+    strips.param(endowment, Endowment);
+    +endowment(Endowment);
+
+    strips.param(market1_return, Market1Return);
+    +market1_return(Market1Return);
+
+    strips.param(cpr_a, CprA);
+    +cpr_a(CprA);
+
+    strips.param(cpr_b, CprB);
+    +cpr_b(CprB).
+
 //starting goals
 !start.
 // plans
 +!start <-
     .println("STARTING SIM");
+    !load_econ_env;
     !apply_gui_config;
     !start_round.
 
@@ -68,7 +79,8 @@ cpr_b(0.25).
 +!submit_bid(Round, Bid, Strategy)[source(Requester)]
     : round(Round)
     & Bid >= 0
-    & Bid <= 10
+    & endowment(Max)
+    & Bid <= Max
     & not bid(Requester, Round, _)
 <-
     +bid(Requester, Round, Bid);

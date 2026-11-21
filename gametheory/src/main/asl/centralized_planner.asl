@@ -3,7 +3,6 @@ seed(42).
 
 round(1).
 max_rounds(100).
-exploration_rounds(20).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -14,19 +13,38 @@ active_agent(agent6).
 active_agent(agent7).
 active_agent(agent8).
 
-endowment(10).
-market1_return(5).
-cpr_a(23).
-cpr_b(0.25).
 
 // A centralized communication occurs at the END of every fifth round.
 // The selected bid will first be played in the following round.
-comm_interval(5).
++!load_econ_env
+<-
+    strips.param(endowment, Endowment);
+    +endowment(Endowment);
+
+    strips.param(market1_return, Market1Return);
+    +market1_return(Market1Return);
+
+    strips.param(cpr_a, CprA);
+    +cpr_a(CprA);
+
+    strips.param(cpr_b, CprB);
+    +cpr_b(CprB).
+
++!load_planner_parameters
+<-
+    strips.param(exploration_rounds, Exploration);
+    +exploration_rounds(Exploration);
+
+    strips.param(comm_interval, CommInterval);
+    +comm_interval(CommInterval).
+
 //starting goals
 !start.
 // plans
 +!start <-
     .println("STARTING SIM");
+    !load_econ_env;
+    !load_planner_parameters;
     !apply_gui_config;
     !start_round.
 
@@ -73,7 +91,8 @@ comm_interval(5).
 +!submit_bid(Round, Bid, Strategy)[source(Requester)]
     : round(Round)
     & Bid >= 0
-    & Bid <= 10
+    & endowment(Max)
+    & Bid <= Max
     & not bid(Requester, Round, _)
 <-
     +bid(Requester, Round, Bid);

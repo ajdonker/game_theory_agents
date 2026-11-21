@@ -2,7 +2,6 @@ run_id(3).
 seed(42).
 //beliefs
 round(1).   
-endowment(10).
 
 last_bid(0).
 last_total_return(0).
@@ -15,11 +14,7 @@ last_market2_return(0).
 last_group_total(0). 
 last_group_average(0).
 
-market1_return(5).
-cpr_a(23).
-cpr_b(0.25).
 
-select_strat_interval(3).
 //total_return_direction(1). // replaced with strategy_direction belief that is modified if incr/decr return
 // avg scores for each strategy even not played
 // strat, type, incr, decr 
@@ -66,21 +61,69 @@ all_agents([agent1, agent2, agent3, agent4, agent5, agent6, agent7, agent8]).
 
 // coalition beliefs 
 
-bid_threshold(2).
-trust_threshold(0.6).
-trust_learning_rate(0.02).
-trust_max_step(0.1).
-default_trust(0.5).
-max_coalition_peers(3).
-coalitioning_rate(5).
 +agent_list(Agents)
 <-
     -all_agents(_);
     +all_agents(Agents);
     !init_trust.
 
++!load_econ_env
+<-
+    strips.param(endowment, Endowment);
+    +endowment(Endowment);
+
+    strips.param(market1_return, Market1Return);
+    +market1_return(Market1Return);
+
+    strips.param(cpr_a, CprA);
+    +cpr_a(CprA);
+
+    strips.param(cpr_b, CprB);
+    +cpr_b(CprB).
+
++!load_agent_parameters
+<-
+    strips.param(strat_reeval_interval, StratInterval);
+    +strat_reeval_interval(StratInterval);
+    +select_strat_interval(StratInterval);
+
+    strips.param(trust_threshold, TrustThreshold);
+    +trust_threshold(TrustThreshold);
+
+    strips.param(trust_learning_rate, LearningRate);
+    +trust_learning_rate(LearningRate);
+
+    strips.param(trust_max_step, MaxStep);
+    +trust_max_step(MaxStep);
+
+    strips.param(default_trust, DefaultTrust);
+    +default_trust(DefaultTrust);
+
+    strips.param(max_coalition_peers, MaxPeers);
+    +max_coalition_peers(MaxPeers);
+
+    strips.param(coalitioning_rate, CoalitioningRate);
+    +coalitioning_rate(CoalitioningRate);
+
+    strips.param(coalition_bid_threshold, BidThreshold);
+    +bid_threshold(BidThreshold).
+
++!ensure_configured
+    : not config_loaded
+<-
+    !load_econ_env;
+    !load_agent_parameters;
+    +config_loaded.
+
++!ensure_configured
+    : config_loaded
+<-
+    true.
+
 +start_round(RunId, Round, Seed)[source(Planner)]
 <- 
+    !ensure_configured;
+
     -run_id(_);
     +run_id(RunId);
     

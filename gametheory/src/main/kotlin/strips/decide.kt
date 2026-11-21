@@ -13,8 +13,8 @@ import kotlin.math.sqrt
 /** Jason internal action that converts simulation metrics into a symbolic STRIPS state and intervention decision. */
 class decide : DefaultInternalAction() {
     
-    override fun getMinArgs() = 18
-    override fun getMaxArgs() = 18
+    override fun getMinArgs() = 20
+    override fun getMaxArgs() = 20
 
     override fun execute(
         ts: TransitionSystem,
@@ -49,6 +49,16 @@ class decide : DefaultInternalAction() {
         val centralizedStable = number(13) == 1.0
         val decentralizedCrater = number(14) == 1.0
 
+        val optimalTolerance = number(15)
+        val dispersionThreshold = number(16)
+
+        if (!optimalTolerance.isFinite() || optimalTolerance < 0.0 ||
+            !dispersionThreshold.isFinite() || dispersionThreshold < 0.0) {
+            ts.ag.logger.warning("Invalid STRIPS thresholds")
+            return false
+        }
+
+
         val relativeErr = when {
             optimalGroupInvestment == 0.0 -> when {
                 groupTotal == 0.0 -> 0.0
@@ -59,14 +69,14 @@ class decide : DefaultInternalAction() {
         }
 
         val investment = when {
-            relativeErr < -0.15 -> "investment_low"
-            relativeErr > 0.15 -> "investment_high"
+            relativeErr < -optimalTolerance -> "investment_low"
+            relativeErr > optimalTolerance -> "investment_high"
             else -> "investment_optimal"
         }
 
         val avg = bids.average()
         val variance = bids.map { (it - avg) * (it - avg) }.average()
-        val dispersion = if (sqrt(variance) > 2.0) "dispersion_high" else "dispersion_low"
+        val dispersion = if (sqrt(variance) > dispersionThreshold) "dispersion_high" else "dispersion_low"
 
         val state = mutableListOf(investment, dispersion, currentMode)
 
@@ -76,13 +86,13 @@ class decide : DefaultInternalAction() {
         ): Boolean {
             // just to add the last three args nicely to the unifier
             return un.unifies(
-                args[15],
+                args[17],
                 Atom(proposed)
             ) && un.unifies(
-                args[16],
+                args[18],
                 toJasonList(state.toList())
             ) && un.unifies(
-                args[17],
+                args[19],
                 toJasonList(actions)
             )
         }

@@ -1,5 +1,6 @@
 package simulation
 
+import strips.SimulationConfig
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assumptions.assumeTrue
@@ -34,15 +35,16 @@ class CoalitionValidationTest {
         System.getenv(name)?.let { it.toIntOrNull() ?: error("$name must be an integer") }
             ?: default
 
+    // must match data from config properties
     private val runId = envInt("ISE_VALIDATION_RUN_ID", 3)
     private val seed = envInt("ISE_VALIDATION_SEED", 42)
     private val expectedRounds = envInt("ISE_VALIDATION_ROUNDS", 100).also { require(it > 0) }
-    private val coalitionInterval = 5
-    private val trustThreshold = 0.6
-    private val bidThreshold = 2.0
-    private val maxPeers = 3
+    private val coalitionInterval get() = SimulationConfig.communicationInterval
+    private val trustThreshold get() = SimulationConfig.trustThreshold
+    private val bidThreshold get() = SimulationConfig.bidThreshold
+    private val maxPeers get() = SimulationConfig.maxPeers
     private val eps = 1e-6
-    private val names = (1..8).map { "agent$it" }.toSet()
+    private val names = (1..SimulationConfig.agentCount).map { "agent$it" }.toSet()
     private fun numberAsInt(value: String): Int = value.toDouble().toInt()
 
     private data class Link(
@@ -84,11 +86,12 @@ class CoalitionValidationTest {
         assertEquals((1..expectedRounds).toList(), rounds.map { numberAsInt(it[2]) }.sorted(),
             "Missing/duplicate coalition rounds")
         val agents = rows("agents.csv")
-        assertEquals(expectedRounds * 8, agents.size, "Incomplete agent results")
+        assertEquals(expectedRounds * SimulationConfig.agentCount, agents.size, "Incomplete agent results")
         val byRound = agents.groupBy { numberAsInt(it[2]) }
         return (1..expectedRounds).associateWith { round ->
             val observations = byRound[round].orEmpty()
-            assertEquals(8, observations.size, "Missing/duplicated agent rows at round $round")
+            assertEquals(SimulationConfig.agentCount, observations.size,
+                "Missing/duplicated agent rows at round $round")
             assertEquals(names, observations.map { it[3].trim('"', '\'') }.toSet(),
                 "Incorrect agent identities at round $round")
             observations.associate { it[3].trim('"', '\'') to it[5].toDouble() }

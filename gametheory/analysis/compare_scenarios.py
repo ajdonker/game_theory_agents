@@ -12,10 +12,14 @@ from pathlib import Path
 import argparse
 import matplotlib.pyplot as plt
 import pandas as pd
+from config import load_config, economic_values
 
+config = load_config()
+econ = economic_values(config)
+OPTIMUM = econ["optimum"]
+BAND = econ["optimal_band"]
 RESULTS = Path(__file__).resolve().parent.parent / "results"
 SCENARIOS = ["no_comm", "centralized", "decentralized", "coalition"]
-OPTIMUM = 36.0
 
 
 def read_rounds(scenario):
@@ -38,7 +42,7 @@ def metrics(frame):
     return {
         "mean_rent_pct": frame.rent_pct.mean(),
         "mean_distance_from_optimum": (frame.total_bid - OPTIMUM).abs().mean(),
-        "fraction_within_optimal_band": ((frame.total_bid - OPTIMUM).abs() <= 5.4).mean(),
+        "fraction_within_optimal_band": ((frame.total_bid - OPTIMUM).abs() <= BAND).mean(),
         "rent_sd": frame.rent_pct.std(),
     }
 
@@ -122,7 +126,7 @@ def main():
     fig, ax = plt.subplots(figsize=(9, 4.5))
     ax.bar(summary.baseline, summary.delta_mean_distance)
     ax.axhline(0, linestyle="--", color="black", linewidth=1)
-    ax.set(ylabel="Difference in mean absolute distance from 36",
+    ax.set(ylabel=f"Difference in mean absolute distance from {OPTIMUM:g}",
            title="Adaptive vs fixed baselines (negative is better)")
     fig.tight_layout()
     fig.savefig(out / "adaptive_distance_improvement.png", dpi=200)

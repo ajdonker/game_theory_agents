@@ -11,7 +11,9 @@ Expected (headerless OR headed) files:
 
 Usage (from repository root):
     python gametheory/analysis/verify_cpr_results.py \\
-        --root gametheory/results --runs 30 --rounds 300
+        --root gametheory/results --runs 30
+
+The default round count comes from config/default.properties.
 
 Requires: pandas, numpy, scipy.
 """
@@ -23,6 +25,19 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy import stats
+from config import load_config, economic_values
+
+CONFIG = load_config()
+ECON = economic_values(CONFIG)
+OPTIMUM = ECON["optimum"]
+AGENT_COUNT = ECON["agent_count"]
+PER_AGENT_OPTIMUM = ECON["per_agent_optimum"]
+MAX_GROUP_INVESTMENT = ECON["max_group_investment"]
+MAX_GROUP_RENT = ECON["max_group_rent"]
+MARKET1_RETURN = ECON["market1_return"]
+CPR_A = ECON["cpr_a"]
+CPR_B = ECON["cpr_b"]
+OPTIMAL_TOLERANCE = float(CONFIG["planner.optimalTolerance"])
 
 ROUND_COLS = ["run_id", "seed", "round", "total", "average", "group_rent", "rent_pct"]
 MODE_COLS = ["run_id", "seed", "round", "mode"]
@@ -82,23 +97,22 @@ def validate_rounds(name: str, df: pd.DataFrame, runs: int, rounds: int) -> list
         if not np.isfinite(df[col]).all():
             problems.append(f"{col} contains NaN/inf")
 
-    # Cross-check the economic model: 8 agents; return 23T - .25T²;
-    # 5T opportunity cost; optimum T=36; maximum group rent=324.
     errors = {
-        "average == total/8": df["average"] - df["total"] / 8,
-        "group_rent == 18*T - 0.25*T^2": (
-            df["group_rent"] - (18 * df["total"] - 0.25 * df["total"] ** 2)
+        f"average == total/{AGENT_COUNT}": df["average"] - df["total"] / AGENT_COUNT,
+        "group_rent follows configured CPR function": (
+            df["group_rent"] -
+            (df["total"] * (CPR_A - MARKET1_RETURN - CPR_B * df["total"]))
         ),
-        "rent_pct == 100*group_rent/324": (
-            df["rent_pct"] - 100 * df["group_rent"] / 324
+        "rent_pct matches configured maximum group rent": (
+            df["rent_pct"] - 100 * df["group_rent"] / MAX_GROUP_RENT
         ),
     }
     for desc, err in errors.items():
         if not np.isfinite(err).all() or (err.abs() > 0.02).any():
             problems.append(f"economic consistency check failed: {desc}")
 
-    if (df["total"] < 0).any() or (df["total"] > 80).any():
-        problems.append("total bid outside [0,80]")
+    if (df["total"] < 0).any() or (df["total"] > MAX_GROUP_INVESTMENT).any():
+        problems.append(f"total bid outside [0,{MAX_GROUP_INVESTMENT:g}]")
 
     if problems:
         for issue in problems[:10]:
@@ -112,8 +126,8 @@ def validate_rounds(name: str, df: pd.DataFrame, runs: int, rounds: int) -> list
 
 def per_run_metrics(name: str, df: pd.DataFrame) -> pd.DataFrame:
     tmp = df.copy()
-    tmp["abs_distance_total"] = (tmp["total"] - 36).abs()
-    tmp["abs_distance_per_agent"] = (tmp["average"] - 4.5).abs()
+    tmp["abs_distance_total"] = (tmp["total"] - OPTIMUM).abs()
+    tmp["abs_distance_per_agent"] = (tmp["average"] - PER_AGENT_OPTIMUM).abs()
     out = (
         tmp.groupby(PAIR_KEY, as_index=False)
         .agg(
@@ -198,6 +212,13 @@ def compare_scenarios(metrics: pd.DataFrame, good_names: list[str]) -> tuple[pd.
 
 
 def audit_modes(adaptive: pd.DataFrame, root: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    centralized_window = int(CONFIG["planner.centralizedWindow"])
+    centralized_stable_count = int(CONFIG["planner.centralizedStableCount"])
+    centralized_good_rent = float(CONFIG["planner.centralizedGoodRent"])
+    decentralized_window = int(CONFIG["planner.decentralizedWindow"])
+    decentralized_ineffective_count = int(CONFIG["planner.decentralizedIneffectiveCount"])
+    decentralized_bad_rent = float(CONFIG["planner.decentralizedGoodRent"])
+
     path = root / "adaptive" / "modes.csv"
     if not path.exists():
         print("\nWARNING: adaptive/modes.csv not found; cannot audit mode usage or transitions")
@@ -265,11 +286,25 @@ def audit_modes(adaptive: pd.DataFrame, root: Path) -> tuple[pd.DataFrame, pd.Da
         rid, seed, round_num = int(rec.run_id), int(rec.seed), int(rec.round)
         source, target = rec.mode, rec.next_mode
         history = joined[(joined["run_id"] == rid) & (joined["seed"] == seed)]
-        last10 = history[(history["round"].between(round_num - 9, round_num)) & (history["mode"] == "centralized")]
-        last5 = history[(history["round"].between(round_num - 4, round_num)) & (history["mode"] == "decentralized")]
-        stable = len(last10) == 10 and int((last10["rent_pct"] >= 85).sum()) >= 8
-        crater = len(last5) == 5 and int((last5["rent_pct"] < 70).sum()) >= 3
-        high = rec.total > 36 * 1.15
+        centralized_history = history[
+            history["round"].between(round_num - centralized_window + 1, round_num)
+            & (history["mode"] == "centralized")
+        ]
+        decentralized_history = history[
+            history["round"].between(round_num - decentralized_window + 1, round_num)
+            & (history["mode"] == "decentralized")
+        ]
+        stable = (
+            len(centralized_history) == centralized_window
+            and int((centralized_history["rent_pct"] >= centralized_good_rent).sum())
+            >= centralized_stable_count
+        )
+        crater = (
+            len(decentralized_history) == decentralized_window
+            and int((decentralized_history["rent_pct"] < decentralized_bad_rent).sum())
+            >= decentralized_ineffective_count
+        )
+        high = rec.total > OPTIMUM * (1 + OPTIMAL_TOLERANCE)
         reason = "other / not identifiable"
         if source == "centralized" and target == "decentralized":
             reason = "stable high rent" if stable else "ineffective/underinvestment/other"
@@ -279,7 +314,10 @@ def audit_modes(adaptive: pd.DataFrame, root: Path) -> tuple[pd.DataFrame, pd.Da
             "run_id": rid, "seed": seed, "decision_round": round_num,
             "new_mode_starts_round": round_num + 1,
             "from_mode": source, "to_mode": target,
-            "mean_last_10_centralized_rent": float(last10["rent_pct"].mean()) if len(last10) == 10 else float("nan"),
+            f"mean_last_{centralized_window}_centralized_rent": (
+                float(centralized_history["rent_pct"].mean())
+                if len(centralized_history) == centralized_window else float("nan")
+            ),
             "centralized_stable_signal": stable,
             "decentralized_crater_signal": crater,
             "investment_high_this_round": high,
@@ -299,7 +337,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("--root", type=Path, default=Path("gametheory/results"))
     parser.add_argument("--runs", type=int, default=30)
-    parser.add_argument("--rounds", type=int, default=300)
+    parser.add_argument("--rounds", type=int, default=int(CONFIG["run.rounds"]))
     parser.add_argument("--scenarios", nargs="+", default=list(DEFAULT_SCENARIOS),
                         help="Which scenario directories to check (missing directories skipped)")
     parser.add_argument("--out", type=Path, default=None,
@@ -311,7 +349,10 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     print(f"Results directory: {root.resolve()}")
     print(f"Expected: {args.runs} independent seeds, {args.rounds} rounds each")
-    print("Distance = |total group investment - 36| (also reports per-agent |average - 4.5|)")
+    print(
+        f"Distance = |total group investment - {OPTIMUM:g}| "
+        f"(also reports per-agent |average - {PER_AGENT_OPTIMUM:g}|)"
+    )
 
     good = {}
     bad = {}

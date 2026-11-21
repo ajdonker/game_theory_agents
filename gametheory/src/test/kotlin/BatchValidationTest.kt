@@ -1,5 +1,6 @@
 package simulation
 
+import strips.SimulationConfig
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -39,6 +40,13 @@ import kotlin.math.abs
  * execution time or whether the runs required manual intervention.
  */
 class BatchValidationTest {
+    private val agentCount get() = SimulationConfig.agentCount
+    private val endowment get() = SimulationConfig.endowment
+    private val market1Return get() = SimulationConfig.market1Return
+    private val cprA get() = SimulationConfig.cprA
+    private val cprB get() = SimulationConfig.cprB
+    private val optimalRent get() = SimulationConfig.optimalRent
+
     private fun envInt(name: String, default: Int): Int =
         System.getenv(name)?.let { value ->
             value.toIntOrNull() ?: error("$name must be an integer, got '$value'")
@@ -57,7 +65,7 @@ class BatchValidationTest {
         }
     }
 
-    private val expectedAgents = (1..8).map { "agent$it" }.toSet()
+    private val expectedAgents = (1..agentCount).map { "agent$it" }.toSet()
     private val epsilon = 1e-5
 
     private data class Key(val runId: Int, val seed: Int)
@@ -122,26 +130,26 @@ class BatchValidationTest {
             assertEquals((1..expectedRounds).toList(),
                 roundRows.map { intField(it[2]) }.sorted(),
                 "Missing or duplicated rounds for run ID ${key.runId}, seed ${key.seed}")
-            assertEquals(expectedRounds * 8, agentRows.size,
+            assertEquals(expectedRounds * agentCount, agentRows.size,
                 "Wrong agent record count for run ID ${key.runId}, seed ${key.seed}")
 
             val byRound = agentRows.groupBy { intField(it[2]) }
             for (roundRow in roundRows) {
                 val round = intField(roundRow[2])
                 val agents = byRound[round].orEmpty()
-                assertEquals(8, agents.size, "Expected 8 agents for $key, round $round")
+                assertEquals(agentCount, agents.size, "Expected $agentCount agents for $key, round $round")
                 assertEquals(expectedAgents, agents.map { it[3] }.toSet(),
                     "Missing or duplicated agent names for $key, round $round")
 
                 val bids = agents.map { doubleField(it[5]) }
-                assertTrue(bids.all { it in 0.0..10.0 }, "Illegal bid for $key, round $round")
+                assertTrue(bids.all { it in 0.0..endowment }, "Illegal bid for $key, round $round")
                 val total = bids.sum()
-                val rent = total * (23.0 - 0.25 * total) - 5.0 * total
-                val rentPercentage = 100.0 * rent / 324.0
+                val rent = total * (cprA - cprB * total) - market1Return * total
+                val rentPercentage = 100.0 * rent / optimalRent
 
                 assertEquals(total, doubleField(roundRow[3]), epsilon,
                     "Wrong total investment for $key, round $round")
-                assertEquals(total / 8.0, doubleField(roundRow[4]), epsilon,
+                assertEquals(total / agentCount, doubleField(roundRow[4]), epsilon,
                     "Wrong average investment for $key, round $round")
                 assertEquals(rent, doubleField(roundRow[5]), epsilon,
                     "Wrong group rent for $key, round $round")
@@ -150,8 +158,8 @@ class BatchValidationTest {
 
                 for (agent in agents) {
                     val bid = doubleField(agent[5])
-                    val market1 = 5.0 * (10.0 - bid)
-                    val market2 = bid * (23.0 - 0.25 * total)
+                    val market1 = market1Return * (endowment - bid)
+                    val market2 = bid * (cprA - cprB * total)
                     assertEquals(market1, doubleField(agent[6]), epsilon,
                         "Wrong market 1 payoff for $key, round $round, ${agent[3]}")
                     assertEquals(market2, doubleField(agent[7]), epsilon,
@@ -168,7 +176,7 @@ class BatchValidationTest {
         }
 
         assertEquals(expectedRuns * expectedRounds, totalValidatedRounds)
-        assertEquals(expectedRuns * expectedRounds * 8, totalValidatedAgents)
+        assertEquals(expectedRuns * expectedRounds * agentCount, totalValidatedAgents)
         val meanRent = totalRentPercentage / totalValidatedRounds
         println("BATCH PASS: scenario=$scenario, runs=$expectedRuns, " +
                 "rounds=$totalValidatedRounds, agent observations=$totalValidatedAgents, " +

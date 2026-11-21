@@ -4,7 +4,6 @@ seed(42).
 
 round(1).
 max_rounds(300).
-exploration_rounds(20).
 
 active_agent(agent1).
 active_agent(agent2).
@@ -15,30 +14,11 @@ active_agent(agent6).
 active_agent(agent7).
 active_agent(agent8).
 
-endowment(10).
-market1_return(5).
-cpr_a(23).
-cpr_b(0.25).
 
 intervention(none).
-intervention_min_duration(5).
-min_rounds_optimal(3).
-optimality_window(5).
-
-stab_round_threshold(centralized, 8).
-ineffective_round_threshold(centralized, 7).
 // at least threshold rounds out of the window need to be acceptable. 
-cent_stab_round_threshold(8).
-centralized_window(10).
-decentralized_window(10).
 
 // expressed in rent pct. min rent pct for good perf, max rent pct for bad perf.
-good_perf_lim(centralized, 85).
-bad_perf_lim(centralized, 75).
-good_perf_lim(decentralized, 70).
-
-
-ineffective_round_threshold(decentralized, 7).
 // Duration counts rounds in which a mode was active at round START.
 // New modes chosen at the end of round R begin in round R+1.
 intervention_since(1).
@@ -47,8 +27,76 @@ intervention_since(1).
 // plans
 +!start <-
     .println("STARTING SIM");
+    // apply configuration injected from gui (rounds, seed, run id), then load econ env and parameters from config file through param.kt
+    !load_econ_env;
+    !load_parameters;
     !apply_gui_config;
     !start_round.
+
++!load_econ_env
+<-
+    strips.param(endowment, Endowment);
+    +endowment(Endowment);
+
+    strips.param(market1_return, Market1Return);
+    +market1_return(Market1Return);
+
+    strips.param(cpr_a, CprA);
+    +cpr_a(CprA);
+
+    strips.param(cpr_b, CprB);
+    +cpr_b(CprB).
+
+
++!load_parameters
+<-
+    // Initial exploration
+    strips.param(exploration_rounds, Exploration);
+    +exploration_rounds(Exploration);
+
+    // Intervention stability
+    strips.param(intervention_min_duration, MinDuration);
+    +intervention_min_duration(MinDuration);
+
+    strips.param(min_rounds_optimal, MinRounds);
+    +min_rounds_optimal(MinRounds);
+
+    strips.param(optimality_window, OptimalWindow);
+    +optimality_window(OptimalWindow);
+
+    strips.param(optimal_tolerance, Tolerance);
+    +optimal_tolerance(Tolerance);
+
+    // Performance evaluation windows
+    strips.param(centralized_window, CentralWindow);
+    +centralized_window(CentralWindow);
+
+    strips.param(decentralized_window, DecentralWindow);
+    +decentralized_window(DecentralWindow);
+
+    // Centralized stability threshold
+    strips.param(stab_round_threshold_centralized, StableCount);
+    +stab_round_threshold(centralized, StableCount);
+
+    // Centralized performance thresholds
+    strips.param(good_perf_lim_centralized, GoodRent);
+    +good_perf_lim(centralized, GoodRent);
+
+    strips.param(bad_perf_lim_centralized, BadRent);
+    +bad_perf_lim(centralized, BadRent);
+
+    strips.param(ineffective_round_threshold_centralized, CentBadCount);
+    +ineffective_round_threshold(centralized, CentBadCount);
+
+    // Decentralized performance thresholds
+    strips.param(good_perf_lim_decentralized, DecentGoodRent);
+    +good_perf_lim(decentralized, DecentGoodRent);
+
+    strips.param(ineffective_round_threshold_decentralized, DecentBadCount);
+    +ineffective_round_threshold(decentralized, DecentBadCount);
+
+    strips.param(dispersion_threshold, Dispersion);
+    +dispersion_threshold(Dispersion).
 
 +!apply_gui_config
 <-
@@ -105,7 +153,8 @@ intervention_since(1).
 +!submit_bid(Round, Bid, Strategy)[source(Requester)]
     : round(Round)
     & Bid >= 0
-    & Bid <= 10
+    & endowment(Max)
+    & Bid <= Max
     & not bid(Requester, Round, _)
 <-
     +bid(Requester, Round, Bid);
@@ -217,6 +266,8 @@ intervention_since(1).
     .count(decentralized_crater(Round), Crater);
 
     ?exploration_rounds(Grace);
+    ?optimal_tolerance(Tolerance);
+    ?dispersion_threshold(DispersionThreshold);
 
     if (Round >= Grace) {
 
@@ -225,6 +276,7 @@ intervention_since(1).
             Total, OptimalGroupInvestment, RentPct,
             B1, B2, B3, B4, B5, B6, B7, B8,
             CurrentIntervention, Ineffective, Stable, Crater,
+            Tolerance, DispersionThreshold,
             Proposed, SymbolicState, Plan
         )) {
             strips.emit_event(
@@ -273,12 +325,6 @@ intervention_since(1).
     // Always calculate returns, including during exploration.
     !calculate_returns(Round, Total, Average).
 
-
-// can refactor next 2 plans to be generic in regard to mode, with appropriate beliefs on limits of perf
-// stab_round_threshold(centralized, 8).
-// ineffective_round_threshold(centralized, 7).
-
-// ineffective_round_threshold(decentralized, 7).
 
 +!detect_mode_performance(Round, centralized, Age)
     : centralized_window(Window)
@@ -361,8 +407,9 @@ intervention_since(1).
     : round(Round)
     & round_mode(Round, centralized)
     & active_agent(A)
+    & endowment(Max)
     & Bid >= 0
-    & Bid <= 10
+    & Bid <= Max
     & not central_bid_suggestion(A, Round, _, _, _)
 <-
     +central_bid_suggestion(A, Round, Bid, Strategy, Average);
@@ -379,6 +426,7 @@ intervention_since(1).
         central_bid_suggestion(_, Round, Bid, Strategy, _),
         Suggestions
     );
+    ?optimal_tolerance(Tolerance);
     !choose_central_bid(Round, Suggestions, W, CprA, CprB).
 
 +!check_central_bid_suggestions(_, Count)
@@ -684,12 +732,13 @@ intervention_since(1).
 // INTERVENTION STABILITY POLICY
 // ===========================================================
 
-// Count consecutive rounds in the +/-15% optimal-investment band.
+// Count rounds in the +/-Tolerance optimal-investment band.
 // An active intervention must run at least Min rounds before switching.
-// Record rounds within +/-15% of optimal investment.
+// Record rounds within +/-Tolerance of optimal investment.
 +!record_optimal_round(Round, Error)
-    : Error >= -0.15
-    & Error <= 0.15
+    : optimal_tolerance(Tolerance)
+    & Error >= (0 - Tolerance)
+    & Error <= Tolerance
 <-
     +optimal_round(Round).
 
